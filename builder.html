@@ -1,32 +1,31 @@
-<!doctype html>
-<html lang="zh-Hant">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>BEC Collection · 品牌頁產生器</title>
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BEC Collection Builder v2.0</title>
 <style>
-:root{font-family:Arial,"Helvetica Neue","PingFang TC",sans-serif;color:#273039;background:#f5f6f6}
-*{box-sizing:border-box}body{margin:0}main{max-width:1020px;margin:0 auto;padding:52px 22px 90px}header{border-bottom:1px solid #d9dddd;padding-bottom:28px;margin-bottom:30px}
-small{color:#777;letter-spacing:.16em;font-size:11px}h1{font-size:clamp(29px,5vw,48px);font-weight:500;letter-spacing:-.05em;margin:9px 0 12px}p{line-height:1.7;color:#647071}label{display:block;margin:0 0 8px;font-size:13px;font-weight:600}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.panel{border:1px solid #dde2e2;background:white;border-radius:16px;padding:24px;margin-bottom:18px}
-input,textarea{width:100%;padding:12px 13px;border:1px solid #d6dddd;border-radius:10px;font:14px/1.6 inherit;background:#fff;color:#273039}
-textarea{resize:vertical;font-family:ui-monospace,Menlo,monospace;min-height:220px}#output{min-height:320px}
-.help{font-size:12px;margin:8px 0 0}.actions{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}
-button{appearance:none;border-radius:999px;padding:13px 23px;cursor:pointer;background:#252f30;color:white;border:1px solid #252f30;font-size:13px}button.secondary{background:white;color:#252f30;border-color:#ced5d5}
-#status{min-height:24px;font-size:13px;color:#48615b}.guide{font-size:13px}.guide strong{color:#303b3b}
-@media(max-width:700px){main{padding:30px 16px}.grid{grid-template-columns:1fr}.panel{padding:17px}}
-</style>
-</head>
-<body>
-<main>
-<header><small>BY ELISS COLLECTION / INTERNAL TOOL</small><h1>COLLECTION BUILDER</h1>
-<p>所有品牌／藝人共用同一套 CSS 與 JavaScript。只要建立分類清單，就能產生可直接貼進 1shop「程式」區塊的完整代碼。無須改動全站 CSS／JS。</p></header>
-<section class="panel">
-<div class="grid">
-<div><label for="name">品牌／藝人名稱</label><input id="name" value="rhode" autocomplete="off"></div>
-<div><label for="slug">網址安全識別碼（英文、小寫、連字號）</label><input id="slug" value="rhode" autocomplete="off"></div>
-</div>
-<div style="margin-top:18px"><label for="categories">商品分類（每行一個）</label>
+:root{font-family:Helvetica,Arial,"PingFang TC",sans-serif;background:#f5f6f6;color:#253034}
+*{box-sizing:border-box}body{margin:0}main{max-width:1060px;margin:auto;padding:44px 20px 100px}
+h1{font-size:clamp(30px,5vw,48px);font-weight:500;letter-spacing:-.05em;margin:8px 0}h2{font-size:19px;font-weight:500;margin:0 0 18px}
+p{line-height:1.75;color:#687273}header{border-bottom:1px solid #dbe1e1;padding-bottom:24px;margin-bottom:24px}
+.eyebrow{font-size:11px;letter-spacing:.18em;color:#8b9292}.panel{border:1px solid #dce1e1;border-radius:16px;padding:24px;background:white;margin:16px 0}
+label{display:block;font-size:13px;font-weight:600;margin:0 0 8px}input[type=text],textarea,select{width:100%;border:1px solid #d3dada;border-radius:10px;padding:11px 12px;background:white;color:#253034;font:14px/1.6 Helvetica,Arial,"PingFang TC",sans-serif}
+textarea{font-family:ui-monospace,Menlo,monospace;resize:vertical;min-height:160px}#output{min-height:290px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:17px}.switch{display:flex;gap:10px}.switch button{flex:1}
+button{background:#283335;color:white;border:1px solid #283335;border-radius:100px;padding:12px 17px;font:13px Helvetica,Arial,sans-serif;cursor:pointer}
+button.light{background:#fff;color:#344041;border-color:#d4dddd}button.selected{background:#dfe7e5;color:#243334;border-color:#94aba4}
+button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid #71978c;outline-offset:2px}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin:16px 0}
+.tip{font-size:12px;color:#667474}.hide{display:none!important}.group{border:1px solid #e0e5e5;border-radius:12px;padding:15px;margin:13px 0}
+.ghead{display:flex;align-items:center;justify-content:space-between;gap:10px}.ghead strong{font-size:14px}
+.options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:13px}
+.option{display:flex;align-items:center;gap:8px;margin:0;font-weight:400;cursor:pointer;padding:9px;border:1px solid #eef0f0;border-radius:9px;font-size:12px}
+.option input{accent-color:#577468}
+#status{font-size:13px;min-height:20px;color:#496e59}
+@media(max-width:700px){main{padding:27px 14px}.panel{padding:17px}.grid{grid-template-columns:1fr}.options{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style></head><body><main>
+<header><div class="eyebrow">BY ELISS COLLECTION / MANAGEMENT</div><h1>COLLECTION BUILDER</h1><p>建立品牌或藝人專頁，一鍵產生 1shop 程式區塊。所有頁面仍使用 BEC 共用程式，不須修改全站 CSS／JS。</p></header>
+<section class="panel"><label>頁面類型</label><div class="switch"><button type="button" id="modeBrand" class="selected" aria-pressed="true">品牌 BRAND</button><button type="button" id="modeArtist" class="light" aria-pressed="false">藝人 ARTIST</button></div>
+<div class="grid" style="margin-top:19px"><div><label for="name">品牌／藝人名稱</label><input type="text" id="name" value="rhode"></div><div><label for="slug">英文識別碼（小寫、連字號）</label><input type="text" id="slug" value="rhode"></div></div></section>
+<section class="panel" id="brandFields"><h2>品牌分類</h2><label for="categories">每行一個分類</label>
 <textarea id="categories" spellcheck="false">全部商品 | all | 全部商品 ALL
 護膚保養 | skincare | 護膚保養 SKINCARE
 唇部 | lips | 唇部 LIPS
@@ -34,69 +33,116 @@ button{appearance:none;border-radius:999px;padding:13px 23px;cursor:pointer;back
 臉頰 | cheeks | 臉頰 CHEEKS
 美妝工具 | tools | 美妝工具 TOOLS
 服飾 | clothing | 服飾 CLOTHING</textarea>
-<p class="help">格式：<strong>按鈕顯示名稱 | 英文分類代碼 | 1shop 原生文字標題</strong>。每個分類都要有不同的英文代碼。預設包含 rhode 的「服飾」。</p>
-</div>
-<div class="actions"><button id="rhode" type="button" class="secondary">載入 rhode 範例</button><button id="example" type="button" class="secondary">載入新品牌範例</button></div>
-</section>
-<section class="panel"><label for="output">完整 1shop 程式區塊</label>
-<div class="actions"><button id="generate" type="button">產生完整代碼</button><button id="copy" type="button" class="secondary">複製代碼</button></div>
-<textarea id="output" spellcheck="false" readonly aria-label="產生的 HTML 程式碼"></textarea>
-<p id="status" role="status" aria-live="polite"></p></section>
-<section class="panel guide"><strong>安裝注意事項</strong><p>1. 新品牌頁建立一個「程式」區塊，貼入輸出的完整代碼。</p><p>2. 最上方的第一個「全部商品」分類可由 v1.2 共用程式補上標題和錨點。其他分類請在各自的商品展示前建立「原生文字」標題，內容需與第三欄一致，或放置明確的分類錨點。這是為了避免標題被誤放在別的商品區塊。</p><p>3. 同一頁只能保留一份共用模板設定；不要同時使用 rhode 舊版 Sticky v4。已完成的 rhode 不需重新設定。</p><p>4. 共用資產版本：CSS v1.1／JavaScript v1.2。若日後更新核心程式，舊頁面不一定立即取得新版（網址參數固定）；正式批次升級時需另行安排版本策略。</p></section>
-</main>
-<script>
+<p class="tip">每行：按鈕名稱 | 英文代碼 | 對應的 1shop 原生標題</p>
+<div class="actions"><button type="button" class="light" id="rhode">載入 rhode 七分類</button><button type="button" class="light" id="brandSample">載入一般品牌範例</button></div></section>
+<section class="panel hide" id="artistFields"><h2>藝人分類配置</h2><p class="tip">先選擇主分類，再勾選子分類。產生後，顧客在藝人頁可先切換主分類，再選擇子分類。未選擇的分類不會出現。</p>
+<div id="artistGroups"></div>
+<div class="actions"><button type="button" id="presetAll" class="light">常用完整分類</button><button type="button" id="presetBasic" class="light">精簡藝人分類</button><button type="button" id="presetClear" class="light">清除選擇</button></div>
+<label for="extra">自訂子分類（可選）</label>
+<textarea id="extra" spellcheck="false" placeholder="音樂 | 簽名版 | signed | 簽名版 SIGNED&#10;服飾 | 外套 | jackets | 外套 JACKETS" style="min-height:84px"></textarea>
+<p class="tip">格式：主分類名稱 | 按鈕名稱 | 英文代碼 | 對應原生標題。自訂類別會加入指定主分類。</p></section>
+<section class="panel"><h2>產生完整代碼</h2><div class="actions"><button type="button" id="generate">產生 1shop 程式</button><button type="button" class="light" id="copy">複製完整代碼</button></div><textarea id="output" readonly spellcheck="false"></textarea><p id="status" role="status" aria-live="polite"></p></section>
+<section class="panel"><h2>重要使用提醒</h2><p class="tip">・第一個「全部商品」會由共用 v1.2 建立必要錨點與標題（若不存在）。<br>・其餘子分類必須在 1shop 對應商品區塊前建立「原生文字」標題，文字要與設定的第三欄一致；否則放入明確的定位錨點。<br>・藝人模式的「主分類」是導覽分組，不代表有獨立商品區塊；實際錨點屬於勾選的子分類。<br>・一張 1shop 網頁只使用一份 BEC Collection 導覽設定。<br>・產生器不會新增、搬移、修改 1shop 的商品資料或商品展示區塊。<br>・共用資產採穩定版：CSS v1.1、JS v1.2；藝人模式額外載入 artist CSS／JS v1.0。</p></section>
+</main><script>
 (()=>{
 'use strict';
-const el=id=>document.getElementById(id);
-const esc=s=>s.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-function slug(s){return s.toLowerCase().trim().replace(/[^a-z0-9-]+/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'');}
-function build(){
- const brand=el('name').value.trim();
- const id=slug(el('slug').value);
- if(!brand||!id){el('status').textContent='請填寫品牌名稱與英文識別碼。';return;}
- const entries=el('categories').value.split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
- const seen=new Set(),rows=[];
- for(let i=0;i<entries.length;i++){
-  const parts=entries[i].split('|').map(s=>s.trim());
-  if(parts.length!==3||!parts.every(Boolean)){el('status').textContent='第 '+(i+1)+' 行格式錯誤：需要「顯示名稱 | 英文分類代碼 | 原生標題」。';return;}
-  const key=slug(parts[1]);
-  if(!key||seen.has(key)){el('status').textContent='第 '+(i+1)+' 行的分類代碼無效或重複。';return;}
-  seen.add(key);rows.push([parts[0],key,parts[2]]);
+const $=id=>document.getElementById(id),esc=s=>String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const slug=s=>s.toLowerCase().trim().replace(/[^a-z0-9-]+/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'');
+const rootUrl='https://byelisseliss.github.io/bec-collection-assets/';
+const library=[
+ {name:'音樂',key:'music',options:[['黑膠','vinyl','黑膠 VINYL'],['CD','cd','CD'],['卡帶','cassette','卡帶 CASSETTE'],['數位音樂','digital','數位音樂 DIGITAL'],['簽名版本','signed','簽名版本 SIGNED']]},
+ {name:'服飾',key:'apparel',options:[['上衣','tops','上衣 TOPS'],['外套','outerwear','外套 OUTERWEAR'],['帽子','headwear','帽子 HEADWEAR'],['褲裝／裙裝','bottoms','褲裝／裙裝 BOTTOMS'],['其他服飾','other-clothing','其他服飾 OTHER CLOTHING']]},
+ {name:'配件',key:'accessories',options:[['包袋','bags','包袋 BAGS'],['手機配件','phone','手機配件 PHONE ACCESSORIES'],['鑰匙圈','keychains','鑰匙圈 KEYCHAINS'],['飾品','jewelry','飾品 JEWELRY'],['髮飾','hair','髮飾 HAIR ACCESSORIES']]},
+ {name:'收藏品',key:'collectibles',options:[['海報／印刷品','prints','海報／印刷品 PRINTS'],['卡片／照片','photocards','卡片／照片 PHOTOCARDS'],['公仔／模型','figures','公仔／模型 FIGURES'],['收藏盒','collectible-boxes','收藏盒 COLLECTIBLE BOXES']]},
+ {name:'居家生活',key:'home',options:[['杯具','drinkware','杯具 DRINKWARE'],['毯子','blankets','毯子 BLANKETS'],['文具','stationery','文具 STATIONERY'],['居家擺設','decor','居家擺設 DECOR']]},
+ {name:'巡演／活動',key:'tour',options:[['巡演商品','tour-merch','巡演商品 TOUR MERCH'],['活動限定','event-exclusive','活動限定 EVENT EXCLUSIVE'],['應援用品','fan-items','應援用品 FAN ITEMS']]}
+];
+let mode='brand';
+function renderArtist(){
+ const host=$('artistGroups');host.replaceChildren();
+ for(const group of library){
+  const box=document.createElement('div');box.className='group';
+  const heading=document.createElement('div');heading.className='ghead';
+  const strong=document.createElement('strong');strong.textContent=group.name+' / '+group.key.toUpperCase();
+  const action=document.createElement('button');action.type='button';action.className='light';action.textContent='全選／取消';
+  action.addEventListener('click',()=>{const boxes=[...box.querySelectorAll('input[type=checkbox]')];const next=!boxes.every(x=>x.checked);boxes.forEach(x=>x.checked=next)});
+  heading.append(strong,action);box.append(heading);
+  const options=document.createElement('div');options.className='options';
+  for(const [title,key,headingName] of group.options){
+   const label=document.createElement('label');label.className='option';
+   const input=document.createElement('input');input.type='checkbox';input.dataset.group=group.name;input.dataset.key=key;input.dataset.title=title;input.dataset.heading=headingName;input.checked=(group.key==='music'&&['vinyl','cd','cassette'].includes(key))||(group.key==='apparel'&&key==='tops')||(group.key==='accessories'&&key==='keychains');
+   const span=document.createElement('span');span.textContent=title;label.append(input,span);options.append(label);
+  }
+  box.append(options);host.append(box);
  }
- if(!rows.length){el('status').textContent='請至少設定一個商品分類。';return;}
- const lines=[
- '<!-- BEC COLLECTION | '+esc(brand)+' -->',
- '<link rel="stylesheet" href="https://byelisseliss.github.io/bec-collection-assets/bec-collection.css?v=1.1">',
- '<nav data-bec-collection aria-label="'+esc(brand)+' 商品分類導覽">',
- '  <div class="bec-col-brand">',
- '    <small>DISCOVER / '+esc(brand.toUpperCase())+'</small>',
- '    <strong>Explore Categories</strong>',
- '  </div>',
- '  <div class="bec-col-links">',
- ...rows.map(([text,key,heading])=>'    <a href="#bec-'+id+'-'+key+'" data-heading="'+esc(heading)+'">'+esc(text)+'</a>'),
- '  </div>',
- '</nav>',
- '<script defer src="https://byelisseliss.github.io/bec-collection-assets/bec-collection.js?v=1.2"><\/script>'
- ];
- el('output').value=lines.join('\n');
- el('status').textContent='已產生 '+rows.length+' 個分類，完整代碼可直接複製貼入 1shop。';
 }
-el('generate').addEventListener('click',build);
-el('copy').addEventListener('click',async()=>{
- if(!el('output').value)build();
- try{await navigator.clipboard.writeText(el('output').value);el('status').textContent='已複製代碼。';}
- catch(e){el('output').select();el('status').textContent='瀏覽器無法自動複製，已選取全部代碼，可按 Command + C。';}
-});
-el('rhode').addEventListener('click',()=>{
- el('name').value='rhode';el('slug').value='rhode';
- el('categories').value='全部商品 | all | 全部商品 ALL\n護膚保養 | skincare | 護膚保養 SKINCARE\n唇部 | lips | 唇部 LIPS\n眼部 | eyes | 眼部 EYES\n臉頰 | cheeks | 臉頰 CHEEKS\n美妝工具 | tools | 美妝工具 TOOLS\n服飾 | clothing | 服飾 CLOTHING';build();
-});
-el('example').addEventListener('click',()=>{
- el('name').value='NEW BRAND';el('slug').value='new-brand';
- el('categories').value='全部商品 | all | 全部商品 ALL\n服飾 | clothing | 服飾 CLOTHING\n配件 | accessories | 配件 ACCESSORIES';build();
-});
-build();
+function setMode(next){
+ mode=next;
+ $('brandFields').classList.toggle('hide',next!=='brand');$('artistFields').classList.toggle('hide',next!=='artist');
+ $('modeBrand').className=next==='brand'?'selected':'light';$('modeArtist').className=next==='artist'?'selected':'light';
+ $('modeBrand').setAttribute('aria-pressed',String(next==='brand'));$('modeArtist').setAttribute('aria-pressed',String(next==='artist'));
+}
+function entries(){
+ const rows=[];
+ if(mode==='brand'){
+  for(const line of $('categories').value.split(/\r?\n/).map(s=>s.trim()).filter(Boolean)){
+   const parts=line.split('|').map(x=>x.trim());if(parts.length!==3||!parts.every(Boolean))throw Error('品牌分類格式必須是三欄：顯示名稱 | 英文代碼 | 原生標題');
+   rows.push({title:parts[0],key:slug(parts[1]),heading:parts[2],group:'全部商品'});
+  }
+ }else{
+  rows.push({title:'全部商品',key:'all',heading:'全部商品 ALL',group:'全部商品'});
+  document.querySelectorAll('#artistGroups input:checked').forEach(i=>rows.push({title:i.dataset.title,key:i.dataset.key,heading:i.dataset.heading,group:i.dataset.group}));
+  for(const line of $('extra').value.split(/\r?\n/).map(s=>s.trim()).filter(Boolean)){
+   const p=line.split('|').map(x=>x.trim());if(p.length!==4||!p.every(Boolean))throw Error('自訂子分類需要四欄：主分類 | 顯示名稱 | 英文代碼 | 原生標題');
+   if(!library.some(g=>g.name===p[0]))throw Error('自訂分類的主分類必須是：'+library.map(g=>g.name).join('、'));
+   rows.push({title:p[1],key:slug(p[2]),heading:p[3],group:p[0]});
+  }
+ }
+ const unique=new Set();
+ for(const r of rows){if(!r.key||unique.has(r.key))throw Error('分類代碼不能空白或重複：'+r.title);unique.add(r.key)}
+ if(!rows.length)throw Error('至少建立一個分類');
+ return rows;
+}
+function build(){
+ try{
+ const name=$('name').value.trim(),id=slug($('slug').value);if(!name||!id)throw Error('請填寫名稱與英文識別碼');
+ const rows=entries();
+ const lines=[
+ '<!-- BEC COLLECTION | '+esc(name)+' | '+mode.toUpperCase()+' -->',
+ '<link rel="stylesheet" href="'+rootUrl+'bec-collection.css?v=1.1">',
+ ...(mode==='artist'?['<link rel="stylesheet" href="'+rootUrl+'bec-artist.css?v=1.0">']:[]),
+ '<nav data-bec-collection class="'+(mode==='artist'?'bec-artist':'')+'" aria-label="'+esc(name)+' 商品分類導覽">',
+ '  <div class="bec-col-brand"><small>DISCOVER / '+esc(name.toUpperCase())+'</small><strong>Explore Categories</strong></div>',
+ '  <div class="bec-col-links">'
+ ];
+ if(mode==='brand'){
+  for(const r of rows)lines.push('    <a href="#bec-'+id+'-'+r.key+'" data-heading="'+esc(r.heading)+'">'+esc(r.title)+'</a>');
+ }else{
+  const groupNames=[...new Set(rows.map(r=>r.group))];
+  lines.push('    <div class="bec-artist-main" role="tablist" aria-label="主分類">');
+  groupNames.forEach((g,i)=>lines.push('      <button type="button" data-group="'+esc(g)+'" aria-selected="'+(i===0?'true':'false')+'" role="tab">'+esc(g)+'</button>'));
+  lines.push('    </div>','    <div class="bec-artist-panels">');
+  for(let i=0;i<groupNames.length;i++){
+   const g=groupNames[i];
+   lines.push('      <div class="bec-artist-panel'+(i===0?' is-current':'')+'" data-group="'+esc(g)+'">');
+   for(const r of rows.filter(x=>x.group===g))lines.push('        <a href="#bec-'+id+'-'+r.key+'" data-heading="'+esc(r.heading)+'">'+esc(r.title)+'</a>');
+   lines.push('      </div>');
+  }
+  lines.push('    </div>');
+ }
+ lines.push('  </div>','</nav>','<script defer src="'+rootUrl+'bec-collection.js?v=1.2"><'+'/script>');
+ if(mode==='artist')lines.push('<script defer src="'+rootUrl+'bec-artist.js?v=1.0"><'+'/script>');
+ $('output').value=lines.join('\n');$('status').textContent='已產生 '+rows.length+' 個分類'+(mode==='artist'?'（含主分類 '+new Set(rows.map(x=>x.group)).size+' 組）':'')+'。';
+ }catch(e){$('output').value='';$('status').textContent='⚠ '+e.message}
+}
+$('modeBrand').onclick=()=>setMode('brand');$('modeArtist').onclick=()=>setMode('artist');
+$('rhode').onclick=()=>{$('name').value='rhode';$('slug').value='rhode';$('categories').value='全部商品 | all | 全部商品 ALL\n護膚保養 | skincare | 護膚保養 SKINCARE\n唇部 | lips | 唇部 LIPS\n眼部 | eyes | 眼部 EYES\n臉頰 | cheeks | 臉頰 CHEEKS\n美妝工具 | tools | 美妝工具 TOOLS\n服飾 | clothing | 服飾 CLOTHING';build()};
+$('brandSample').onclick=()=>{$('name').value='NEW BRAND';$('slug').value='new-brand';$('categories').value='全部商品 | all | 全部商品 ALL\n服飾 | clothing | 服飾 CLOTHING\n配件 | accessories | 配件 ACCESSORIES';build()};
+$('presetAll').onclick=()=>document.querySelectorAll('#artistGroups input').forEach(i=>i.checked=true);
+$('presetBasic').onclick=()=>document.querySelectorAll('#artistGroups input').forEach(i=>i.checked=['vinyl','cd','cassette','tops','keychains'].includes(i.dataset.key));
+$('presetClear').onclick=()=>document.querySelectorAll('#artistGroups input').forEach(i=>i.checked=false);
+$('generate').onclick=build;
+$('copy').onclick=async()=>{if(!$('output').value)build();if(!$('output').value)return;try{await navigator.clipboard.writeText($('output').value);$('status').textContent='已複製完整代碼。'}catch(e){$('output').focus();$('output').select();$('status').textContent='請按 Command + C 複製已選取的代碼。'}};
+renderArtist();build();
 })();
-</script>
-</body>
-</html>
+</script></body></html>
