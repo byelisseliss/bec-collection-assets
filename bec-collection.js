@@ -1,4 +1,4 @@
-/* BEC Collection Template v1.0 | Shared script: no brand-specific names */
+/* BEC Collection Template v1.1 | Shared script: no brand-specific names */
 (()=>{
 'use strict';
 const root=document.querySelector('[data-bec-collection]');
@@ -54,16 +54,89 @@ function target(link){
   }
   return null;
 }
+
+/*
+ * v1.1 section repair:
+ * - Existing native heading is always preferred.
+ * - Existing explicit anchors are trusted section locations.
+ * - Only the first 'all' category can be inferred from the nav position.
+ * - Never guess the position of another category's products.
+ */
+const pageContainer=()=>document.querySelector('.page-single .customize');
+const linksByIndex=()=>originalLinks;
+function topLevel(el,box){
+  while(el&&el.parentElement!==box)el=el.parentElement;
+  return el&&el.parentElement===box?el:null;
+}
+function headingName(a){
+  return (a.dataset.heading||a.textContent||'').split('|')[0].trim();
+}
+function generatedHeading(id,label,before){
+  if(!before||!before.parentNode)return null;
+  const el=document.createElement('section');
+  el.className='editor bec-col-generated-heading';
+  el.dataset.becGenerated=id;
+  el.id=id+'-heading';
+  const p=document.createElement('p');
+  const strong=document.createElement('strong');
+  strong.textContent=label;
+  p.appendChild(strong);
+  el.appendChild(p);
+  before.parentNode.insertBefore(el,before);
+  return el;
+}
+function autoHeading(a,index){
+  const box=pageContainer();
+  if(!box)return null;
+  const id=a.getAttribute('href')?.slice(1);
+  if(!id)return null;
+  const existing=box.querySelectorAll(':scope > section.editor');
+  const names=(a.dataset.heading||'').split('|').map(norm).filter(Boolean);
+  for(const s of existing)if(names.includes(norm(s.textContent)))return s;
+  const prior=box.querySelector('[data-bec-generated="'+CSS.escape(id)+'"]');
+  if(prior)return prior;
+  // An explicit anchor marks a safe category boundary.
+  const anchor=document.getElementById(id);
+  if(anchor&&anchor!==root&&!root.contains(anchor)){
+    const host=topLevel(anchor,box);
+    if(host&&host!==topLevel(root,box)){
+      // Keep the heading immediately after the anchor's own builder block.
+      const next=host.nextElementSibling;
+      if(next){
+        if(next.matches('section.editor')){
+          const raw=norm(next.textContent);
+          if(raw===norm(headingName(a)))return next;
+          // A mismatching editor could be a genuine category heading: don't overwrite it.
+          if(raw.length<90)return anchor;
+        }
+        return generatedHeading(id,headingName(a),next);
+      }
+      return anchor;
+    }
+  }
+  // Safe fallback: the first "All" tab starts immediately after the navigation.
+  if(index===0){
+    const navHost=topLevel(root,box);
+    const after=navHost?.nextElementSibling;
+    if(after){
+      // Don't label a different explicit category as All.
+      if(after.matches('section.editor')&&norm(after.textContent).length<90)return null;
+      return generatedHeading(id,headingName(a),after);
+    }
+  }
+  return null;
+}
 function tabCount(){
-  const valid=originalLinks.filter(a=>!a.classList.contains('bec-col-missing')).length;
-  [root,clone].forEach(el=>el.style.setProperty('--bec-tabs',Math.max(1,valid)));
+  const count=originalLinks.length;
+  [root,clone].forEach(el=>el.style.setProperty('--bec-tabs',Math.max(1,count)));
 }
 function validate(){
   originalLinks.forEach((a,i)=>{
-    const invalid=!target(a);
-    a.classList.toggle('bec-col-missing',invalid);
-    floatLinks[i]?.classList.toggle('bec-col-missing',invalid);
-    if(invalid)console.warn('[BEC Collection] 找不到分類標題／錨點：',a.textContent.trim(),a.getAttribute('href'));
+    // Repair heading before resolving each target. Never hide links on temporary failures.
+    const found=target(a)||autoHeading(a,i);
+    a.classList.remove('bec-col-missing');
+    floatLinks[i]?.classList.remove('bec-col-missing');
+    if(!found)console.warn('[BEC Collection v1.1] 尚無安全的分類位置：',a.textContent.trim(),a.getAttribute('href'));
   });
   tabCount();
 }
@@ -135,7 +208,7 @@ function glide(el){
 [root,clone].forEach(nav=>nav.addEventListener('click',event=>{
   const a=event.target.closest('a[href^="#"]');
   if(!a||!nav.contains(a))return;
-  const t=target(a);if(!t)return;
+  let t=target(a);if(!t){validate();t=target(a);}if(!t)return;
   event.preventDefault();
   select(a.getAttribute('href'));
   glide(t);
@@ -183,9 +256,9 @@ function reveal(){
 }
 // Defer validation until 1shop has had time to render product sections.
 function ready(){
+  validate();
   reveal();
   sticky();active();
-  validate();
   const hash=location.hash;
   if(hash){
     const link=originalLinks.find(a=>a.getAttribute('href')===hash);
