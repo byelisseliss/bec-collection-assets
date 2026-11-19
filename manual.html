@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BEC — Collection Playbook</title>
+<meta name="description" content="BEC 品牌與藝人專頁建立、發布與維護的視覺化管理指南。">
+<style>
+:root{--ink:#262b2b;--muted:#777f7e;--line:#e0e2df;--bg:#f7f7f4;--paper:#fff;--accent:#d8ee49;font-family:Helvetica,Arial,"PingFang TC","Noto Sans TC",sans-serif}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:35px}body{margin:0;background:var(--bg);color:var(--ink)}button,a{font:inherit}a{color:inherit;text-decoration:none}a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid #688928;outline-offset:4px}button{cursor:pointer}
+.top{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:21px clamp(18px,5vw,70px);background:var(--bg);border-bottom:1px solid var(--line)}
+.wordmark{font-size:14px;font-weight:800;letter-spacing:.03em}.top small{letter-spacing:.15em;color:var(--muted);font-size:10px}.top a:not(.wordmark){font-size:12px;border-bottom:1px solid #8e9693;padding-bottom:3px}
+.hero{background:#222827;color:#f8faf8;position:relative;overflow:hidden;padding:clamp(50px,8vw,112px) clamp(20px,7vw,110px) clamp(44px,6vw,80px)}
+.hero::after{content:"BEC";position:absolute;right:-1vw;bottom:-11vw;font-size:clamp(170px,33vw,520px);font-weight:900;letter-spacing:-.12em;color:rgba(255,255,255,.027);pointer-events:none;line-height:1}
+.eyebrow{font-size:10px;letter-spacing:.23em;text-transform:uppercase}.hero .eyebrow{color:#c2cbcb}.hero h1{font-size:clamp(45px,7.4vw,112px);font-weight:500;line-height:1.02;letter-spacing:-.075em;margin:26px 0 29px;max-width:1100px}
+.hero h1 em{font-weight:400;font-style:normal;color:var(--accent)}.hero p{color:#bec7c5;line-height:1.9;max-width:530px;font-size:14px;margin:0}
+.meta{display:flex;gap:28px;flex-wrap:wrap;margin-top:58px;padding-top:21px;border-top:1px solid #46514f;font-size:11px;color:#b2bdbb}.meta b{color:#e4e9e7;font-weight:500}
+.shell{display:grid;grid-template-columns:220px minmax(0,1fr);gap:clamp(32px,5vw,90px);max-width:1350px;margin:0 auto;padding:64px clamp(20px,5vw,70px) 120px}
+aside{align-self:start;position:sticky;top:25px}.side-label{font-size:10px;letter-spacing:.18em;color:#919997;margin-bottom:24px}
+aside nav a{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line);font-size:12px;color:#66716e}
+aside nav a:hover{color:#222}aside nav span{font-size:10px;color:#abb3b0}
+.side-action{display:block;margin-top:29px;background:var(--ink);color:#fff;padding:15px 16px;border-radius:4px;font-size:12px;text-align:center}
+.article{min-width:0}.section{padding-bottom:76px;margin-bottom:68px;border-bottom:1px solid var(--line)}.section:last-child{border-bottom:0;margin-bottom:0}
+.kicker{font-size:10px;color:#8e9795;letter-spacing:.17em;margin-bottom:17px}.section h2{font-size:clamp(28px,4vw,48px);font-weight:500;letter-spacing:-.055em;line-height:1.13;margin:0 0 19px}
+.lede{font-size:15px;line-height:1.9;color:#6d7674;max-width:680px;margin:0 0 29px}
+.mode{display:grid;grid-template-columns:1fr 1fr;gap:14px}.mode article{background:var(--paper);border:1px solid var(--line);padding:26px;border-radius:7px;min-height:215px}
+.mode h3{font-size:26px;letter-spacing:-.04em;font-weight:500;margin:26px 0 8px}.mode p{font-size:13px;line-height:1.75;color:#7a8380;margin:0}
+.tag{font-size:10px;letter-spacing:.12em;color:#848e88;text-transform:uppercase}.tag.dark{color:#384840}
+.step{display:grid;grid-template-columns:45px 1fr;gap:18px;padding:28px 0;border-top:1px solid var(--line)}
+.num{font-size:18px;color:#a5afab;font-weight:400}.step h3{font-size:19px;margin:0 0 9px;font-weight:500;letter-spacing:-.02em}
+.step p{font-size:13px;color:#717b78;line-height:1.85;margin:0;max-width:660px}
+.chip{display:inline-flex;padding:5px 9px;border-radius:5px;background:#e8ebe7;color:#4e5c58;font-size:11px;margin:5px 5px 0 0}
+.diagram{border:1px solid var(--line);background:#fff;border-radius:8px;padding:22px;margin-top:20px}
+.diagram .bar{background:#e9edeb;border-radius:5px;padding:15px 20px;font-size:13px;text-align:center;margin:8px 0}
+.diagram .bar.accent{background:#e6ebc8}.diagram .arr{text-align:center;font-size:15px;color:#a9b0ab}
+.diagram .sub{border:1px solid #e1e5e3;border-radius:5px;padding:15px 20px;font-size:12px;text-align:center}
+.options{display:flex;gap:9px;flex-wrap:wrap;margin:24px 0 12px}.tab{border:1px solid #cfd6d2;background:transparent;color:#65706d;padding:11px 20px;border-radius:999px;font-size:12px}.tab[aria-selected=true]{background:#26312e;color:#fff;border-color:#26312e}
+.example{display:none}.example.is-on{display:block}.note{background:#e9eee8;border-radius:7px;padding:18px 21px;font-size:12px;line-height:1.9;color:#53615d;margin-top:18px}
+.checklist{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:24px}.check{display:flex;align-items:center;gap:11px;padding:14px 15px;border:1px solid #dfe3df;background:#fff;border-radius:5px;font-size:12px;line-height:1.5;cursor:pointer}.check input{accent-color:#536b5e;width:16px;height:16px;flex:none}.meter{height:4px;background:#e0e5df;margin-top:22px;border-radius:4px;overflow:hidden}.meter span{display:block;height:100%;width:0;background:#64796f;transition:width .2s}.progress{color:#77827a;font-size:11px;margin:8px 0}
+.faq{border-top:1px solid var(--line)}details{border-bottom:1px solid var(--line);padding:20px 0}summary{cursor:pointer;display:flex;justify-content:space-between;gap:15px;font-size:14px;list-style:none}summary::-webkit-details-marker{display:none}summary::after{content:"+";font-size:20px;color:#8e9a92}details[open] summary::after{content:"−"}details p{font-size:12px;color:#737f79;line-height:1.85;max-width:680px}
+.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.tile{background:white;border:1px solid var(--line);border-radius:6px;padding:19px}.tile small{display:block;font-size:10px;color:#8b958f;letter-spacing:.06em;margin-bottom:18px}.tile strong{font-size:13px;font-weight:500;word-break:break-word}.tile p{font-size:11px;line-height:1.7;color:#7c8680}
+.footer{padding:34px clamp(20px,5vw,70px);border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:16px;color:#959f9a;font-size:11px}
+@media(max-width:850px){.shell{grid-template-columns:1fr;padding-top:35px}aside{position:static}aside nav{display:flex;gap:17px;overflow-x:auto;scrollbar-width:none}aside nav a{flex:0 0 auto}.side-action,.side-label{display:none}.hero h1{font-size:clamp(46px,10vw,76px)}}
+@media(max-width:580px){.mode,.checklist,.cols{grid-template-columns:1fr}.hero{padding:53px 20px 45px}.meta{margin-top:36px}.top small{display:none}.section{padding-bottom:53px;margin-bottom:49px}.step{grid-template-columns:28px 1fr;gap:8px}}
+@media print{.top,aside,.options,.side-action{display:none!important}.hero{padding:38px}.hero h1{font-size:50px}.shell{display:block;padding:25px}.section{break-inside:avoid;padding-bottom:24px;margin-bottom:20px}.example{display:block}.footer{padding:15px}body{background:white}}
+</style></head><body>
+<div class="top"><a class="wordmark" href="builder.html">BEC<span style="color:#929c96">.</span></a><small>COLLECTION OPERATIONS / INTERNAL GUIDE</small><a href="builder.html">開啟建立平台 ↗</a></div>
+<header class="hero">
+<div class="eyebrow">By Eliss Collection / The Playbook</div>
+<h1>Make it simple.<br><em>Keep it consistent.</em></h1>
+<p>品牌與藝人專頁的建立、管理與發布指南。從第一次建立到後續維護，讓每位管理者都能用相同的流程，做出一致而有質感的 BEC Collection。</p>
+<div class="meta"><span>EDITION <b>01</b></span><span>UPDATED <b>20 NOV 2026</b></span><span>PLATFORM <b>1SHOP + GITHUB PAGES</b></span></div>
+</header>
+<div class="shell">
+<aside><div class="side-label">CONTENTS / 目錄</div><nav>
+<a href="#overview">01　選擇頁面類型 <span>↗</span></a>
+<a href="#workflow">02　建立流程 <span>↗</span></a>
+<a href="#layout">03　區塊配置 <span>↗</span></a>
+<a href="#launch">04　發布前檢查 <span>↗</span></a>
+<a href="#maintenance">05　維護與更新 <span>↗</span></a>
+<a href="#support">06　問題排除 <span>↗</span></a>
+<a href="#resources">07　工具與資源 <span>↗</span></a>
+</nav><a class="side-action" href="builder.html">CREATE A COLLECTION ↗</a></aside>
+<div class="article">
+<section class="section" id="overview"><div class="kicker">01 / START HERE</div><h2>先選擇，<br>再開始建立。</h2><p class="lede">BEC 的品牌與藝人頁面使用同一套核心程式，但分類方式不同。第一步先決定這張頁面適合哪一種模式。</p>
+<div class="mode"><article><div class="tag">01 / BRAND</div><h3>品牌專頁</h3><p>單層分類。適合 rhode、alo 及一般選物品牌。分類清楚、頁面簡潔，適用於商品類型相對集中的品牌。</p></article><article><div class="tag">02 / ARTIST</div><h3>藝人專頁</h3><p>兩層分類。先選音樂、服飾、配件、收藏品等主分類，再切換黑膠、CD、卡帶等子分類。適合 Taylor Swift、BTS。</p></article></div>
+<div class="note">已完成的 rhode 是品牌模式的穩定範例，保留七個分類：全部商品、護膚保養、唇部、眼部、臉頰、美妝工具、<strong>服飾 CLOTHING</strong>。沒有必要為了更新手冊而重新改動它。</div>
+</section>
+<section class="section" id="workflow"><div class="kicker">02 / THE WORKFLOW</div><h2>一張頁面，<br>六個步驟。</h2><p class="lede">以下流程適用於未來的每一位管理者。只要依順序操作，就不需要接觸共用 CSS 或 JavaScript 原始碼。</p>
+<div class="step"><div class="num">01</div><div><h3>在 1shop 建立獨立網頁</h3><p>進入「網頁」新增頁面，先設定品牌／藝人名稱、Banner 和商品展示。測試期間先不要加入正式主選單。</p></div></div>
+<div class="step"><div class="num">02</div><div><h3>開啟 BEC Collection Builder</h3><p>選擇 BRAND 或 ARTIST；輸入完整名稱與英文識別碼，例如 Taylor Swift 使用 <span class="chip">taylor-swift</span>。上線後盡量不要改識別碼，以免既有分類連結失效。</p></div></div>
+<div class="step"><div class="num">03</div><div><h3>選擇商品分類</h3><p>品牌模式逐行設定分類名稱、代碼與原生文字標題。藝人模式先選主分類，再勾選子分類，也能使用常用分類與自訂子分類。</p></div></div>
+<div class="step"><div class="num">04</div><div><h3>產生並貼上代碼</h3><p>按「產生 1shop 程式」，複製完整內容，貼到這張網頁唯一一個 Collection「程式」區塊。不要和舊版 Sticky Nav 並存。</p></div></div>
+<div class="step"><div class="num">05</div><div><h3>加入原生標題與商品</h3><p>「全部商品」若缺失，v1.2 可協助生成標題與錨點。其他分類需在對應商品展示前建立 1shop 原生「文字」標題，文字與產生器設定一致。系統不會替你建立商品展示。</p></div></div>
+<div class="step"><div class="num">06</div><div><h3>驗收後正式發布</h3><p>測試桌面和手機、錨點、吸頂、Mega Menu、圖片、價格及 SEO，確認正常後再加入品牌／藝人主選單。</p></div></div>
+<a href="builder.html" style="display:inline-block;background:#26312e;color:#fff;padding:15px 25px;border-radius:100px;font-size:12px;margin-top:23px">前往建立平台 ↗</a>
+</section>
+<section class="section" id="layout"><div class="kicker">03 / STRUCTURE</div><h2>商品分類，<br>該放在哪裡？</h2><p class="lede">導覽列、標題和商品展示是三個不同的部分。標題必須位於它所屬的商品區塊上方，點擊導覽才會準確定位。</p>
+<div class="options" role="tablist" aria-label="頁面配置範例"><button class="tab" data-tab="brand" aria-selected="true">品牌 BRAND</button><button class="tab" data-tab="artist" aria-selected="false">藝人 ARTIST</button></div>
+<div class="example is-on" id="sample-brand"><div class="diagram"><div class="bar accent">BEC 分類導覽｜全部商品　護膚保養　唇部　眼部　…</div><div class="arr">↓</div><div class="bar">全部商品 ALL（可自動產生）</div><div class="sub">1shop 原生「全部商品」展示</div><div class="arr">↓</div><div class="bar">護膚保養 SKINCARE（原生文字標題）</div><div class="sub">1shop 原生護膚保養商品展示</div><div class="arr">↓</div><div class="bar">服飾 CLOTHING（原生文字標題）</div><div class="sub">1shop 原生服飾商品展示</div></div></div>
+<div class="example" id="sample-artist"><div class="diagram"><div class="bar accent">藝人導覽第一層｜全部商品　音樂　服飾　配件　…</div><div class="bar">導覽第二層｜黑膠　CD　卡帶（依主分類切換）</div><div class="arr">↓</div><div class="bar">全部商品 ALL（可自動產生）</div><div class="sub">1shop 全部商品展示</div><div class="arr">↓</div><div class="bar">黑膠 VINYL（原生文字標題）</div><div class="sub">1shop 黑膠展示</div><div class="arr">↓</div><div class="bar">CD（原生文字標題）</div><div class="sub">1shop CD 展示</div></div></div>
+<div class="note">藝人「主分類」只是導覽群組，不代表 1shop 自動新增一整組商品。真正需要和商品展示對齊的是每個選用的「子分類」。</div>
+</section>
+<section class="section" id="launch"><div class="kicker">04 / QUALITY CONTROL</div><h2>發布前，<br>快速檢查。</h2><p class="lede">可直接勾選以下項目，確認每張新頁面的基本品質。勾選狀態只用於本次瀏覽，不會儲存到伺服器。</p>
+<div class="meter"><span id="meter"></span></div><p class="progress" id="progress">0 / 10 CHECKED</p>
+<div class="checklist" id="checks">
+<label class="check"><input type="checkbox">名稱、識別碼和網址正確</label>
+<label class="check"><input type="checkbox">分類名稱與排列順序正確</label>
+<label class="check"><input type="checkbox">主／子分類切換正確（藝人頁）</label>
+<label class="check"><input type="checkbox">全部商品標題與錨點正常</label>
+<label class="check"><input type="checkbox">各子分類停在文字標題上方</label>
+<label class="check"><input type="checkbox">導覽吸頂穩定，不閃爍</label>
+<label class="check"><input type="checkbox">Mega Menu 不被遮住</label>
+<label class="check"><input type="checkbox">手機版可滑動及切換分類</label>
+<label class="check"><input type="checkbox">商品圖片、連結、價格正確</label>
+<label class="check"><input type="checkbox">SEO、封面及選單入口已確認</label>
+</div></section>
+<section class="section" id="maintenance"><div class="kicker">05 / KEEP IT UPDATED</div><h2>維護很簡單，<br>但要分清楚。</h2><div class="mode"><article><div class="tag dark">PAGE CONTENT</div><h3>只改這個品牌</h3><p>調整這一頁的分類：在 Builder 重新產生完整設定，替換原本唯一的「程式」區塊，再同步更新 1shop 標題與商品展示。無須碰共用核心。</p></article><article><div class="tag dark">SHARED SYSTEM</div><h3>修改全部頁面</h3><p>吸頂、動畫及外觀等共用功能由 GitHub 程式庫管理。先用測試頁驗證，再安排更新與快取版本；共用檔案改動可能影響所有引用頁面。</p></article></div>
+<div class="note">目前參考版本：共用 CSS <strong>v1.1</strong>、共用 JavaScript <strong>v1.2</strong>；藝人模式額外使用 Artist CSS／JS <strong>v1.0</strong>。不要為了更新手冊而修改已成功的 rhode 共用設定。</div>
+</section>
+<section class="section" id="support"><div class="kicker">06 / QUICK HELP</div><h2>遇到問題，<br>先看這裡。</h2>
+<div class="faq">
+<details><summary>點擊子分類沒有反應</summary><p>檢查 Builder「對應原生標題」是否和 1shop 的原生文字方塊相符；該標題必須放在商品展示之前。不要把商品卡片當作標題。</p></details>
+<details><summary>「全部商品」的標題或錨點消失</summary><p>確認最前面是「全部商品」連結、導覽放在全部商品展示之前，並載入 bec-collection.js?v=1.2。避免同頁放兩份共用導覽。</p></details>
+<details><summary>導覽閃爍或出現兩條</summary><p>檢查是否同時保留舊版 Sticky Nav v4 與新版共用模板，或重複貼入兩份 Collection 設定。請先備份，再移除重複導覽；不要刪掉原生商品標題。</p></details>
+<details><summary>藝人主分類不能切換</summary><p>確認產生器選的是 ARTIST，且完整代碼包含 bec-artist.css、bec-artist.js 與 nav 的 bec-artist 類別。</p></details>
+<details><summary>全站 Mega Menu 被導覽蓋住</summary><p>確認共用 CSS／JavaScript 正常載入，再測試滑鼠移入與移出 Header 品牌選單；不要任意增加浮動列的 z-index。</p></details>
+<details><summary>更新後還是舊版本，或出現 404</summary><p>檢查 GitHub Pages 是否從 main /(root) 發布、檔案 URL 是否能打開，並確認網址的 ?v= 版本參數。不要直接刪除已上線的商品頁。</p></details>
+<details><summary>商品圖片出現 .avif 404</summary><p>這是獨立於 Collection 導覽的圖片 Hover 問題。需要在 Safari Network 核對來源，勿直接修改共用導覽以處理。</p></details>
+</div></section>
+<section class="section" id="resources"><div class="kicker">07 / YOUR TOOLKIT</div><h2>需要的工具，<br>都在這裡。</h2>
+<div class="cols"><a class="tile" href="builder.html"><small>01 / CREATE</small><strong>Collection Builder ↗</strong><p>輸入品牌或藝人名稱、選擇分類，產生完整 1shop 程式碼。</p></a><a class="tile" href="https://github.com/byelisseliss/bec-collection-assets" target="_blank" rel="noopener"><small>02 / MANAGE</small><strong>GitHub Repository ↗</strong><p>存放品牌和藝人共用資產。正式改版前先備份並驗收。</p></a><a class="tile" href="https://byelisscollection.my1shop.com/rhode-collection" target="_blank" rel="noopener"><small>03 / REFERENCE</small><strong>rhode Collection ↗</strong><p>目前已驗證的品牌頁穩定範本，含服飾 CLOTHING。</p></a></div>
+<div class="note">安全提醒：此管理指南與 Builder 均為公開可開啟的靜態頁面，不是受密碼保護的管理後台。不要輸入密碼、Token、客戶資料。建立平台目前不會自動保存歷史品牌設定。</div>
+</section></div></div>
+<footer class="footer"><span>BEC / BY ELISS COLLECTION</span><span>COLLECTION PLAYBOOK · EDITION 01</span></footer>
+<script>
+(()=>{
+const tabs=[...document.querySelectorAll('.tab')];
+tabs.forEach(btn=>btn.addEventListener('click',()=>{
+tabs.forEach(b=>b.setAttribute('aria-selected',String(b===btn)));
+document.querySelectorAll('.example').forEach(p=>p.classList.toggle('is-on',p.id==='sample-'+btn.dataset.tab));
+}));
+const boxes=[...document.querySelectorAll('#checks input')],bar=document.getElementById('meter'),count=document.getElementById('progress');
+function update(){const n=boxes.filter(x=>x.checked).length;bar.style.width=(n/boxes.length*100)+'%';count.textContent=n+' / '+boxes.length+' CHECKED'}
+boxes.forEach(b=>b.addEventListener('change',update));update();
+})();
+</script></body></html>
