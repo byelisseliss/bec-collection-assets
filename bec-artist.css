@@ -1,0 +1,20 @@
+/* BEC Artist Collection v1.0: optional two-level navigation */
+.bec-collection-nav.bec-artist,.bec-collection-float.bec-artist{--bec-artist-gap:9px}
+.bec-artist .bec-col-links{display:block!important}
+.bec-artist .bec-artist-main{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 11px}
+.bec-artist .bec-artist-main button{appearance:none;flex:1 1 auto;min-width:100px;border:1px solid #dfe5e5;border-radius:999px;background:#fff;padding:10px 14px;color:#5c6667;font:500 12px/1.4 Helvetica,Arial,sans-serif;cursor:pointer;transition:background .2s,color .2s}
+.bec-artist .bec-artist-main button[aria-selected="true"],.bec-artist .bec-artist-main button:hover{background:#e3e8e8;color:#394646;border-color:#e3e8e8}
+.bec-artist .bec-artist-panels{min-height:38px}
+.bec-artist .bec-artist-panel{display:none;flex-wrap:wrap;gap:8px;align-items:center}
+.bec-artist .bec-artist-panel.is-current{display:flex}
+.bec-artist .bec-artist-panel a{width:auto!important;min-width:95px;flex:1 1 auto;padding:9px 13px!important}
+.bec-collection-float.bec-artist .bec-artist-main{margin-bottom:8px}
+@media(max-width:767px){
+.bec-artist .bec-artist-main{overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding-bottom:4px}
+.bec-artist .bec-artist-main::-webkit-scrollbar{display:none}
+.bec-artist .bec-artist-main button{flex:0 0 auto;min-width:0;white-space:nowrap;padding:9px 13px}
+.bec-artist .bec-artist-panels{min-height:34px}
+.bec-artist .bec-artist-panel.is-current{display:flex;overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding-bottom:4px}
+.bec-artist .bec-artist-panel::-webkit-scrollbar{display:none}
+.bec-artist .bec-artist-panel a{flex:0 0 auto;min-width:0!important;white-space:nowrap}
+}
