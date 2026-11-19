@@ -1,4 +1,4 @@
-/* BEC Collection Template v1.1 | Shared script: no brand-specific names */
+/* BEC Collection Template v1.2 | Shared script: no brand-specific names */
 (()=>{
 'use strict';
 const root=document.querySelector('[data-bec-collection]');
@@ -126,17 +126,74 @@ function autoHeading(a,index){
   }
   return null;
 }
+
+/*
+ * v1.2: the first ALL category has a guaranteed real anchor.
+ * Insert the marker at the content boundary, never into the nav.
+ * Existing matching native headings are kept and reused.
+ */
+function ensureFirstCategory(){
+  const box=pageContainer(),a=originalLinks[0];
+  if(!box||!a)return null;
+  const id=a.getAttribute('href')?.slice(1);
+  if(!id)return null;
+  const names=(a.dataset.heading||'').split('|').map(norm).filter(Boolean);
+  const existing=pages().find(s=>names.includes(norm(s.textContent)));
+  if(existing){
+    if(!document.getElementById(id))existing.id=id;
+    return existing;
+  }
+  const previous=box.querySelector('[data-bec-generated="'+CSS.escape(id)+'"]');
+  if(previous){
+    if(!document.getElementById(id))previous.id=id;
+    return previous;
+  }
+  let marker=document.getElementById(id);
+  // Respect a pre-existing standalone anchor when there is one.
+  let insertion=null;
+  if(marker&&!root.contains(marker)){
+    const wrapper=topLevel(marker,box);
+    insertion=wrapper?.nextElementSibling||null;
+  }
+  if(!insertion){
+    const wrapper=topLevel(root,box);
+    insertion=wrapper?.nextElementSibling||null;
+    // The navigation may itself be nested inside a custom code wrapper.
+    if(!wrapper&&root.parentElement){
+      insertion=root.nextElementSibling;
+    }
+  }
+  if(!insertion){
+    const wrapper=topLevel(root,box);
+    if(wrapper?.parentElement===box){
+      // At the end of the page builder: append after the nav block.
+      insertion=document.createElement('span');
+      insertion.hidden=true;
+      box.appendChild(insertion);
+    }
+  }
+  if(!insertion)return marker||null;
+  // If another category's native heading immediately follows, this
+  // is still the ALL boundary: do not suppress the missing ALL title.
+  const created=generatedHeading(id,headingName(a),insertion);
+  if(created){
+    if(!marker)created.id=id; // exact hash, not id+"-heading"
+    return created;
+  }
+  return marker||null;
+}
 function tabCount(){
   const count=originalLinks.length;
   [root,clone].forEach(el=>el.style.setProperty('--bec-tabs',Math.max(1,count)));
 }
 function validate(){
+  ensureFirstCategory();
   originalLinks.forEach((a,i)=>{
     // Repair heading before resolving each target. Never hide links on temporary failures.
-    const found=target(a)||autoHeading(a,i);
+    const found=target(a)||(i===0?ensureFirstCategory():autoHeading(a,i));
     a.classList.remove('bec-col-missing');
     floatLinks[i]?.classList.remove('bec-col-missing');
-    if(!found)console.warn('[BEC Collection v1.1] 尚無安全的分類位置：',a.textContent.trim(),a.getAttribute('href'));
+    if(!found)console.warn('[BEC Collection v1.2] 尚無安全的分類位置：',a.textContent.trim(),a.getAttribute('href'));
   });
   tabCount();
 }
