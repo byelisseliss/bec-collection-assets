@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BEC Collection · 品牌頁產生器</title>
+<style>
+:root{font-family:Arial,"Helvetica Neue","PingFang TC",sans-serif;color:#273039;background:#f5f6f6}
+*{box-sizing:border-box}body{margin:0}main{max-width:1020px;margin:0 auto;padding:52px 22px 90px}header{border-bottom:1px solid #d9dddd;padding-bottom:28px;margin-bottom:30px}
+small{color:#777;letter-spacing:.16em;font-size:11px}h1{font-size:clamp(29px,5vw,48px);font-weight:500;letter-spacing:-.05em;margin:9px 0 12px}p{line-height:1.7;color:#647071}label{display:block;margin:0 0 8px;font-size:13px;font-weight:600}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.panel{border:1px solid #dde2e2;background:white;border-radius:16px;padding:24px;margin-bottom:18px}
+input,textarea{width:100%;padding:12px 13px;border:1px solid #d6dddd;border-radius:10px;font:14px/1.6 inherit;background:#fff;color:#273039}
+textarea{resize:vertical;font-family:ui-monospace,Menlo,monospace;min-height:220px}#output{min-height:320px}
+.help{font-size:12px;margin:8px 0 0}.actions{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}
+button{appearance:none;border-radius:999px;padding:13px 23px;cursor:pointer;background:#252f30;color:white;border:1px solid #252f30;font-size:13px}button.secondary{background:white;color:#252f30;border-color:#ced5d5}
+#status{min-height:24px;font-size:13px;color:#48615b}.guide{font-size:13px}.guide strong{color:#303b3b}
+@media(max-width:700px){main{padding:30px 16px}.grid{grid-template-columns:1fr}.panel{padding:17px}}
+</style>
+</head>
+<body>
+<main>
+<header><small>BY ELISS COLLECTION / INTERNAL TOOL</small><h1>COLLECTION BUILDER</h1>
+<p>所有品牌／藝人共用同一套 CSS 與 JavaScript。只要建立分類清單，就能產生可直接貼進 1shop「程式」區塊的完整代碼。無須改動全站 CSS／JS。</p></header>
+<section class="panel">
+<div class="grid">
+<div><label for="name">品牌／藝人名稱</label><input id="name" value="rhode" autocomplete="off"></div>
+<div><label for="slug">網址安全識別碼（英文、小寫、連字號）</label><input id="slug" value="rhode" autocomplete="off"></div>
+</div>
+<div style="margin-top:18px"><label for="categories">商品分類（每行一個）</label>
+<textarea id="categories" spellcheck="false">全部商品 | all | 全部商品 ALL
+護膚保養 | skincare | 護膚保養 SKINCARE
+唇部 | lips | 唇部 LIPS
+眼部 | eyes | 眼部 EYES
+臉頰 | cheeks | 臉頰 CHEEKS
+美妝工具 | tools | 美妝工具 TOOLS
+服飾 | clothing | 服飾 CLOTHING</textarea>
+<p class="help">格式：<strong>按鈕顯示名稱 | 英文分類代碼 | 1shop 原生文字標題</strong>。每個分類都要有不同的英文代碼。預設包含 rhode 的「服飾」。</p>
+</div>
+<div class="actions"><button id="rhode" type="button" class="secondary">載入 rhode 範例</button><button id="example" type="button" class="secondary">載入新品牌範例</button></div>
+</section>
+<section class="panel"><label for="output">完整 1shop 程式區塊</label>
+<div class="actions"><button id="generate" type="button">產生完整代碼</button><button id="copy" type="button" class="secondary">複製代碼</button></div>
+<textarea id="output" spellcheck="false" readonly aria-label="產生的 HTML 程式碼"></textarea>
+<p id="status" role="status" aria-live="polite"></p></section>
+<section class="panel guide"><strong>安裝注意事項</strong><p>1. 新品牌頁建立一個「程式」區塊，貼入輸出的完整代碼。</p><p>2. 最上方的第一個「全部商品」分類可由 v1.2 共用程式補上標題和錨點。其他分類請在各自的商品展示前建立「原生文字」標題，內容需與第三欄一致，或放置明確的分類錨點。這是為了避免標題被誤放在別的商品區塊。</p><p>3. 同一頁只能保留一份共用模板設定；不要同時使用 rhode 舊版 Sticky v4。已完成的 rhode 不需重新設定。</p><p>4. 共用資產版本：CSS v1.1／JavaScript v1.2。若日後更新核心程式，舊頁面不一定立即取得新版（網址參數固定）；正式批次升級時需另行安排版本策略。</p></section>
+</main>
+<script>
+(()=>{
+'use strict';
+const el=id=>document.getElementById(id);
+const esc=s=>s.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+function slug(s){return s.toLowerCase().trim().replace(/[^a-z0-9-]+/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'');}
+function build(){
+ const brand=el('name').value.trim();
+ const id=slug(el('slug').value);
+ if(!brand||!id){el('status').textContent='請填寫品牌名稱與英文識別碼。';return;}
+ const entries=el('categories').value.split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
+ const seen=new Set(),rows=[];
+ for(let i=0;i<entries.length;i++){
+  const parts=entries[i].split('|').map(s=>s.trim());
+  if(parts.length!==3||!parts.every(Boolean)){el('status').textContent='第 '+(i+1)+' 行格式錯誤：需要「顯示名稱 | 英文分類代碼 | 原生標題」。';return;}
+  const key=slug(parts[1]);
+  if(!key||seen.has(key)){el('status').textContent='第 '+(i+1)+' 行的分類代碼無效或重複。';return;}
+  seen.add(key);rows.push([parts[0],key,parts[2]]);
+ }
+ if(!rows.length){el('status').textContent='請至少設定一個商品分類。';return;}
+ const lines=[
+ '<!-- BEC COLLECTION | '+esc(brand)+' -->',
+ '<link rel="stylesheet" href="https://byelisseliss.github.io/bec-collection-assets/bec-collection.css?v=1.1">',
+ '<nav data-bec-collection aria-label="'+esc(brand)+' 商品分類導覽">',
+ '  <div class="bec-col-brand">',
+ '    <small>DISCOVER / '+esc(brand.toUpperCase())+'</small>',
+ '    <strong>Explore Categories</strong>',
+ '  </div>',
+ '  <div class="bec-col-links">',
+ ...rows.map(([text,key,heading])=>'    <a href="#bec-'+id+'-'+key+'" data-heading="'+esc(heading)+'">'+esc(text)+'</a>'),
+ '  </div>',
+ '</nav>',
+ '<script defer src="https://byelisseliss.github.io/bec-collection-assets/bec-collection.js?v=1.2"><\/script>'
+ ];
+ el('output').value=lines.join('\n');
+ el('status').textContent='已產生 '+rows.length+' 個分類，完整代碼可直接複製貼入 1shop。';
+}
+el('generate').addEventListener('click',build);
+el('copy').addEventListener('click',async()=>{
+ if(!el('output').value)build();
+ try{await navigator.clipboard.writeText(el('output').value);el('status').textContent='已複製代碼。';}
+ catch(e){el('output').select();el('status').textContent='瀏覽器無法自動複製，已選取全部代碼，可按 Command + C。';}
+});
+el('rhode').addEventListener('click',()=>{
+ el('name').value='rhode';el('slug').value='rhode';
+ el('categories').value='全部商品 | all | 全部商品 ALL\n護膚保養 | skincare | 護膚保養 SKINCARE\n唇部 | lips | 唇部 LIPS\n眼部 | eyes | 眼部 EYES\n臉頰 | cheeks | 臉頰 CHEEKS\n美妝工具 | tools | 美妝工具 TOOLS\n服飾 | clothing | 服飾 CLOTHING';build();
+});
+el('example').addEventListener('click',()=>{
+ el('name').value='NEW BRAND';el('slug').value='new-brand';
+ el('categories').value='全部商品 | all | 全部商品 ALL\n服飾 | clothing | 服飾 CLOTHING\n配件 | accessories | 配件 ACCESSORIES';build();
+});
+build();
+})();
+</script>
+</body>
+</html>
