@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>BEC Collection Builder v2.2</title>
+<title>BEC Collection Builder v2.3</title>
 <style>
 :root{font-family:Helvetica,Arial,"PingFang TC",sans-serif;background:#f5f6f6;color:#253034}
 *{box-sizing:border-box}body{margin:0}main{max-width:1060px;margin:auto;padding:44px 20px 100px}
@@ -21,21 +21,27 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px soli
 .option input{accent-color:#577468}
 #status{font-size:13px;min-height:20px;color:#496e59}
 @media(max-width:700px){main{padding:27px 14px}.panel{padding:17px}.grid{grid-template-columns:1fr}.options{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.custom-editor{margin-top:24px;padding-top:20px;border-top:1px solid #e6e9e8}.custom-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.custom-top h3{font-size:16px;font-weight:500;margin:0}.custom-row{background:#f7f9f8;border:1px solid #e0e7e4;padding:15px;border-radius:13px;margin:11px 0}.custom-grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:11px}.custom-row label{font-size:11px;color:#5d6965}.custom-row input,.custom-row select{min-width:0}.custom-row .row-actions{display:flex;justify-content:flex-end;align-items:center;margin-top:10px}.custom-row .remove{background:none;color:#687571;border:0;padding:6px 10px;font-size:12px}.custom-row .remove:hover{color:#b13a3a}.inline-actions{display:flex;gap:8px;flex-wrap:wrap}.muted{font-size:12px;color:#77817e}.error{color:#a0443f!important}.summary-bar{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;color:#66746e;font-size:12px;margin:9px 0}.code-tip{font-size:12px;color:#79817d}.status-good{color:#426854}.status-warn{color:#a0443f}.advanced{border-top:1px solid #eef0ef;padding-top:13px;margin-top:18px}details.advanced summary{cursor:pointer;font-size:12px;color:#727f78}@media(max-width:800px){.custom-grid{grid-template-columns:1fr 1fr}}@media(max-width:480px){.custom-grid{grid-template-columns:1fr}.custom-row{padding:12px}}.series-editor{border-top:1px solid #e5e9e6;margin-top:26px;padding-top:24px}.series-intro{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}.series-card{border:1px solid #dce3df;border-radius:14px;background:#fafbfa;padding:17px;margin-top:14px}.series-fields{display:grid;grid-template-columns:2fr 1fr 1fr;gap:11px}.series-options{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-top:14px}.series-options label{border:1px solid #e3e8e5;border-radius:8px;padding:10px 8px;font-size:12px;font-weight:400;display:flex;gap:7px;align-items:center;margin:0}.series-options input{accent-color:#536e60}.series-card .row-actions{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:14px}.series-card .row-actions button{font-size:12px;padding:9px 14px}.series-info{font-size:12px;color:#75817a}.series-actions{display:flex;flex-wrap:wrap;gap:7px}.series-card input,.series-card select{width:100%;min-width:0}@media(max-width:700px){.series-fields{grid-template-columns:1fr}.series-options{grid-template-columns:1fr 1fr}}</style></head><body><main>
+.custom-editor{margin-top:24px;padding-top:20px;border-top:1px solid #e6e9e8}.custom-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.custom-top h3{font-size:16px;font-weight:500;margin:0}.custom-row{background:#f7f9f8;border:1px solid #e0e7e4;padding:15px;border-radius:13px;margin:11px 0}.custom-grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:11px}.custom-row label{font-size:11px;color:#5d6965}.custom-row input,.custom-row select{min-width:0}.custom-row .row-actions{display:flex;justify-content:flex-end;align-items:center;margin-top:10px}.custom-row .remove{background:none;color:#687571;border:0;padding:6px 10px;font-size:12px}.custom-row .remove:hover{color:#b13a3a}.inline-actions{display:flex;gap:8px;flex-wrap:wrap}.muted{font-size:12px;color:#77817e}.error{color:#a0443f!important}.summary-bar{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;color:#66746e;font-size:12px;margin:9px 0}.code-tip{font-size:12px;color:#79817d}.status-good{color:#426854}.status-warn{color:#a0443f}.advanced{border-top:1px solid #eef0ef;padding-top:13px;margin-top:18px}details.advanced summary{cursor:pointer;font-size:12px;color:#727f78}@media(max-width:800px){.custom-grid{grid-template-columns:1fr 1fr}}@media(max-width:480px){.custom-grid{grid-template-columns:1fr}.custom-row{padding:12px}}.series-editor{border-top:1px solid #e5e9e6;margin-top:26px;padding-top:24px}.series-intro{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}.series-card{border:1px solid #dce3df;border-radius:14px;background:#fafbfa;padding:17px;margin-top:14px}.series-fields{display:grid;grid-template-columns:2fr 1fr 1fr;gap:11px}.series-options{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-top:14px}.series-options label{border:1px solid #e3e8e5;border-radius:8px;padding:10px 8px;font-size:12px;font-weight:400;display:flex;gap:7px;align-items:center;margin:0}.series-options input{accent-color:#536e60}.series-card .row-actions{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:14px}.series-card .row-actions button{font-size:12px;padding:9px 14px}.series-info{font-size:12px;color:#75817a}.series-actions{display:flex;flex-wrap:wrap;gap:7px}.series-card input,.series-card select{width:100%;min-width:0}@media(max-width:700px){.series-fields{grid-template-columns:1fr}.series-options{grid-template-columns:1fr 1fr}}.brand-library{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.brand-cluster{padding:17px;border:1px solid #e1e7e4;border-radius:13px;background:#fbfcfb}.brand-cluster h3{font-size:13px;font-weight:600;margin:0 0 13px;color:#34423d}.brand-checks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.brand-choice{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:400;margin:0;padding:9px;border:1px solid #e6eae7;border-radius:8px;background:#fff;cursor:pointer}.brand-choice input{accent-color:#557266}.brand-choice:has(input:checked){background:#eaf0ec;border-color:#c8d8cf}.brand-cluster.is-filtered{display:none}.brand-choice.is-filtered{display:none}.brand-custom-grid{display:grid;grid-template-columns:1fr 1fr 1.4fr;gap:10px}.brand-custom-grid input{width:100%;min-width:0}@media(max-width:800px){.brand-library{grid-template-columns:1fr}.brand-custom-grid{grid-template-columns:1fr 1fr}}@media(max-width:480px){.brand-checks,.brand-custom-grid{grid-template-columns:1fr}}</style></head><body><main>
 <header><div class="eyebrow">BY ELISS COLLECTION / MANAGEMENT</div><h1>COLLECTION BUILDER</h1><p>建立品牌或藝人專頁，一鍵產生 1shop 程式區塊。所有頁面仍使用 BEC 共用程式，不須修改全站 CSS／JS。</p></header>
 <div class="actions"><a href="manual.html" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;text-decoration:none;color:#283335;font-size:13px;border:1px solid #cbd4d4;padding:11px 17px;border-radius:100px">COLLECTION PLAYBOOK ／ 操作指南 ↗</a></div>
 <section class="panel"><label>頁面類型</label><div class="switch"><button type="button" id="modeBrand" class="selected" aria-pressed="true">品牌 BRAND</button><button type="button" id="modeArtist" class="light" aria-pressed="false">藝人 ARTIST</button></div>
 <div class="grid" style="margin-top:19px"><div><label for="name">品牌／藝人名稱</label><input type="text" id="name" value="rhode"></div><div><label for="slug">英文識別碼（小寫、連字號）</label><input type="text" id="slug" value="rhode"></div></div></section>
-<section class="panel" id="brandFields"><h2>品牌分類</h2><label for="categories">每行一個分類</label>
-<textarea id="categories" spellcheck="false">全部商品 | all | 全部商品 ALL
-護膚保養 | skincare | 護膚保養 SKINCARE
-唇部 | lips | 唇部 LIPS
-眼部 | eyes | 眼部 EYES
-臉頰 | cheeks | 臉頰 CHEEKS
-美妝工具 | tools | 美妝工具 TOOLS
-服飾 | clothing | 服飾 CLOTHING</textarea>
-<p class="tip">每行：按鈕名稱 | 英文代碼 | 對應的 1shop 原生標題</p>
-<div class="actions"><button type="button" class="light" id="rhode">載入 rhode 七分類</button><button type="button" class="light" id="brandSample">載入一般品牌範例</button></div></section>
+<section class="panel" id="brandFields">
+<h2>品牌商品分類</h2><p class="tip">不需要打字編排分類。先選品牌類型，再勾選實際販售的品項；不同產業可混合選取。</p>
+<div class="grid"><div><label for="brandIndustry">品牌類型／快速範本</label><select id="brandIndustry">
+<option value="beauty">美妝保養 BEAUTY</option><option value="apparel">服飾與鞋履 FASHION</option>
+<option value="drinkware">水瓶／杯具 DRINKWARE</option><option value="home">家居生活 HOME</option>
+<option value="lifestyle">生活選物 LIFESTYLE</option><option value="tech">3C 與配件 TECH</option>
+<option value="accessories">包袋／飾品 ACCESSORIES</option><option value="wellness">運動／戶外 ACTIVE</option>
+<option value="kids">親子／兒童 KIDS</option><option value="food">食品／飲品 FOOD</option>
+<option value="mixed">全品類自訂 MIXED</option></select></div>
+<div><label for="brandFilter">搜尋商品類型</label><input type="text" id="brandFilter" placeholder="例如：水瓶、外套、手機殼、保濕"></div></div>
+<div class="actions"><button type="button" class="light" id="rhode">套用 rhode 七分類</button><button type="button" class="light" id="brandSample">載入生活品牌範例</button><button type="button" class="light" id="brandClear">清除所有勾選</button></div>
+<div class="summary-bar"><span id="brandCount">全部商品 + 選擇的分類</span><span>所有品牌都可跨產業選取</span></div>
+<div id="brandCategories" class="brand-library"></div>
+<div class="custom-editor"><div class="custom-top"><div><h3>找不到商品類型？</h3><p class="muted">直接新增一個自訂分類，不需要輸入英文分隔符號。</p></div><button type="button" class="light" id="brandAddCustom">＋ 新增分類</button></div><div id="brandCustomRows"></div></div>
+<details class="advanced"><summary>從舊版品牌分類文字匯入（進階）</summary><p class="tip">僅限舊版三欄文字：顯示名稱 | 英文代碼 | 原生標題。匯入後可在可視化清單中管理。</p><textarea id="categories" spellcheck="false" style="min-height:92px" placeholder="護膚保養 | skincare | 護膚保養 SKINCARE"></textarea><div class="actions"><button type="button" class="light" id="brandImport">匯入舊版分類</button></div></details>
+</section>
 <section class="panel hide" id="artistFields"><h2>藝人分類配置</h2><p class="tip">先選擇主分類，再勾選子分類。產生後，顧客在藝人頁可先切換主分類，再選擇子分類。未選擇的分類不會出現。</p>
 <div id="artistGroups"></div>
 <div class="actions"><button type="button" id="presetAll" class="light">常用完整分類</button><button type="button" id="presetBasic" class="light">精簡藝人分類</button><button type="button" id="presetClear" class="light">清除選擇</button></div>
@@ -68,6 +74,120 @@ const library=[
  {name:'巡演／活動',key:'tour',options:[['巡演商品','tour-merch','巡演商品 TOUR MERCH'],['活動限定','event-exclusive','活動限定 EVENT EXCLUSIVE'],['應援用品','fan-items','應援用品 FAN ITEMS']]}
 ];
 let mode='brand',previousOutput='',autoSlug=true;
+
+/* Common cross-industry brand taxonomy. Each key is unique globally. */
+const brandTaxonomy=[
+ {name:'美妝／保養',items:[['skincare','護膚保養','護膚保養 SKINCARE'],['cleansers','清潔卸妝','清潔卸妝 CLEANSERS'],['serums','精華液','精華液 SERUMS'],['moisturizers','保濕乳霜','保濕乳霜 MOISTURIZERS'],['sun-care','防曬','防曬 SUN CARE'],['lips','唇部','唇部 LIPS'],['eyes','眼部','眼部 EYES'],['cheeks','臉頰','臉頰 CHEEKS'],['makeup','彩妝','彩妝 MAKEUP'],['beauty-tools','美妝工具','美妝工具 BEAUTY TOOLS'],['fragrance','香氛','香氛 FRAGRANCE'],['body-care','身體保養','身體保養 BODY CARE'],['hair-care','頭髮護理','頭髮護理 HAIR CARE'],['beauty-sets','美妝組合','美妝組合 BEAUTY SETS']]},
+ {name:'服飾／鞋履',items:[['clothing','服飾','服飾 CLOTHING'],['tops','上衣','上衣 TOPS'],['t-shirts','T-shirt','T-SHIRTS'],['shirts','襯衫','襯衫 SHIRTS'],['knitwear','針織／毛衣','針織／毛衣 KNITWEAR'],['hoodies','帽T／大學T','帽T／大學T HOODIES'],['outerwear','外套','外套 OUTERWEAR'],['dresses','洋裝','洋裝 DRESSES'],['bottoms','褲裝／裙裝','褲裝／裙裝 BOTTOMS'],['activewear','運動服飾','運動服飾 ACTIVEWEAR'],['swimwear','泳裝','泳裝 SWIMWEAR'],['shoes','鞋履','鞋履 SHOES'],['socks','襪子','襪子 SOCKS'],['headwear','帽子','帽子 HEADWEAR']]},
+ {name:'水瓶／杯具',items:[['drinkware','水瓶／杯具','水瓶／杯具 DRINKWARE'],['water-bottles','水瓶','水瓶 WATER BOTTLES'],['tumblers','隨行杯','隨行杯 TUMBLERS'],['travel-mugs','保溫杯','保溫杯 TRAVEL MUGS'],['cups','杯子','杯子 CUPS'],['straws','吸管／杯蓋','吸管／杯蓋 STRAWS & LIDS'],['bottle-accessories','水瓶配件','水瓶配件 BOTTLE ACCESSORIES'],['coolers','保冷箱／袋','保冷箱／袋 COOLERS']]},
+ {name:'家居生活',items:[['home','居家用品','居家用品 HOME'],['decor','家飾／擺飾','家飾／擺飾 DECOR'],['storage','收納用品','收納用品 STORAGE'],['kitchen','廚房用品','廚房用品 KITCHEN'],['tableware','餐具','餐具 TABLEWARE'],['bedding','寢具','寢具 BEDDING'],['blankets','毯子','毯子 BLANKETS'],['towels','毛巾','毛巾 TOWELS'],['lighting','燈具','燈具 LIGHTING'],['candles','蠟燭／擴香','蠟燭／擴香 CANDLES'],['furniture','家具','家具 FURNITURE'],['bath','衛浴用品','衛浴用品 BATH']]},
+ {name:'包袋／飾品',items:[['bags','包袋','包袋 BAGS'],['wallets','錢包／卡夾','錢包／卡夾 WALLETS'],['jewelry','飾品','飾品 JEWELRY'],['necklaces','項鍊','項鍊 NECKLACES'],['earrings','耳環','耳環 EARRINGS'],['bracelets','手鍊','手鍊 BRACELETS'],['keychains','鑰匙圈','鑰匙圈 KEYCHAINS'],['hair-accessories','髮飾','髮飾 HAIR ACCESSORIES'],['sunglasses','太陽眼鏡','太陽眼鏡 SUNGLASSES'],['accessories','其他配件','其他配件 ACCESSORIES']]},
+ {name:'3C／生活科技',items:[['tech','3C 用品','3C 用品 TECH'],['phone-cases','手機殼','手機殼 PHONE CASES'],['phone-accessories','手機配件','手機配件 PHONE ACCESSORIES'],['chargers','充電配件','充電配件 CHARGERS'],['audio','音訊用品','音訊用品 AUDIO'],['computer-accessories','電腦配件','電腦配件 COMPUTER ACCESSORIES'],['gadgets','科技小物','科技小物 GADGETS']]},
+ {name:'生活選物／運動',items:[['lifestyle','生活小物','生活小物 LIFESTYLE'],['stationery','文具','文具 STATIONERY'],['travel','旅行用品','旅行用品 TRAVEL'],['outdoor','戶外用品','戶外用品 OUTDOOR'],['fitness','健身用品','健身用品 FITNESS'],['sports','運動配件','運動配件 SPORTS'],['pet','寵物用品','寵物用品 PET'],['gifts','禮品／組合','禮品／組合 GIFTS']]},
+ {name:'親子／食品',items:[['baby','嬰幼兒用品','嬰幼兒用品 BABY'],['kids-clothing','童裝','童裝 KIDS CLOTHING'],['toys','玩具','玩具 TOYS'],['food','食品','食品 FOOD'],['snacks','零食','零食 SNACKS'],['coffee-tea','咖啡／茶','咖啡／茶 COFFEE & TEA'],['food-gifts','食品禮盒','食品禮盒 FOOD GIFTS']]}
+];
+const brandPresets={
+ beauty:['skincare','lips','eyes','cheeks','makeup','beauty-tools','body-care','fragrance'],
+ apparel:['clothing','tops','t-shirts','hoodies','outerwear','bottoms','shoes','headwear','bags'],
+ drinkware:['drinkware','water-bottles','tumblers','travel-mugs','cups','bottle-accessories','straws'],
+ home:['home','decor','storage','kitchen','tableware','bedding','blankets','candles'],
+ lifestyle:['lifestyle','drinkware','bags','stationery','travel','decor','gifts'],
+ tech:['tech','phone-cases','phone-accessories','chargers','audio','computer-accessories','gadgets'],
+ accessories:['bags','wallets','jewelry','keychains','hair-accessories','sunglasses'],
+ wellness:['activewear','fitness','sports','water-bottles','outdoor','travel'],
+ kids:['baby','kids-clothing','toys','drinkware','bags'],
+ food:['food','snacks','coffee-tea','food-gifts','drinkware'],
+ mixed:[]
+};
+function brandSelected(){return [...document.querySelectorAll('#brandCategories input:checked')].map(n=>n.value)}
+function renderBrandLibrary(){
+ const host=$('brandCategories');host.replaceChildren();
+ for(const g of brandTaxonomy){
+  const cluster=document.createElement('section');cluster.className='brand-cluster';
+  const title=document.createElement('h3');title.textContent=g.name;cluster.append(title);
+  const options=document.createElement('div');options.className='brand-checks';
+  for(const [key,name,heading] of g.items){
+   const label=document.createElement('label');label.className='brand-choice';
+   const input=document.createElement('input');input.type='checkbox';input.value=key;
+   Object.assign(input.dataset,{title:name,heading});
+   input.addEventListener('change',schedule);
+   const span=document.createElement('span');span.textContent=name;label.append(input,span);options.append(label);
+  }
+  cluster.append(options);host.append(cluster);
+ }
+}
+function brandApplyPreset(value){
+ const chosen=new Set(brandPresets[value]||[]);
+ document.querySelectorAll('#brandCategories input').forEach(n=>n.checked=chosen.has(n.value));
+ build();
+}
+function brandCustomRow(data={}){
+ const box=document.createElement('div');box.className='custom-row';
+ const grid=document.createElement('div');grid.className='brand-custom-grid';
+ const title=newInput(data.title||'','例如：水壺收納包');
+ const code=newInput(data.key||'','例如：bottle-bags');
+ const heading=newInput(data.heading||'','自動產生');
+ title.dataset.field='title';code.dataset.field='key';heading.dataset.field='heading';
+ let autoCode=!data.key,autoHeading=!data.heading;
+ const makeHeading=()=>{if(autoHeading)heading.value=(title.value.trim()+' '+code.value.trim().replace(/-/g,' ').toUpperCase()).trim()};
+ title.addEventListener('input',()=>{if(autoCode)code.value=slug(title.value);makeHeading();schedule()});
+ code.addEventListener('input',()=>{autoCode=false;code.value=slug(code.value);makeHeading();schedule()});
+ heading.addEventListener('input',()=>{autoHeading=false;schedule()});
+ const label=(name,el)=>{const l=document.createElement('label');l.textContent=name;l.append(el);return l};
+ grid.append(label('分類名稱',title),label('英文代碼',code),label('原生標題',heading));
+ makeHeading();
+ const foot=document.createElement('div');foot.className='row-actions';
+ const del=document.createElement('button');del.type='button';del.className='remove';del.textContent='移除此分類 ×';
+ del.onclick=()=>{box.remove();schedule()};
+ foot.append(del);box.append(grid,foot);$('brandCustomRows').append(box);
+ schedule();return title;
+}
+function brandRows(){
+ const rows=[{title:'全部商品',key:'all',heading:'全部商品 ALL',group:'全部商品'}];
+ for(const el of document.querySelectorAll('#brandCategories input:checked')){
+  rows.push({title:el.dataset.title,key:el.value,heading:el.dataset.heading,group:'全部商品'});
+ }
+ document.querySelectorAll('#brandCustomRows .custom-row').forEach((el,i)=>{
+  const field=k=>el.querySelector('[data-field="'+k+'"]')?.value.trim()||'';
+  const title=field('title'),key=slug(field('key')),heading=field('heading');
+  if(!title&&!key&&!heading)return;
+  if(!title||!key)throw Error('品牌自訂分類 '+(i+1)+'：請填寫分類名稱與英文代碼');
+  rows.push({title,key,heading:heading||title+' '+key.toUpperCase(),group:'全部商品'});
+ });
+ return rows;
+}
+function brandFilter(){
+ const term=$('brandFilter').value.trim().toLowerCase();
+ document.querySelectorAll('.brand-cluster').forEach(cluster=>{
+  let visible=0;
+  cluster.querySelectorAll('.brand-choice').forEach(item=>{
+   const show=!term||item.textContent.toLowerCase().includes(term)||item.querySelector('input').value.includes(term);
+   item.classList.toggle('is-filtered',!show);if(show)visible++;
+  });
+  cluster.classList.toggle('is-filtered',!visible);
+ });
+}
+function brandImport(){
+ const raw=$('categories').value.split(/\r?\n/).map(x=>x.trim()).filter(Boolean);
+ const data=[];
+ for(const [i,line] of raw.entries()){
+  const p=line.split(/[|｜]/).map(x=>x.trim());
+  if(p.length!==3||!p.every(Boolean)){announce('⚠ 第 '+(i+1)+' 行不符合三欄格式',true);return;}
+  data.push({title:p[0],key:slug(p[1]),heading:p[2]});
+ }
+ const indexed=new Map([...document.querySelectorAll('#brandCategories input')].map(x=>[x.value,x]));
+ let added=0;
+ for(const d of data){
+  if(d.key==='all')continue;
+  const option=indexed.get(d.key);
+  if(option&&option.dataset.title===d.title&&option.dataset.heading===d.heading){option.checked=true;}
+  else brandCustomRow(d);
+  added++;
+ }
+ $('categories').value='';build();
+ announce('✓ 已匯入 '+added+' 個品牌分類');
+}
+
 let timer=0;
 function announce(s,error=false){$('status').textContent=s;$('status').className=error?'status-warn':'status-good'}
 function schedule(){clearTimeout(timer);timer=setTimeout(build,140)}
@@ -205,11 +325,7 @@ function setMode(next){
 function entries(){
  let rows=[];
  if(mode==='brand'){
-  for(const [index,line] of $('categories').value.split(/\r?\n/).map(s=>s.trim()).filter(Boolean).entries()){
-   const parts=line.split('|').map(x=>x.trim());
-   if(parts.length!==3||!parts.every(Boolean))throw Error('品牌分類第 '+(index+1)+' 行格式不完整，請使用：名稱 | 代碼 | 原生標題');
-   rows.push({title:parts[0],key:slug(parts[1]),heading:parts[2],group:'全部商品'});
-  }
+  rows=brandRows();
  }else{
   rows.push({title:'全部商品',key:'all',heading:'全部商品 ALL',group:'全部商品'});
   document.querySelectorAll('#artistGroups input:checked').forEach(i=>rows.push({title:i.dataset.title,key:i.dataset.key,heading:i.dataset.heading,group:i.dataset.group}));
@@ -272,6 +388,7 @@ function build(){
   if(mode==='artist')lines.push('<script defer src="'+rootUrl+'bec-artist.js?v=1.0"><'+'/script>');
   $('output').value=lines.join('\n');
   $('seriesCount').textContent=$('seriesRows').children.length+' 個作品系列';
+  $('brandCount').textContent='全部商品 + '+brandSelected().length+' 個選取分類 + '+$('brandCustomRows').children.length+' 個自訂分類';
   $('summary').textContent=rows.length+' 個分類'+(mode==='artist'?' / '+new Set(rows.map(x=>x.group)).size+' 組主分類':'');
   announce('已準備完整代碼，可以直接複製。');
  }catch(e){
@@ -301,20 +418,24 @@ $('addSeries').onclick=()=>{const box=addSeriesCard();box.querySelector('input')
 $('addCustom').onclick=()=>{const row=customRow();row.name.focus();schedule()};
 $('importExtra').onclick=importOld;
 $('modeBrand').onclick=()=>setMode('brand');$('modeArtist').onclick=()=>setMode('artist');
-$('rhode').onclick=()=>{$('name').value='rhode';$('slug').value='rhode';$('categories').value='全部商品 | all | 全部商品 ALL\n護膚保養 | skincare | 護膚保養 SKINCARE\n唇部 | lips | 唇部 LIPS\n眼部 | eyes | 眼部 EYES\n臉頰 | cheeks | 臉頰 CHEEKS\n美妝工具 | tools | 美妝工具 TOOLS\n服飾 | clothing | 服飾 CLOTHING';build()};
-$('brandSample').onclick=()=>{$('name').value='NEW BRAND';$('slug').value='new-brand';$('categories').value='全部商品 | all | 全部商品 ALL\n服飾 | clothing | 服飾 CLOTHING\n配件 | accessories | 配件 ACCESSORIES';build()};
+$('rhode').onclick=()=>{$('name').value='rhode';$('slug').value='rhode';$('brandIndustry').value='mixed';document.querySelectorAll('#brandCategories input').forEach(x=>x.checked=['skincare','lips','eyes','cheeks','beauty-tools','clothing'].includes(x.value));build()};
+$('brandSample').onclick=()=>{$('name').value='NEW BRAND';$('slug').value='new-brand';$('brandIndustry').value='lifestyle';brandApplyPreset('lifestyle')};
 $('presetAll').onclick=()=>{document.querySelectorAll('#artistGroups input').forEach(i=>i.checked=true);build()};
 $('presetBasic').onclick=()=>{document.querySelectorAll('#artistGroups input').forEach(i=>i.checked=['vinyl','cd','cassette','tops','keychains'].includes(i.dataset.key));build()};
 $('presetClear').onclick=()=>{document.querySelectorAll('#artistGroups input').forEach(i=>i.checked=false);build()};
 $('name').addEventListener('input',()=>{if(autoSlug){$('slug').value=slug($('name').value)}schedule()});
 $('slug').addEventListener('input',()=>{autoSlug=false;schedule()});
-$('categories').addEventListener('input',schedule);
+$('brandIndustry').addEventListener('change',()=>brandApplyPreset($('brandIndustry').value));
+$('brandFilter').addEventListener('input',brandFilter);
+$('brandClear').onclick=()=>{document.querySelectorAll('#brandCategories input').forEach(x=>x.checked=false);build()};
+$('brandAddCustom').onclick=()=>brandCustomRow().focus();
+$('brandImport').onclick=brandImport;
 $('generate').onclick=build;
 $('copy').onclick=async()=>{
  build();if(!$('output').value)return;
  try{await navigator.clipboard.writeText($('output').value);announce('✓ 已複製完整代碼，可以貼入 1shop。')}
  catch(e){$('output').focus();$('output').select();announce('請按 Command + C 複製已選取的完整代碼。')}
 };
-renderArtist();build();
+renderBrandLibrary();brandApplyPreset('beauty');renderArtist();build();
 })();
 </script></body></html>
