@@ -77,7 +77,7 @@ let mode='brand',previousOutput='',autoSlug=true;
 
 /* Common cross-industry brand taxonomy. Each key is unique globally. */
 const brandTaxonomy=[
- {name:'美妝／保養',items:[['skincare','護膚保養','護膚保養 SKINCARE'],['cleansers','清潔卸妝','清潔卸妝 CLEANSERS'],['serums','精華液','精華液 SERUMS'],['moisturizers','保濕乳霜','保濕乳霜 MOISTURIZERS'],['sun-care','防曬','防曬 SUN CARE'],['lips','唇部','唇部 LIPS'],['eyes','眼部','眼部 EYES'],['cheeks','臉頰','臉頰 CHEEKS'],['makeup','彩妝','彩妝 MAKEUP'],['beauty-tools','美妝工具','美妝工具 BEAUTY TOOLS'],['fragrance','香氛','香氛 FRAGRANCE'],['body-care','身體保養','身體保養 BODY CARE'],['hair-care','頭髮護理','頭髮護理 HAIR CARE'],['beauty-sets','美妝組合','美妝組合 BEAUTY SETS']]},
+ {name:'美妝／保養',items:[['skincare','護膚保養','護膚保養 SKINCARE'],['cleansers','清潔卸妝','清潔卸妝 CLEANSERS'],['serums','精華液','精華液 SERUMS'],['moisturizers','保濕乳霜','保濕乳霜 MOISTURIZERS'],['sun-care','防曬','防曬 SUN CARE'],['lips','唇部','唇部 LIPS'],['eyes','眼部','眼部 EYES'],['cheeks','臉頰','臉頰 CHEEKS'],['makeup','彩妝','彩妝 MAKEUP'],['tools','美妝工具','美妝工具 TOOLS'],['fragrance','香氛','香氛 FRAGRANCE'],['body-care','身體保養','身體保養 BODY CARE'],['hair-care','頭髮護理','頭髮護理 HAIR CARE'],['beauty-sets','美妝組合','美妝組合 BEAUTY SETS']]},
  {name:'服飾／鞋履',items:[['clothing','服飾','服飾 CLOTHING'],['tops','上衣','上衣 TOPS'],['t-shirts','T-shirt','T-SHIRTS'],['shirts','襯衫','襯衫 SHIRTS'],['knitwear','針織／毛衣','針織／毛衣 KNITWEAR'],['hoodies','帽T／大學T','帽T／大學T HOODIES'],['outerwear','外套','外套 OUTERWEAR'],['dresses','洋裝','洋裝 DRESSES'],['bottoms','褲裝／裙裝','褲裝／裙裝 BOTTOMS'],['activewear','運動服飾','運動服飾 ACTIVEWEAR'],['swimwear','泳裝','泳裝 SWIMWEAR'],['shoes','鞋履','鞋履 SHOES'],['socks','襪子','襪子 SOCKS'],['headwear','帽子','帽子 HEADWEAR']]},
  {name:'水瓶／杯具',items:[['drinkware','水瓶／杯具','水瓶／杯具 DRINKWARE'],['water-bottles','水瓶','水瓶 WATER BOTTLES'],['tumblers','隨行杯','隨行杯 TUMBLERS'],['travel-mugs','保溫杯','保溫杯 TRAVEL MUGS'],['cups','杯子','杯子 CUPS'],['straws','吸管／杯蓋','吸管／杯蓋 STRAWS & LIDS'],['bottle-accessories','水瓶配件','水瓶配件 BOTTLE ACCESSORIES'],['coolers','保冷箱／袋','保冷箱／袋 COOLERS']]},
  {name:'家居生活',items:[['home','居家用品','居家用品 HOME'],['decor','家飾／擺飾','家飾／擺飾 DECOR'],['storage','收納用品','收納用品 STORAGE'],['kitchen','廚房用品','廚房用品 KITCHEN'],['tableware','餐具','餐具 TABLEWARE'],['bedding','寢具','寢具 BEDDING'],['blankets','毯子','毯子 BLANKETS'],['towels','毛巾','毛巾 TOWELS'],['lighting','燈具','燈具 LIGHTING'],['candles','蠟燭／擴香','蠟燭／擴香 CANDLES'],['furniture','家具','家具 FURNITURE'],['bath','衛浴用品','衛浴用品 BATH']]},
@@ -87,7 +87,7 @@ const brandTaxonomy=[
  {name:'親子／食品',items:[['baby','嬰幼兒用品','嬰幼兒用品 BABY'],['kids-clothing','童裝','童裝 KIDS CLOTHING'],['toys','玩具','玩具 TOYS'],['food','食品','食品 FOOD'],['snacks','零食','零食 SNACKS'],['coffee-tea','咖啡／茶','咖啡／茶 COFFEE & TEA'],['food-gifts','食品禮盒','食品禮盒 FOOD GIFTS']]}
 ];
 const brandPresets={
- beauty:['skincare','lips','eyes','cheeks','makeup','beauty-tools','body-care','fragrance'],
+ beauty:['skincare','lips','eyes','cheeks','makeup','tools','body-care','fragrance'],
  apparel:['clothing','tops','t-shirts','hoodies','outerwear','bottoms','shoes','headwear','bags'],
  drinkware:['drinkware','water-bottles','tumblers','travel-mugs','cups','bottle-accessories','straws'],
  home:['home','decor','storage','kitchen','tableware','bedding','blankets','candles'],
@@ -418,7 +418,7 @@ $('addSeries').onclick=()=>{const box=addSeriesCard();box.querySelector('input')
 $('addCustom').onclick=()=>{const row=customRow();row.name.focus();schedule()};
 $('importExtra').onclick=importOld;
 $('modeBrand').onclick=()=>setMode('brand');$('modeArtist').onclick=()=>setMode('artist');
-$('rhode').onclick=()=>{$('name').value='rhode';$('slug').value='rhode';$('brandIndustry').value='mixed';document.querySelectorAll('#brandCategories input').forEach(x=>x.checked=['skincare','lips','eyes','cheeks','beauty-tools','clothing'].includes(x.value));build()};
+$('rhode').onclick=()=>{$('brandCustomRows').replaceChildren();$('name').value='rhode';$('slug').value='rhode';$('brandIndustry').value='mixed';document.querySelectorAll('#brandCategories input').forEach(x=>x.checked=['skincare','lips','eyes','cheeks','tools','clothing'].includes(x.value));build()};
 $('brandSample').onclick=()=>{$('name').value='NEW BRAND';$('slug').value='new-brand';$('brandIndustry').value='lifestyle';brandApplyPreset('lifestyle')};
 $('presetAll').onclick=()=>{document.querySelectorAll('#artistGroups input').forEach(i=>i.checked=true);build()};
 $('presetBasic').onclick=()=>{document.querySelectorAll('#artistGroups input').forEach(i=>i.checked=['vinyl','cd','cassette','tops','keychains'].includes(i.dataset.key));build()};
