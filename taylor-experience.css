@@ -261,3 +261,9 @@
 #bec-ts-landing[data-motion=off] .bc-card:hover{--hover-lift:0px!important;--hover-scale:1!important}
 @media(max-width:780px){#bec-ts-landing .bc-card{width:clamp(180px,44vw,var(--v-card-width,260px))}}
 @media(max-width:500px){#bec-ts-landing .bc-card{width:min(205px,var(--v-card-width,320px))}}
+
+/* v7 — functional album title typography and clean artwork */
+#bec-ts-landing .bc-card-title{display:none!important}
+#bec-ts-landing .bc-selected strong{font-size:var(--v-title-size,34px)!important;font-weight:var(--v-heading-weight,500)!important}
+#bec-ts-landing .bc-intro h1,#bec-ts-landing .bc-types h2{font-weight:var(--v-heading-weight,500)!important}
+#bec-ts-landing .bc-top,#bec-ts-landing .bc-selected p,#bec-ts-landing .bc-types,#bec-ts-landing .bc-footer{font-weight:var(--v-body-weight,400)!important}
