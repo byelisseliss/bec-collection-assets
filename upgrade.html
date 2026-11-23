@@ -36,6 +36,7 @@ details p{font-size:12px;line-height:1.8;color:#7b8880}
 .file-button input{display:none}
 @media(max-width:850px){.layout{grid-template-columns:1fr}.hero{padding-top:36px}}
 @media(max-width:500px){main{padding:18px 12px 70px}.panel{padding:17px}.project{align-items:flex-start;flex-wrap:wrap}}
+body.bec-embedded main{max-width:100%;padding:0 0 20px}body.bec-embedded .top,body.bec-embedded .hero{display:none}body.bec-embedded .layout{grid-template-columns:minmax(220px,270px) minmax(0,1fr);gap:16px}body.bec-embedded .panel{padding:19px}body.bec-embedded textarea{max-width:100%}@media(max-width:770px){body.bec-embedded .layout{grid-template-columns:1fr}}
 </style></head><body><main>
 <div class="top"><b>BEC.</b><a href="builder.html">COLLECTION BUILDER ↗</a></div>
 <header class="hero"><div class="eyebrow">BY ELISS COLLECTION / RELEASE MANAGEMENT</div>
@@ -70,7 +71,14 @@ details p{font-size:12px;line-height:1.8;color:#7b8880}
 <details><summary>為什麼不能直接從 1shop 網址抓取我的設定？</summary><p>網頁公開顯示的 DOM 可能沒有原始程式碼，也不一定含完整分類。為避免誤刪系列，使用 1shop 後台的原始「程式」區塊匯入才比較可靠。</p></details></section>
 </div></div></main>
 <script>
+if(new URLSearchParams(location.search).has('embed')){
+ document.body.classList.add('bec-embedded');
+}else{
+ // Preserve the old bookmark and project storage; switch to the integrated tab.
+ location.replace('builder.html#upgrade');
+}
 (()=>{
+
 'use strict';
 const $=id=>document.getElementById(id);
 const BASE='https://byelisseliss.github.io/bec-collection-assets/';
@@ -253,5 +261,15 @@ $('importBackup').onchange=async event=>{
  event.target.value='';
 };
 projects=readSaved();renderProjects();refreshManifest();
+if(document.body.classList.contains('bec-embedded')){
+ const sendHeight=()=>{
+  const size=Math.max(document.documentElement.scrollHeight,document.body.scrollHeight);
+  parent.postMessage({kind:'bec-upgrade-height',height:size},location.origin);
+ };
+ if('ResizeObserver' in window)new ResizeObserver(sendHeight).observe(document.querySelector('main'));
+ new MutationObserver(sendHeight).observe(document.querySelector('main'),{childList:true,subtree:true,characterData:true});
+ addEventListener('load',sendHeight,{once:true});setTimeout(sendHeight,100);
+}
+
 })();
 </script></body></html>
