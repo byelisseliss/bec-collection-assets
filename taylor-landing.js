@@ -54,7 +54,7 @@ const chooseArt=(a,element)=>{
   const normalize=s=>String(s||'').toLowerCase().replace(/[^a-z0-9]/g,'');
   const found=(data.results||[]).filter(x=>normalize(x.artistName).includes('taylorswift')&&x.artworkUrl100);
   const exact=found.find(x=>normalize(x.collectionName)===normalize(a.title));
-  const suitable=exact||found.find(x=>normalize(x.collectionName).startsWith(normalize(a.title)))||found[0];
+  const suitable=exact||found.find(x=>normalize(x.collectionName).startsWith(normalize(a.title)));
   if(!suitable)return;
   const url=suitable.artworkUrl100.replace(/100x100(?:bb)?/,'600x600bb');
   imageElement(element,url,a.title);
