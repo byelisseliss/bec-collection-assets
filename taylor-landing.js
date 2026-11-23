@@ -84,37 +84,57 @@ function artwork(){
 }
 function initLanding(){
  const root=document.querySelector('#bec-ts-landing');if(!root)return;
- root.innerHTML='<div class="ts-shell ts-hero"><div class="ts-kicker">BEC / BY ELISS COLLECTION · THE TAYLOR SWIFT EDIT</div>'+
- '<div class="ts-hero-main"><h1>Every era.<br><span class="ts-highlight">All here.</span></h1>'+
- '<div class="ts-hero-aside"><p>從第一張專輯到最新篇章。依作品、依商品，找到你想收藏的每一個 Taylor Swift 瞬間。</p>'+
- '<div class="ts-small-marker"><span>YOUR ERA STARTS HERE</span><span class="ts-tiny-diamond" aria-hidden="true"></span></div></div></div></div>'+
- '<div class="ts-shell ts-pathbar" aria-label="選擇瀏覽方式">'+
- '<button class="ts-path" data-path="album" aria-pressed="true" type="button"><span><span class="ts-path-title">依專輯／系列探索</span><span class="ts-path-sub">BROWSE BY ALBUM · 12 ERAS</span></span><span class="ts-path-icon">↗</span></button>'+
- '<button class="ts-path" data-path="type" aria-pressed="false" type="button"><span><span class="ts-path-title">依商品類型探索</span><span class="ts-path-sub">BROWSE BY CATEGORY · 08 TYPES</span></span><span class="ts-path-icon">↗</span></button></div>'+
- '<div class="ts-shell ts-feature-wrap"><a class="ts-feature" href="'+escapeHtml(albumHref(albums[0]))+'"><div class="ts-feature-image" data-art="showgirl"></div><div class="ts-feature-copy"><span class="ts-kicker">FEATURED ERA / 2025 · 12TH CHAPTER</span><strong>Step into<br>the show.</strong><span>THE LIFE OF A SHOWGIRL &nbsp; ↗</span></div><span class="ts-feature-index">01 / 12</span></a></div>'+
- '<section class="ts-shell ts-section" id="bec-ts-albums"><div class="ts-section-head"><div><div class="ts-kicker">01 / THE DISCOGRAPHY</div><h2>Choose your era.</h2></div><div class="ts-count">12 STORIES / 12 CHAPTERS</div></div>'+
- '<div class="ts-filters"><div class="ts-search"><label for="bec-ts-search">⌕</label><input id="bec-ts-search" type="search" placeholder="搜尋專輯名稱／年份" autocomplete="off"></div><button type="button" class="ts-reset" id="bec-ts-reset">CLEAR SEARCH ×</button></div>'+
- '<div class="ts-grid" id="bec-ts-album-grid">'+albums.map(albumCard).join('')+'</div></section>'+
- '<section class="ts-shell ts-section" id="bec-ts-categories" hidden><div class="ts-section-head"><div><div class="ts-kicker">02 / THE COLLECTION</div><h2>Find your kind of Taylor.</h2></div><div class="ts-count">08 CURATED CATEGORIES</div></div>'+
- '<div class="ts-type-grid">'+types.map(typeCard).join('')+'</div></section>'+
- '<aside class="ts-strip"><div class="ts-shell ts-strip-inner"><div><div class="ts-kicker">BEC / THE COMPLETE SWIFT EDIT</div><strong>One artist. A whole universe.</strong><p>專輯、限量版本、服飾與生活選物，集中探索。</p></div><a href="'+store+'categories/artist">瀏覽 BEC 所有藝人商品 ↗</a></div></aside>'+
- '<footer class="ts-shell ts-bottom"><span>CURATED BY BEC · BY ELISS COLLECTION</span><span>13 IS OUR FAVORITE NUMBER ✳</span></footer>';
- const albumSection=root.querySelector('#bec-ts-albums'),typeSection=root.querySelector('#bec-ts-categories'),search=root.querySelector('#bec-ts-search'),grid=root.querySelector('#bec-ts-album-grid');
- root.querySelectorAll('[data-path]').forEach(button=>button.addEventListener('click',()=>{
-  const byType=button.dataset.path==='type';albumSection.hidden=byType;typeSection.hidden=!byType;
-  root.querySelectorAll('[data-path]').forEach(x=>x.setAttribute('aria-pressed',String(x===button)));
-  (byType?typeSection:albumSection).scrollIntoView({block:'start',behavior:'smooth'});
- }));
- function filter(){
-  const value=search.value.toLocaleLowerCase().trim();
-  const active=albums.filter(x=>(x.title+' '+x.year).toLocaleLowerCase().includes(value));
-  grid.innerHTML=active.length?active.map(x=>albumCard(x,albums.indexOf(x))).join(''):'<div class="ts-empty">沒有符合的專輯；試著搜尋另一個作品或年份。</div>';
-  artwork();
+ const esc=escapeHtml;
+ const albumTile=(a,i)=>'<button type="button" class="ts-era-tile'+(i===0?' is-selected':'')+'" data-index="'+i+'" aria-pressed="'+(i===0)+'"><span class="ts-era-art" data-art="'+a.id+'" style="--color:'+a.tone+'"></span><span class="ts-era-meta"><small>CHAPTER '+String(i+1).padStart(2,'0')+' / '+a.year+'</small><strong>'+esc(a.title)+'</strong><span>EXPLORE ↗</span></span></button>';
+ const route=(label,sub,path)=>'<button type="button" class="ts-route" data-route="'+path+'"><span class="ts-kicker">'+esc(sub)+'</span><strong>'+esc(label)+'</strong><span class="ts-route-arrow">↗</span></button>';
+ root.innerHTML='<div class="ts-immersive-shell">'+
+ '<section class="ts-live-portal"><div class="ts-live-copy"><span class="ts-kicker">BEC PRESENTS / TAYLOR SWIFT COLLECTION</span><h1>Collect the era.<br><span>Keep the feeling.</span></h1>'+
+ '<p>十二個音樂篇章，無數值得珍藏的瞬間。滑動探索、找到喜歡的作品，再輕鬆收藏。</p>'+
+ '<div class="ts-live-story"><div class="ts-live-story-top"><span id="ts-live-index">CHAPTER 01 / 12</span><span id="ts-live-year">2025</span></div>'+
+ '<h2 id="ts-live-title"></h2><p id="ts-live-description"></p></div>'+
+ '<div class="ts-live-actions"><a id="ts-live-shop" class="ts-live-primary" href="#">EXPLORE THIS ERA <span>↗</span></a><button type="button" id="ts-live-objects">BROWSE BY OBJECT ↗</button></div></div>'+
+ '<div class="ts-live-visual"><div class="ts-live-art" id="ts-live-art" data-art="showgirl"><div class="ts-live-art-caption"><span id="ts-live-caption">THE LIFE OF A SHOWGIRL</span><span class="ts-live-art-disc">01 / 12</span></div></div></div></section>'+
+ '<section class="ts-floating-island ts-eras" id="bec-ts-albums"><div class="ts-immersive-sectionhead"><div><span class="ts-kicker">01 / THE COLLECTION</span><h2>Choose your era.</h2><p>左右拖曳封面，像翻找自己的唱片收藏。</p></div>'+
+ '<div class="ts-era-controls"><button aria-label="上一張專輯" id="ts-prev" type="button">←</button><button aria-label="下一張專輯" id="ts-next" type="button">→</button></div></div>'+
+ '<div class="ts-era-rail" id="ts-era-rail" tabindex="0" aria-label="Taylor Swift 十二張專輯">'+albums.map(albumTile).join('')+'</div>'+
+ '<div class="ts-era-bottom"><span>DRAG TO EXPLORE <span aria-hidden="true">↔</span></span><span id="ts-era-progress">01 / 12</span></div></section>'+
+ '<section class="ts-floating-island ts-routes" id="ts-routes"><div class="ts-immersive-sectionhead"><div><span class="ts-kicker">02 / CHOOSE YOUR ROUTE</span><h2>What are you collecting?</h2></div></div>'+
+ '<div class="ts-route-grid">'+route('By album / series','THE ERAS','album')+route('By product type','THE OBJECTS','type')+'</div></section>'+
+ '<section class="ts-floating-island ts-objects" id="bec-ts-categories"><div class="ts-immersive-sectionhead"><div><span class="ts-kicker">03 / THE OBJECTS</span><h2>Collect by object.</h2><p>從黑膠、服飾到生活選物，依照你想收藏的物件探索。</p></div></div>'+
+ '<div class="ts-object-grid">'+types.map((t,i)=>'<a class="ts-object" href="'+esc(typeHref(t))+'"><small>'+String(i+1).padStart(2,'0')+' / OBJECT</small><strong>'+esc(t.zh)+'</strong><span>'+esc(t.en)+'</span><p>'+esc(t.detail)+'</p><b>↗</b></a>').join('')+'</div></section>'+
+ '<footer class="ts-floating-island ts-live-footer"><strong>MADE TO BE COLLECTED.</strong><span>CURATED BY BEC / BY ELISS COLLECTION</span></footer>'+
+ '</div>';
+ const rail=root.querySelector('#ts-era-rail');
+ const story=root.querySelector('#ts-live-description'),heading=root.querySelector('#ts-live-title'),year=root.querySelector('#ts-live-year');
+ const count=root.querySelector('#ts-live-index'),progress=root.querySelector('#ts-era-progress');
+ const shop=root.querySelector('#ts-live-shop'),visual=root.querySelector('#ts-live-art');
+ let active=0,dragging=false,dragDist=0,dragStart=0,dragScroll=0,dragPointer=-1,settleTimer=0;
+ function select(i,scroll=true){
+  active=Math.max(0,Math.min(albums.length-1,i));const a=albums[active];
+  root.style.setProperty('--ts-scene',a.tone);
+  heading.textContent=a.title;story.textContent=a.story;year.textContent=a.year;
+  count.textContent='CHAPTER '+String(active+1).padStart(2,'0')+' / 12';progress.textContent=String(active+1).padStart(2,'0')+' / 12';
+  shop.href=albumHref(a);root.querySelector('#ts-live-caption').textContent=a.title;
+  root.querySelector('.ts-live-art-disc').textContent=String(active+1).padStart(2,'0')+' / 12';
+  visual.querySelector('img')?.remove();visual.dataset.art=a.id;visual.style.background='linear-gradient(135deg,'+a.tone+',#1e2625)';
+  chooseArt(a,visual);
+  rail.querySelectorAll('.ts-era-tile').forEach((tile,j)=>{const selected=j===active;tile.classList.toggle('is-selected',selected);tile.setAttribute('aria-pressed',String(selected))});
+  if(scroll){const el=rail.children[active];rail.scrollTo({left:el.offsetLeft-rail.offsetLeft-(rail.clientWidth-el.offsetWidth)/2,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})}
  }
- search.addEventListener('input',filter);
- root.querySelector('#bec-ts-reset').addEventListener('click',()=>{search.value='';filter();search.focus()});
- artwork();
- if(location.hash==='#shop-by-type')root.querySelector('[data-path="type"]').click();
+ rail.addEventListener('click',e=>{const tile=e.target.closest('.ts-era-tile');if(!tile||dragDist>8)return;select(Number(tile.dataset.index))});
+ root.querySelector('#ts-prev').addEventListener('click',()=>select((active+albums.length-1)%albums.length));
+ root.querySelector('#ts-next').addEventListener('click',()=>select((active+1)%albums.length));
+ root.querySelector('#ts-live-objects').addEventListener('click',()=>root.querySelector('#bec-ts-categories').scrollIntoView({block:'start',behavior:'smooth'}));
+ root.querySelectorAll('[data-route]').forEach(btn=>btn.addEventListener('click',()=>root.querySelector(btn.dataset.route==='type'?'#bec-ts-categories':'#bec-ts-albums').scrollIntoView({block:'start',behavior:'smooth'})));
+ rail.addEventListener('pointerdown',e=>{if(e.pointerType==='touch')return;dragging=true;dragDist=0;dragPointer=e.pointerId;dragStart=e.clientX;dragScroll=rail.scrollLeft;rail.classList.add('is-dragging')});
+ rail.addEventListener('pointermove',e=>{if(!dragging||e.pointerId!==dragPointer)return;dragDist=Math.max(dragDist,Math.abs(e.clientX-dragStart));if(dragDist>8){rail.scrollLeft=dragScroll-(e.clientX-dragStart);e.preventDefault()}});
+ const stop=()=>{if(!dragging)return;dragging=false;rail.classList.remove('is-dragging');if(dragDist>8){const center=rail.scrollLeft+rail.clientWidth/2;let best=0,d=Infinity;[...rail.children].forEach((node,i)=>{const dist=Math.abs(node.offsetLeft-rail.offsetLeft+node.offsetWidth/2-center);if(dist<d){d=dist;best=i}});select(best,false)}};
+ rail.addEventListener('pointerup',stop);rail.addEventListener('pointercancel',stop);window.addEventListener('pointerup',stop);
+ rail.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();select((active+(e.key==='ArrowRight'?1:albums.length-1))%albums.length)}});
+ rail.addEventListener('scroll',()=>{clearTimeout(settleTimer);settleTimer=setTimeout(()=>{if(dragging)return;const center=rail.scrollLeft+rail.clientWidth/2;let best=0,d=Infinity;[...rail.children].forEach((node,i)=>{const dist=Math.abs(node.offsetLeft-rail.offsetLeft+node.offsetWidth/2-center);if(dist<d){d=dist;best=i}});if(best!==active)select(best,false)},140)},{passive:true});
+ root.querySelectorAll('.ts-era-art').forEach(el=>{const a=albums.find(x=>x.id===el.dataset.art);if(a)chooseArt(a,el)});
+ select(0,false);
+ if(location.hash==='#shop-by-type')root.querySelector('#bec-ts-categories').scrollIntoView();
 }
 function initDetail(){
  const root=document.querySelector('#bec-ts-detail');if(!root)return;
