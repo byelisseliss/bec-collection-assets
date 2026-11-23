@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>BEC Collection Builder v2.3</title>
+<title>BEC Collection Builder v2.4</title>
 <style>
 :root{font-family:Helvetica,Arial,"PingFang TC",sans-serif;background:#f5f6f6;color:#253034}
 *{box-sizing:border-box}body{margin:0}main{max-width:1060px;margin:auto;padding:44px 20px 100px}
@@ -66,10 +66,10 @@ const esc=s=>String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g
 const slug=s=>String(s).toLowerCase().trim().replace(/[^a-z0-9-]+/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'');
 const rootUrl='https://byelisseliss.github.io/bec-collection-assets/';
 const library=[
- {name:'音樂',key:'music',options:[['黑膠','vinyl','黑膠 VINYL'],['CD','cd','CD'],['卡帶','cassette','卡帶 CASSETTE'],['數位音樂','digital','數位音樂 DIGITAL'],['簽名版本','signed','簽名版本 SIGNED']]},
+ {name:'音樂',key:'music',options:[['黑膠','vinyl','黑膠 VINYL'],['CD','cd','CD'],['卡帶','cassette','卡帶 CASSETTE'],['數位音樂','digital','數位音樂 DIGITAL'],['簽名版本','signed','簽名版本 SIGNED'],['收納展示','organizer','收納展示 ORGANIZER']]},
  {name:'服飾',key:'apparel',options:[['上衣','tops','上衣 TOPS'],['外套','outerwear','外套 OUTERWEAR'],['帽子','headwear','帽子 HEADWEAR'],['褲裝／裙裝','bottoms','褲裝／裙裝 BOTTOMS'],['其他服飾','other-clothing','其他服飾 OTHER CLOTHING']]},
  {name:'配件',key:'accessories',options:[['包袋','bags','包袋 BAGS'],['手機配件','phone','手機配件 PHONE ACCESSORIES'],['鑰匙圈','keychains','鑰匙圈 KEYCHAINS'],['飾品','jewelry','飾品 JEWELRY'],['髮飾','hair','髮飾 HAIR ACCESSORIES']]},
- {name:'收藏品',key:'collectibles',options:[['海報／印刷品','prints','海報／印刷品 PRINTS'],['卡片／照片','photocards','卡片／照片 PHOTOCARDS'],['公仔／模型','figures','公仔／模型 FIGURES'],['收藏盒','collectible-boxes','收藏盒 COLLECTIBLE BOXES']]},
+ {name:'收藏品',key:'collectibles',options:[['海報／印刷品','prints','海報／印刷品 PRINTS'],['卡片／照片','photocards','卡片／照片 PHOTOCARDS'],['公仔／模型','figures','公仔／模型 FIGURES'],['收藏盒','collectible-boxes','收藏盒 COLLECTIBLE BOXES'],['水晶球','snowglobe','水晶球 SNOWGLOBE']]},
  {name:'居家生活',key:'home',options:[['杯具','drinkware','杯具 DRINKWARE'],['毯子','blankets','毯子 BLANKETS'],['文具','stationery','文具 STATIONERY'],['居家擺設','decor','居家擺設 DECOR']]},
  {name:'巡演／活動',key:'tour',options:[['巡演商品','tour-merch','巡演商品 TOUR MERCH'],['活動限定','event-exclusive','活動限定 EVENT EXCLUSIVE'],['應援用品','fan-items','應援用品 FAN ITEMS']]}
 ];
@@ -80,7 +80,7 @@ const brandTaxonomy=[
  {name:'美妝／保養',items:[['skincare','護膚保養','護膚保養 SKINCARE'],['cleansers','清潔卸妝','清潔卸妝 CLEANSERS'],['serums','精華液','精華液 SERUMS'],['moisturizers','保濕乳霜','保濕乳霜 MOISTURIZERS'],['sun-care','防曬','防曬 SUN CARE'],['lips','唇部','唇部 LIPS'],['eyes','眼部','眼部 EYES'],['cheeks','臉頰','臉頰 CHEEKS'],['makeup','彩妝','彩妝 MAKEUP'],['tools','美妝工具','美妝工具 TOOLS'],['fragrance','香氛','香氛 FRAGRANCE'],['body-care','身體保養','身體保養 BODY CARE'],['hair-care','頭髮護理','頭髮護理 HAIR CARE'],['beauty-sets','美妝組合','美妝組合 BEAUTY SETS']]},
  {name:'服飾／鞋履',items:[['clothing','服飾','服飾 CLOTHING'],['tops','上衣','上衣 TOPS'],['t-shirts','T-shirt','T-SHIRTS'],['shirts','襯衫','襯衫 SHIRTS'],['knitwear','針織／毛衣','針織／毛衣 KNITWEAR'],['hoodies','帽T／大學T','帽T／大學T HOODIES'],['outerwear','外套','外套 OUTERWEAR'],['dresses','洋裝','洋裝 DRESSES'],['bottoms','褲裝／裙裝','褲裝／裙裝 BOTTOMS'],['activewear','運動服飾','運動服飾 ACTIVEWEAR'],['swimwear','泳裝','泳裝 SWIMWEAR'],['shoes','鞋履','鞋履 SHOES'],['socks','襪子','襪子 SOCKS'],['headwear','帽子','帽子 HEADWEAR']]},
  {name:'水瓶／杯具',items:[['drinkware','水瓶／杯具','水瓶／杯具 DRINKWARE'],['water-bottles','水瓶','水瓶 WATER BOTTLES'],['tumblers','隨行杯','隨行杯 TUMBLERS'],['travel-mugs','保溫杯','保溫杯 TRAVEL MUGS'],['cups','杯子','杯子 CUPS'],['straws','吸管／杯蓋','吸管／杯蓋 STRAWS & LIDS'],['bottle-accessories','水瓶配件','水瓶配件 BOTTLE ACCESSORIES'],['coolers','保冷箱／袋','保冷箱／袋 COOLERS']]},
- {name:'家居生活',items:[['home','居家用品','居家用品 HOME'],['decor','家飾／擺飾','家飾／擺飾 DECOR'],['storage','收納用品','收納用品 STORAGE'],['kitchen','廚房用品','廚房用品 KITCHEN'],['tableware','餐具','餐具 TABLEWARE'],['bedding','寢具','寢具 BEDDING'],['blankets','毯子','毯子 BLANKETS'],['towels','毛巾','毛巾 TOWELS'],['lighting','燈具','燈具 LIGHTING'],['candles','蠟燭／擴香','蠟燭／擴香 CANDLES'],['furniture','家具','家具 FURNITURE'],['bath','衛浴用品','衛浴用品 BATH']]},
+ {name:'家居生活',items:[['home','居家用品','居家用品 HOME'],['decor','家飾／擺飾','家飾／擺飾 DECOR'],['snowglobe','水晶球','水晶球 SNOWGLOBE'],['organizer','收納展示','收納展示 ORGANIZER'],['storage','收納用品','收納用品 STORAGE'],['kitchen','廚房用品','廚房用品 KITCHEN'],['tableware','餐具','餐具 TABLEWARE'],['bedding','寢具','寢具 BEDDING'],['blankets','毯子','毯子 BLANKETS'],['towels','毛巾','毛巾 TOWELS'],['lighting','燈具','燈具 LIGHTING'],['candles','蠟燭／擴香','蠟燭／擴香 CANDLES'],['furniture','家具','家具 FURNITURE'],['bath','衛浴用品','衛浴用品 BATH']]},
  {name:'包袋／飾品',items:[['bags','包袋','包袋 BAGS'],['wallets','錢包／卡夾','錢包／卡夾 WALLETS'],['jewelry','飾品','飾品 JEWELRY'],['necklaces','項鍊','項鍊 NECKLACES'],['earrings','耳環','耳環 EARRINGS'],['bracelets','手鍊','手鍊 BRACELETS'],['keychains','鑰匙圈','鑰匙圈 KEYCHAINS'],['hair-accessories','髮飾','髮飾 HAIR ACCESSORIES'],['sunglasses','太陽眼鏡','太陽眼鏡 SUNGLASSES'],['accessories','其他配件','其他配件 ACCESSORIES']]},
  {name:'3C／生活科技',items:[['tech','3C 用品','3C 用品 TECH'],['phone-cases','手機殼','手機殼 PHONE CASES'],['phone-accessories','手機配件','手機配件 PHONE ACCESSORIES'],['chargers','充電配件','充電配件 CHARGERS'],['audio','音訊用品','音訊用品 AUDIO'],['computer-accessories','電腦配件','電腦配件 COMPUTER ACCESSORIES'],['gadgets','科技小物','科技小物 GADGETS']]},
  {name:'生活選物／運動',items:[['lifestyle','生活小物','生活小物 LIFESTYLE'],['stationery','文具','文具 STATIONERY'],['travel','旅行用品','旅行用品 TRAVEL'],['outdoor','戶外用品','戶外用品 OUTDOOR'],['fitness','健身用品','健身用品 FITNESS'],['sports','運動配件','運動配件 SPORTS'],['pet','寵物用品','寵物用品 PET'],['gifts','禮品／組合','禮品／組合 GIFTS']]},
@@ -266,6 +266,59 @@ const seriesProductTypes=[
  ['drinkware','杯具'],['blankets','毯子'],['decor','家飾／擺飾'],
  ['stationery','文具'],['tour-merch','巡演周邊']
 ];
+
+/* One shared taxonomy powers artist options and every series.
+   Custom child categories appear in existing AND newly-added series. */
+function getCustomArtistTypes(){
+ const out=[];
+ document.querySelectorAll('#customRows .custom-row').forEach(row=>{
+  const get=k=>row.querySelector('[data-field="'+k+'"]')?.value.trim()||'';
+  const key=slug(get('key')),title=get('title'),heading=get('heading');
+  if(key&&title)out.push({key,title,heading,group:get('group')});
+ });
+ return out;
+}
+function seriesCatalog(){
+ const catalog=new Map();
+ for(const [key,title] of seriesProductTypes)catalog.set(key,{key,title});
+ for(const group of library){
+  for(const [title,key] of group.options){
+   if(!catalog.has(key))catalog.set(key,{key,title});
+  }
+ }
+ for(const item of getCustomArtistTypes()){
+  // Custom category metadata overrides the matching preset label without
+  // creating a duplicate checkbox or a second product category.
+  catalog.set(item.key,{key:item.key,title:item.title});
+ }
+ return [...catalog.values()];
+}
+function createSeriesOption(key,title,checked){
+ const label=document.createElement('label');
+ const input=document.createElement('input');input.type='checkbox';
+ input.value=key;input.checked=!!checked;input.addEventListener('change',schedule);
+ const caption=document.createElement('span');caption.textContent=title;
+ label.append(input,caption);return label;
+}
+function synchronizeSeriesOptions(){
+ const catalog=seriesCatalog();
+ for(const box of $('seriesRows').children){
+  const area=box.querySelector('.series-options');
+  if(!area)continue;
+  const old=new Map([...area.querySelectorAll('label')].map(label=>[label.querySelector('input')?.value,label]));
+  const fragment=document.createDocumentFragment();
+  for(const item of catalog){
+   let label=old.get(item.key);
+   if(label){
+    const span=label.querySelector('span');
+    if(span)span.textContent=item.title;
+   }else label=createSeriesOption(item.key,item.title,false);
+   fragment.append(label);
+  }
+  area.replaceChildren(fragment);
+ }
+}
+
 function seriesName(s){return s.trim().replace(/\s+/g,' ')}
 function addSeriesCard(data={}){
  const box=document.createElement('div');box.className='series-card';
@@ -282,10 +335,9 @@ function addSeriesCard(data={}){
  kind.addEventListener('change',schedule);
  fields.append(field('作品／系列名稱',name),field('英文代碼',code),field('系列類型',kind));
  const options=document.createElement('div');options.className='series-options';
- for(const [key,title] of seriesProductTypes){
-  const label=document.createElement('label');const input=document.createElement('input');input.type='checkbox';input.value=key;
-  input.checked=Array.isArray(data.selected)?data.selected.includes(key):['vinyl','cd','tops','decor'].includes(key);
-  input.addEventListener('change',schedule);const text=document.createElement('span');text.textContent=title;label.append(input,text);options.append(label);
+ for(const {key,title} of seriesCatalog()){
+  const checked=Array.isArray(data.selected)?data.selected.includes(key):['vinyl','cd','tops','decor'].includes(key);
+  options.append(createSeriesOption(key,title,checked));
  }
  const actions=document.createElement('div');actions.className='row-actions';
  const hint=document.createElement('span');hint.className='series-info';hint.textContent='勾選這個系列實際販售的商品類型';
@@ -335,14 +387,19 @@ function entries(){
    // Fully blank placeholder rows are ignored, but a partly filled row must be corrected.
    if(!title&&!key&&!heading)return;
    if(!title||!key)throw Error('自訂分類 '+(index+1)+'：請填寫顯示名稱與英文代碼（例如 decor）。');
+   const duplicate=rows.find(r=>r.key===key);
+   if(duplicate){
+    if(duplicate.title===title)return; // same preset selected in custom editor: do not duplicate
+    throw Error('自訂分類 '+(index+1)+' 的英文代碼「'+key+'」已被「'+duplicate.title+'」使用');
+   }
    rows.push({title,key,heading:heading||title+' '+key.toUpperCase(),group});
   });
  }
  if(mode==='artist'){
   for(const series of seriesEntries()){
    for(const key of series.selected){
-    const pair=seriesProductTypes.find(t=>t[0]===key);
-    const label=pair?pair[1]:key;
+    const pair=seriesCatalog().find(t=>t.key===key);
+    const label=pair?pair.title:key;
     rows.push({title:label,key:'series-'+series.seriesKey+'-'+key,heading:series.seriesName+' ／ '+label,group:series.group});
    }
   }
@@ -358,6 +415,7 @@ function entries(){
 }
 function build(){
  updateCustomCount();
+ synchronizeSeriesOptions();
  try{
   const name=$('name').value.trim(),id=slug($('slug').value);
   if(!name||!id)throw Error('請先填寫名稱與有效英文識別碼。');
