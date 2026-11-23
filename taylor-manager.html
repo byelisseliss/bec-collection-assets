@@ -29,10 +29,38 @@ body.bec-embedded main{max-width:100%;padding:0 0 20px}body.bec-embedded header{
 .design-preview .hint{margin-bottom:2px}
 @media(max-width:1100px){.design-workspace{grid-template-columns:1fr}.design-controls{max-height:none;overflow:visible}.design-preview{position:relative;top:auto}}
 @media(max-width:540px){.design-grid{grid-template-columns:1fr 1fr;gap:10px}.design-preview-top{align-items:flex-start;flex-direction:column}.design-frame-wrap{min-height:580px}#designFrame{height:580px}}
+
+/* DENSE DESIGN EDITOR v6.1 — sidebar + sticky preview on desktop */
+main{max-width:1650px;padding:12px clamp(8px,1.2vw,18px) 45px}
+body.bec-embedded main{max-width:100%;padding:0 0 20px}
+body.bec-embedded .manager-sync[hidden]{display:none!important}
+.box{margin:0 0 12px;padding:17px;border-radius:17px!important}
+.visual-studio{background:#faf8f5}
+.design-head{align-items:center}
+.design-head h2{font-size:19px;margin:5px 0}
+.design-head h2 small{font-size:13px;color:#9a8f84;font-weight:400}
+.design-head-actions{display:flex;gap:8px;align-items:center}
+.design-head-actions a{display:inline-flex;padding:10px 14px;border:1px solid #e5d9cc;border-radius:999px;color:#4e4238;font-size:11px;text-decoration:none;background:#fffaf5}
+.design-head-actions button{font-size:11px}
+.design-preset{margin:10px 0 12px;gap:6px}
+.design-preset button{padding:8px 11px}
+.design-workspace{display:grid;grid-template-columns:minmax(310px,35%) minmax(0,1fr);gap:12px;align-items:start}
+.design-controls{max-height:calc(100vh - 120px);min-height:550px;overflow:auto;padding-right:5px}
+.design-controls details{margin:0 0 7px;border-radius:11px}
+.design-controls summary{padding:12px}
+.design-grid{gap:10px;padding:12px}
+.design-field{gap:5px}
+.design-preview{position:sticky;top:8px;padding:9px;border-radius:12px}
+.design-preview-top{margin:0 0 8px}
+.design-frame-wrap{min-height:690px}
+#designFrame{height:min(83vh,950px);min-height:690px}
+#designFrame.mobile{width:390px}
+@media(min-width:850px){.design-workspace{grid-template-columns:minmax(300px,35%) minmax(0,1fr)}}
+@media(max-width:849px){.design-workspace{grid-template-columns:1fr}.design-controls{max-height:none;min-height:0;overflow:visible}.design-preview{position:relative;top:auto}.design-frame-wrap{min-height:560px}#designFrame{height:600px;min-height:560px}}
 </style></head><body><main><header><div class="kicker">BEC COLLECTION STUDIO / TAYLOR SWIFT</div><h1>Landing page<br>manager.</h1><p>管理 12 張專輯的封面圖片、對應 1shop 分類頁，以及各商品類型的跳轉網址。每次只需更新網址，再複製完整程式碼到 1shop；自動保留目前瀏覽器的編輯草稿。</p><div class="actions"><a href="taylor-landing.html" target="_blank" rel="noopener">觀看落地頁預覽 ↗</a><a href="builder.html">返回 Collection Studio ↗</a></div></header>
-<section class="box manager-sync"><div class="sync-bar"><div><div class="kicker">SHARED CLASSIFICATION WORKSPACE</div><h2>商品分類與落地頁，統一管理。</h2><p id="classificationSummary">正在檢查目前分類設定…</p></div><button class="light" id="openCategories" type="button">編輯專輯／商品分類 ↗</button></div></section>
+<section class="box manager-sync" hidden><div class="sync-bar"><div><div class="kicker">SHARED CLASSIFICATION WORKSPACE</div><h2>商品分類與落地頁，統一管理。</h2><p id="classificationSummary">正在檢查目前分類設定…</p></div><button class="light" id="openCategories" type="button">編輯專輯／商品分類 ↗</button></div></section>
 <section class="box visual-studio" id="designStudio">
-<div class="design-head"><div><div class="kicker">VISUAL LANDING PAGE BUILDER</div><h2>落地頁視覺設計</h2><p>改顏色、字體、比例與動畫，右側立即預覽。所有設計與專輯設定一併儲存及產生 1shop 程式碼。</p></div><button class="light" id="designReset" type="button">還原原始設計</button></div>
+<div class="design-head"><div><div class="kicker">VISUAL LANDING PAGE BUILDER</div><h2>設計編輯器 <small>／ 即時預覽</small></h2></div><div class="design-head-actions"><a href="taylor-landing.html" target="_blank" rel="noopener">另開預覽 ↗</a><button class="light" id="designReset" type="button">重設設計</button></div></div>
 <div class="design-preset" id="designPresets"><button type="button" class="light" data-preset="rhode">RHODE / WARM</button><button type="button" class="light" data-preset="minimal">MONO / MINIMAL</button><button type="button" class="light" data-preset="soft">SOFT / BLUSH</button><button type="button" class="light" data-preset="night">DARK / EDITORIAL</button></div>
 <div class="design-workspace">
 <div class="design-controls">
@@ -42,11 +70,11 @@ body.bec-embedded main{max-width:100%;padding:0 0 20px}body.bec-embedded header{
 <details><summary>04　按鈕與商品分類</summary><div class="design-grid" id="designTypes"></div></details>
 <details><summary>05　文案編輯</summary><div class="design-grid" id="designCopy"></div></details>
 </div>
-<div class="design-preview"><div class="design-preview-top"><strong>LIVE PREVIEW</strong><div class="design-preview-modes"><button type="button" id="designDesktop" class="selected">桌面</button><button type="button" id="designMobile" class="light">手機</button><button type="button" id="designReload" class="light">重新整理</button></div></div><div class="design-frame-wrap"><iframe id="designFrame" title="Taylor Swift 落地頁即時預覽" loading="lazy" src="taylor-landing.html?v=6"></iframe></div><p class="hint">在預覽中可以滑動專輯卡片、懸停查看微動畫及切換下方商品分類。預覽的點擊不會修改正式商店。</p></div>
+<div class="design-preview"><div class="design-preview-top"><strong>LIVE PREVIEW</strong><div class="design-preview-modes"><button type="button" id="designDesktop" class="selected">桌面</button><button type="button" id="designMobile" class="light">手機</button><button type="button" id="designReload" class="light">重新整理</button></div></div><div class="design-frame-wrap"><iframe id="designFrame" title="Taylor Swift 落地頁即時預覽" loading="lazy" src="taylor-landing.html?v=6"></iframe></div></div>
 </div></section>
-<section class="box"><h2>01 / 專輯系列</h2><p>「前往網址」請填入你在 1shop 建立的實際專輯分類頁 URL。封面圖建議使用已取得使用權的圖片並存放於自己的 BEC 站點。空白不代表已完成連結，會使用示範的系列目錄頁。</p><div id="albumList"></div></section>
-<section class="box"><h2>02 / 商品類型</h2><p>貼上各分類頁的完整網址。只有 URL 已確定時才填寫，避免顧客被帶到錯誤商品頁。</p><div id="typeList"></div></section>
-<section class="box"><h2>03 / 複製到 1shop</h2><p>生成一份可貼進 Taylor Swift 落地頁「程式」區塊的完整代碼。圖片與分類頁網址會一起保存於輸出，不用手動改 JavaScript。</p><div class="actions"><button id="generate" type="button">產生完整 1shop 程式碼</button><button class="light" id="copy" type="button">複製完整代碼</button><button class="light" id="download" type="button">匯出設定 JSON</button><button class="light" type="button" id="importButton">匯入設定 JSON</button><input id="importFile" type="file" accept=".json,application/json"></div><p id="status" role="status" aria-live="polite"></p><textarea id="output" spellcheck="false" readonly></textarea><p class="hint">此管理器只變更連結與圖片設定，不會自動建立 1shop 分類頁面或變更已上架商品。</p></section>
+<section class="box"><h2>專輯系列 · 封面與分類連結</h2><p>「前往網址」請填入你在 1shop 建立的實際專輯分類頁 URL。封面圖建議使用已取得使用權的圖片並存放於自己的 BEC 站點。空白不代表已完成連結，會使用示範的系列目錄頁。</p><div id="albumList"></div></section>
+<section class="box"><h2>共用商品類型網址</h2><p>貼上各分類頁的完整網址。只有 URL 已確定時才填寫，避免顧客被帶到錯誤商品頁。</p><div id="typeList"></div></section>
+<section class="box"><h2>匯出／複製到 1shop</h2><p>生成一份可貼進 Taylor Swift 落地頁「程式」區塊的完整代碼。圖片與分類頁網址會一起保存於輸出，不用手動改 JavaScript。</p><div class="actions"><button id="generate" type="button">產生完整 1shop 程式碼</button><button class="light" id="copy" type="button">複製完整代碼</button><button class="light" id="download" type="button">匯出設定 JSON</button><button class="light" type="button" id="importButton">匯入設定 JSON</button><input id="importFile" type="file" accept=".json,application/json"></div><p id="status" role="status" aria-live="polite"></p><textarea id="output" spellcheck="false" readonly></textarea><p class="hint">此管理器只變更連結與圖片設定，不會自動建立 1shop 分類頁面或變更已上架商品。</p></section>
 </main><script>(()=>{'use strict';
 const root='https://byelisseliss.github.io/bec-collection-assets/';
 const albums=[['showgirl','The Life of a Showgirl'],['ttpd','The Tortured Poets Department'],['midnights','Midnights'],['evermore','evermore'],['folklore','folklore'],['lover','Lover'],['reputation','reputation'],['1989-tv',"1989 (Taylor's Version)"],['red-tv',"Red (Taylor's Version)"],['speak-now-tv',"Speak Now (Taylor's Version)"],['fearless-tv',"Fearless (Taylor's Version)"],['debut','Taylor Swift']];
