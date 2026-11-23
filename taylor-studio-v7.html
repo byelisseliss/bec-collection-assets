@@ -159,7 +159,7 @@ function studioMode(next,updateHash=true){
   studioTabs[key].className=key===next?'selected':'light';
  });
  if(next!=='create'&&!studioLoaded[next]){
-  studioFrames[next].src=next==='taylor'?'taylor-manager.html?ui=v7': 'upgrade.html?embed=1';
+  studioFrames[next].src=next==='taylor'?'taylor-manager-v7.html': 'upgrade.html?embed=1';
   studioLoaded[next]=true;
  }else if(next==='upgrade'){
   studioFrames.upgrade.contentWindow?.postMessage({kind:'bec-refresh-projects'},location.origin);
