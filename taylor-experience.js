@@ -18,6 +18,7 @@ const albums=rows.map(([id,title,year,tone,story])=>({id,title,year,tone,story})
 const kind=[['vinyl','黑膠','◉'],['cd','CD','◎'],['cassette','卡帶','▣'],['clothing','服飾','▤'],['accessories','配件','✳'],['collectibles','收藏品','◇'],['home','居家生活','⌂'],['tour','巡演／活動','✦']];
 const albumLinks={showgirl:'https://byelisscollection.my1shop.com/TheLifeofaShowgirl',...(window.BEC_TS_ALBUM_URLS||{})};
 const typeLinks={...(window.BEC_TS_TYPE_URLS||{})};const coverLinks=window.BEC_TS_IMAGES||{};
+const albumTypes=window.BEC_TS_ALBUM_TYPES||{};const albumTypeUrls=window.BEC_TS_ALBUM_TYPE_URLS||{};
 const safe=x=>typeof x==='string'&&/^https:\/\//i.test(x)?x:null;
 const href=a=>safe(albumLinks[a.id])||BASE+'taylor-discover.html?era='+encodeURIComponent(a.id);
 const typeHref=id=>safe(typeLinks[id])||BASE+'taylor-discover.html?type='+encodeURIComponent(id);
@@ -40,7 +41,8 @@ function create(){
  const root=document.querySelector('#bec-ts-landing');if(!root)return;
  root.classList.add('bec-deck-v4');root.classList.remove('bec-world');
  const escTitle=s=>esc(s);
- const typeHtml=kind.map(([id,zh],i)=>'<a href="'+typeHref(id)+'"><small>'+String(i+1).padStart(2,'0')+'</small><strong>'+escTitle(zh)+'</strong><span>↗</span></a>').join('');
+ const productTypes=(a)=>{const configured=albumTypes[a.id];const selected=Array.isArray(configured)?configured:kind.map(k=>k[0]);return kind.filter(k=>selected.includes(k[0]));};
+ const typeHtml=(a)=>productTypes(a).map(([id,zh],i)=>{const link=safe(albumTypeUrls[a.id+':'+id])||safe(albumLinks[a.id])||typeHref(id);return '<a href="'+esc(link)+'"><small>'+String(i+1).padStart(2,'0')+'</small><strong>'+escTitle(zh)+'</strong><span>↗</span></a>'}).join('');
  root.innerHTML='<main class="bc-shell">'+
  '<div class="bc-top"><span>BY ELISS COLLECTION <i></i> TAYLOR SWIFT</span><span>THE COLLECTION / 12 ERAS</span></div>'+
  '<section class="bc-stage" id="bc-stage"><div class="bc-intro"><span>YOUR COLLECTION STARTS HERE</span><h1>Find your<br><em>favorite era.</em></h1></div>'+
@@ -49,8 +51,8 @@ function create(){
  '<div class="bc-bottom"><button type="button" id="bc-prev" aria-label="上一張">←</button>'+
  '<div class="bc-selected"><span id="bc-count">01 / 12</span><strong id="bc-title"></strong><p id="bc-story"></p><a id="bc-enter" href="#">EXPLORE THIS ERA ↗</a></div>'+
  '<button type="button" id="bc-next" aria-label="下一張">→</button></div></section>'+
- '<section class="bc-types" id="bc-types"><div><span>ANOTHER WAY IN</span><h2>By object.</h2><p>如果你知道想找什麼，就直接從商品類型開始。</p></div>'+
- '<nav class="bc-type-links">'+typeHtml+'</nav></section>'+
+ '<section class="bc-types" id="bc-types"><div><span>EXPLORE THE SELECTED ALBUM</span><h2 id="bc-types-title"></h2><p id="bc-types-description">探索這張專輯的商品類別，點選後開啟對應頁面。</p></div>'+
+ '<nav class="bc-type-links" id="bc-type-links" aria-live="polite"></nav></section>'+
  '<footer class="bc-footer"><span>CURATED BY BEC</span><a href="#bc-stage">BACK TO TOP ↑</a></footer></main>';
  const deck=root.querySelector('#bc-deck'),host=root.querySelector('#bc-cards');
  const cards=albums.map((a,i)=>{
@@ -66,6 +68,10 @@ function create(){
   root.querySelector('#bc-count').textContent=String(index+1).padStart(2,'0')+' / '+albums.length;
   root.querySelector('#bc-title').textContent=a.title;root.querySelector('#bc-story').textContent=a.story;
   root.querySelector('#bc-enter').href=href(a);
+  root.querySelector('#bc-types-title').textContent=a.title;
+  root.querySelector('#bc-type-links').innerHTML=typeHtml(a);
+  root.querySelector('#bc-types-description').textContent=productTypes(a).length?'SELECT A CATEGORY / 選擇此專輯的商品類別':'此專輯尚未設定商品類別。';
+  const typesPanel=root.querySelector('#bc-types');typesPanel.classList.remove('is-changing');void typesPanel.offsetWidth;typesPanel.classList.add('is-changing');
   cards.forEach((el,i)=>{const d=delta(i),visible=Math.abs(d)<=3;el.style.setProperty('--d',d);el.style.setProperty('--absd',Math.abs(d));el.style.setProperty('--sgn',Math.sign(d));el.style.opacity=visible?'1':'0';el.style.pointerEvents=visible?'auto':'none';el.classList.toggle('is-current',d===0);el.tabIndex=visible?0:-1;el.setAttribute('aria-hidden',String(!visible))});
  }
  function change(n){index=(n+albums.length)%albums.length;render()}
