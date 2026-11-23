@@ -42,7 +42,18 @@ body.studio-taylor-wide .ts-workspace-nav button{min-width:0;min-height:37px;fon
 body.studio-taylor-wide .ts-workspace-nav button.selected{background:#eae1d7;color:#3b332c;border-color:#d7c9bb}
 body.studio-taylor-wide #studioTaylorFrame{border-radius:0;min-height:1300px}
 @media(max-width:850px){body.studio-taylor-wide header p{display:none}body.studio-taylor-wide .ts-control-panel{align-items:stretch}body.studio-taylor-wide .ts-workspace-nav{width:100%}body.studio-taylor-wide .ts-workspace-nav button{flex:1}body.studio-taylor-wide .ts-section-title span{display:none}}
-body.studio-taylor-wide header{margin-bottom:0!important}body.studio-taylor-wide header p{display:none!important}body.studio-taylor-wide .studio-bar{margin-top:6px!important}body.studio-taylor-wide #studioTaylor .ts-control-panel{margin-top:0!important}body.studio-taylor-wide main{max-width:1800px!important;width:100%!important}body.studio-taylor-wide #studioManual{display:none!important}body.studio-taylor-wide #tsLandingMount{width:100%;min-width:0}body.studio-taylor-wide #studioTaylorFrame{width:100%;display:block}@media(min-width:900px){body.studio-taylor-wide #studioTaylorFrame{min-height:1400px}}</style></head><body><main>
+body.studio-taylor-wide header{margin-bottom:0!important}body.studio-taylor-wide header p{display:none!important}body.studio-taylor-wide .studio-bar{margin-top:6px!important}body.studio-taylor-wide #studioTaylor .ts-control-panel{margin-top:0!important}body.studio-taylor-wide main{max-width:1800px!important;width:100%!important}body.studio-taylor-wide #studioManual{display:none!important}body.studio-taylor-wide #tsLandingMount{width:100%;min-width:0}body.studio-taylor-wide #studioTaylorFrame{width:100%;display:block}@media(min-width:900px){body.studio-taylor-wide #studioTaylorFrame{min-height:1400px}}
+/* V7 quick output fixed at top of Taylor design workspace */
+body.studio-taylor-wide .ts-quick-actions{display:flex;position:sticky;top:62px;z-index:45;align-items:center;gap:12px;flex-wrap:wrap;background:rgba(250,248,245,.97);border:1px solid #e3d9ce;backdrop-filter:blur(16px);padding:9px 13px;margin:0 0 10px;border-radius:14px;box-shadow:0 7px 24px rgba(63,49,37,.06)}
+.ts-quick-actions{display:none}
+.ts-quick-caption{color:#756a60;font-size:11px;flex:1;min-width:140px}
+.ts-quick-buttons{display:flex;gap:7px;align-items:center;flex-wrap:wrap}
+.ts-quick-buttons button{font-size:12px;padding:10px 15px;min-height:40px;white-space:nowrap;border-radius:11px}
+.ts-quick-buttons #tsQuickCopy{background:#342f2a;color:#fff;border-color:#342f2a;font-weight:600}
+#tsQuickStatus{font-size:11px;color:#6b625a;min-height:0}
+body.studio-taylor-wide:has(#tsCategoryMount:not(.hide)) .ts-quick-actions{display:none}
+@media(max-width:750px){body.studio-taylor-wide .ts-quick-actions{top:56px;padding:8px;gap:5px}.ts-quick-caption{display:none}.ts-quick-buttons{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:6px}.ts-quick-buttons button{padding:10px 7px;font-size:11px;white-space:normal}#tsQuickStatus{width:100%;text-align:center}}
+</style></head><body><main>
 <header><div class="eyebrow">BY ELISS COLLECTION / MANAGEMENT</div><h1>COLLECTION STUDIO</h1><p>品牌與藝人的建立、編輯、備份、版本升級、完整代碼複製，現在都在同一個管理平台。</p></header>
 <div class="studio-bar" role="tablist" aria-label="Collection 工作模式">
 <button type="button" id="studioCreateTab" role="tab" aria-selected="true" aria-controls="studioCreate" class="selected">建立與編輯</button>
@@ -106,6 +117,14 @@ body.studio-taylor-wide header{margin-bottom:0!important}body.studio-taylor-wide
 <button type="button" id="tsWorkspaceLanding" class="selected" aria-pressed="true">視覺設計／即時預覽／專輯連結</button>
 
 </div></div>
+<div id="tsQuickActions" class="ts-quick-actions" role="toolbar" aria-label="落地頁快速輸出">
+  <span class="ts-quick-caption">設計設定自動儲存 <span aria-hidden="true">·</span> 隨時輸出 1shop</span>
+  <div class="ts-quick-buttons">
+    <button type="button" id="tsQuickGenerate" class="light">產生最新版代碼</button>
+    <button type="button" id="tsQuickCopy">複製 1shop 完整代碼</button>
+  </div>
+  <span id="tsQuickStatus" role="status" aria-live="polite"></span>
+</div>
 <div id="tsCategoryMount" class="hide"></div>
 <div id="tsLandingMount"><iframe id="studioTaylorFrame" title="Taylor Swift 專屬落地頁設定" loading="lazy"></iframe></div>
 </section>
@@ -144,6 +163,38 @@ function tsInnerMode(kind){
 }
 document.getElementById('tsWorkspaceCategories').addEventListener('click',()=>tsInnerMode('categories'));
 document.getElementById('tsWorkspaceLanding').addEventListener('click',()=>tsInnerMode('landing'));
+
+
+/* Accessible quick output lives in the parent so it remains sticky during iframe scrolling. */
+const quickGenerate=document.getElementById('tsQuickGenerate');
+const quickCopy=document.getElementById('tsQuickCopy');
+const quickStatus=document.getElementById('tsQuickStatus');
+function compiledTaylorCode(){
+ const frame=document.getElementById('studioTaylorFrame');
+ const child=frame?.contentWindow;
+ if(!child||!child.document||child.document.readyState==='loading')throw Error('落地頁編輯器尚未載入');
+ const btn=child.document.getElementById('generate');
+ const out=child.document.getElementById('output');
+ const status=child.document.getElementById('status');
+ if(!btn||!out)throw Error('無法讀取設計編輯器');
+ btn.click();
+ if(status?.textContent?.startsWith('⚠'))throw Error(status.textContent.replace(/^⚠\s*/,''));
+ if(!out.value.trim())throw Error('尚未產生任何代碼');
+ return out.value;
+}
+quickGenerate.addEventListener('click',()=>{
+ try{const val=compiledTaylorCode();quickStatus.textContent='✓ 已產生最新版（'+val.length.toLocaleString()+' 字元）'}
+ catch(e){quickStatus.textContent='⚠ '+e.message}
+});
+quickCopy.addEventListener('click',async()=>{
+ try{
+  const value=compiledTaylorCode();
+  await navigator.clipboard.writeText(value);
+  quickStatus.textContent='✓ 已複製最新版 1shop 完整代碼';
+ }catch(e){
+  quickStatus.textContent='⚠ '+(e?.message||'複製失敗')+'；請使用下方完整代碼區';
+ }
+});
 
 function studioMode(next,updateHash=true){
  if(!studioTabs[next])next='create';
