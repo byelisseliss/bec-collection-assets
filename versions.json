@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "release": "2026.11.23",
+  "builder": "2.5",
+  "description": "BEC Collection stable production asset manifest",
+  "assets": {
+    "commonCSS": {
+      "path": "bec-collection.css",
+      "version": "1.1"
+    },
+    "commonJS": {
+      "path": "bec-collection.js",
+      "version": "1.2"
+    },
+    "artistCSS": {
+      "path": "bec-artist-v2.css",
+      "version": "2.0"
+    },
+    "artistJS": {
+      "path": "bec-artist-v2.js",
+      "version": "2.0"
+    }
+  },
+  "upgrade": {
+    "brand": "original-category-links",
+    "artist": "series-type-three-stage",
+    "requiresManualVerification": true
+  }
+}
