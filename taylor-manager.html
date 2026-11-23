@@ -45,10 +45,10 @@ function values(kind,defaults={}){
 function code(){
  const album=values('albums',defaults),type=values('types',typeDefaults),images=values('images');
  const config=(name,obj)=>'window.'+name+' = '+JSON.stringify(obj).replace(/</g,'\\u003c').replace(/\\u2028/g,'\\\\u2028')+';';
- return '<!-- BEC TAYLOR SWIFT · LIVING COLLECTION v3.0 -->\n'+
- '<link rel="stylesheet" href="'+root+'taylor-experience.css?v=3.0">\n'+
+ return '<!-- BEC TAYLOR SWIFT · LIVING COLLECTION v3.1 -->\n'+
+ '<link rel="stylesheet" href="'+root+'taylor-experience.css?v=3.1">\n'+
  '<div id="bec-ts-landing"></div>\n<script>\n'+config('BEC_TS_ALBUM_URLS',album)+'\n'+config('BEC_TS_TYPE_URLS',type)+'\n'+config('BEC_TS_IMAGES',images)+'\n<'+'/script>\n'+
- '<script defer src="'+root+'taylor-experience.js?v=3.0"><'+'/script>';
+ '<script defer src="'+root+'taylor-experience.js?v=3.1"><'+'/script>';
 }
 $('generate').onclick=()=>{try{$('output').value=code();$('status').textContent='✓ 完整程式碼已產生。'}catch(e){$('status').textContent='⚠ '+e.message}};
 $('copy').onclick=async()=>{try{$('output').value=code();await navigator.clipboard.writeText($('output').value);$('status').textContent='✓ 已複製完整代碼。'}catch(e){$('output').select();$('status').textContent='請按 Command + C 複製已選取的完整代碼。'}};
