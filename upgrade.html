@@ -155,9 +155,11 @@ function generate(){
  ...(p.artist?['<script defer src="'+url('artistJS')+'"><'+'/script>']:[])
  ];
  const out=lines.join('\n');
- const before=p.items.map(x=>x.href).sort().join('|');
- const after=parse(out).items.map(x=>x.href).sort().join('|');
- if(before!==after)throw Error('升級後分類錨點數或內容不一致，已停止輸出，請保留原始碼。');
+ // Compare complete category identity, not only the anchor count.
+ const signature=items=>items.map(x=>JSON.stringify([x.href,x.heading,x.title,x.group,x.view])).sort().join('\n');
+ const before=signature(p.items);
+ const after=signature(parse(out).items);
+ if(before!==after)throw Error('升級後分類名稱、原生標題、群組或錨點不一致；已停止輸出。原始碼仍保留。');
  converted=out;rawSnapshot=source;currentName=p.name;currentMode=p.artist?'artist':'brand';
  $('upgraded').value=out;
  $('report').textContent+='\n\n驗證結果：錨點、分類數與原生標題均保留\n正式資產版本：'+manifest.release+'\n狀態：已產生最新版完整代碼（尚未貼回 1shop）';
