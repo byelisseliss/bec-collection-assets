@@ -115,6 +115,10 @@ addEventListener('message',event=>{
   const size=Number(event.data.height);
   if(Number.isFinite(size))studioFrames.upgrade.style.height=Math.max(900,Math.min(15000,size+16))+'px';
  }
+ if(event.source===studioFrames.taylor.contentWindow&&event.data?.kind==='bec-taylor-height'){
+  const size=Number(event.data.height);
+  if(Number.isFinite(size))studioFrames.taylor.style.height=Math.max(900,Math.min(18000,size+16))+'px';
+ }
  if(event.source===studioFrames.upgrade.contentWindow&&event.data?.kind==='bec-show-builder')studioMode('create');
 });
 addEventListener('hashchange',()=>studioMode(location.hash.slice(1),false));
