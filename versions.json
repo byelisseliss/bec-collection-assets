@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "release": "2026.11.23.4",
-  "builder": "3.1",
+  "release": "2026.11.24.1",
+  "builder": "3.2",
   "description": "BEC Collection stable production asset manifest",
   "assets": {
     "commonCSS": {
@@ -31,12 +31,14 @@
       "artist three-stage nav v2.x"
     ]
   },
-  "manager": "studio-3.1",
+  "manager": "studio-3.2",
   "taylorLanding": {
-    "version": "1.0",
+    "version": "1.1",
     "preview": "taylor-landing.html",
     "manager": "builder.html#taylor",
     "albumCategoryTemplate": "taylor-discover.html",
-    "status": "preview-awaiting-1shop-category-links-and-approved-album-art"
+    "status": "preview-awaiting-1shop-category-links-and-approved-album-art",
+    "design": "rounded-floating-islands",
+    "integration": "shared-category-editor-and-landing-manager"
   }
 }
