@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BEC Taylor Studio v7 / Compact Layout</title>
+<style>
+:root{font-family:Helvetica,Arial,"PingFang TC",sans-serif;background:#f5f6f6;color:#253034}
+*{box-sizing:border-box}body{margin:0}main{max-width:1060px;margin:auto;padding:44px 20px 100px}
+h1{font-size:clamp(30px,5vw,48px);font-weight:500;letter-spacing:-.05em;margin:8px 0}h2{font-size:19px;font-weight:500;margin:0 0 18px}
+p{line-height:1.75;color:#687273}header{border-bottom:1px solid #dbe1e1;padding-bottom:24px;margin-bottom:24px}
+.eyebrow{font-size:11px;letter-spacing:.18em;color:#8b9292}.panel{border:1px solid #dce1e1;border-radius:16px;padding:24px;background:white;margin:16px 0}
+label{display:block;font-size:13px;font-weight:600;margin:0 0 8px}input[type=text],textarea,select{width:100%;border:1px solid #d3dada;border-radius:10px;padding:11px 12px;background:white;color:#253034;font:14px/1.6 Helvetica,Arial,"PingFang TC",sans-serif}
+textarea{font-family:ui-monospace,Menlo,monospace;resize:vertical;min-height:160px}#output{min-height:290px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:17px}.switch{display:flex;gap:10px}.switch button{flex:1}
+button{background:#283335;color:white;border:1px solid #283335;border-radius:100px;padding:12px 17px;font:13px Helvetica,Arial,sans-serif;cursor:pointer}
+button.light{background:#fff;color:#344041;border-color:#d4dddd}button.selected{background:#dfe7e5;color:#243334;border-color:#94aba4}
+button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid #71978c;outline-offset:2px}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin:16px 0}
+.tip{font-size:12px;color:#667474}.hide{display:none!important}.group{border:1px solid #e0e5e5;border-radius:12px;padding:15px;margin:13px 0}
+.ghead{display:flex;align-items:center;justify-content:space-between;gap:10px}.ghead strong{font-size:14px}
+.options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:13px}
+.option{display:flex;align-items:center;gap:8px;margin:0;font-weight:400;cursor:pointer;padding:9px;border:1px solid #eef0f0;border-radius:9px;font-size:12px}
+.option input{accent-color:#577468}
+#status{font-size:13px;min-height:20px;color:#496e59}
+@media(max-width:700px){main{padding:27px 14px}.panel{padding:17px}.grid{grid-template-columns:1fr}.options{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.custom-editor{margin-top:24px;padding-top:20px;border-top:1px solid #e6e9e8}.custom-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.custom-top h3{font-size:16px;font-weight:500;margin:0}.custom-row{background:#f7f9f8;border:1px solid #e0e7e4;padding:15px;border-radius:13px;margin:11px 0}.custom-grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:11px}.custom-row label{font-size:11px;color:#5d6965}.custom-row input,.custom-row select{min-width:0}.custom-row .row-actions{display:flex;justify-content:flex-end;align-items:center;margin-top:10px}.custom-row .remove{background:none;color:#687571;border:0;padding:6px 10px;font-size:12px}.custom-row .remove:hover{color:#b13a3a}.inline-actions{display:flex;gap:8px;flex-wrap:wrap}.muted{font-size:12px;color:#77817e}.error{color:#a0443f!important}.summary-bar{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;color:#66746e;font-size:12px;margin:9px 0}.code-tip{font-size:12px;color:#79817d}.status-good{color:#426854}.status-warn{color:#a0443f}.advanced{border-top:1px solid #eef0ef;padding-top:13px;margin-top:18px}details.advanced summary{cursor:pointer;font-size:12px;color:#727f78}@media(max-width:800px){.custom-grid{grid-template-columns:1fr 1fr}}@media(max-width:480px){.custom-grid{grid-template-columns:1fr}.custom-row{padding:12px}}.series-editor{border-top:1px solid #e5e9e6;margin-top:26px;padding-top:24px}.series-intro{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}.series-card{border:1px solid #dce3df;border-radius:14px;background:#fafbfa;padding:17px;margin-top:14px}.series-fields{display:grid;grid-template-columns:2fr 1fr 1fr;gap:11px}.series-options{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-top:14px}.series-options label{border:1px solid #e3e8e5;border-radius:8px;padding:10px 8px;font-size:12px;font-weight:400;display:flex;gap:7px;align-items:center;margin:0}.series-options input{accent-color:#536e60}.series-card .row-actions{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:14px}.series-card .row-actions button{font-size:12px;padding:9px 14px}.series-info{font-size:12px;color:#75817a}.series-actions{display:flex;flex-wrap:wrap;gap:7px}.series-card input,.series-card select{width:100%;min-width:0}@media(max-width:700px){.series-fields{grid-template-columns:1fr}.series-options{grid-template-columns:1fr 1fr}}.brand-library{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.brand-cluster{padding:17px;border:1px solid #e1e7e4;border-radius:13px;background:#fbfcfb}.brand-cluster h3{font-size:13px;font-weight:600;margin:0 0 13px;color:#34423d}.brand-checks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.brand-choice{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:400;margin:0;padding:9px;border:1px solid #e6eae7;border-radius:8px;background:#fff;cursor:pointer}.brand-choice input{accent-color:#557266}.brand-choice:has(input:checked){background:#eaf0ec;border-color:#c8d8cf}.brand-cluster.is-filtered{display:none}.brand-choice.is-filtered{display:none}.brand-custom-grid{display:grid;grid-template-columns:1fr 1fr 1.4fr;gap:10px}.brand-custom-grid input{width:100%;min-width:0}@media(max-width:800px){.brand-library{grid-template-columns:1fr}.brand-custom-grid{grid-template-columns:1fr 1fr}}@media(max-width:480px){.brand-checks,.brand-custom-grid{grid-template-columns:1fr}}.file-button{display:inline-block;padding:12px 17px;background:white;color:#344041;border:1px solid #d4dddd;border-radius:999px;font-size:13px;cursor:pointer}.file-button input{display:none}.studio-bar{position:sticky;top:10px;z-index:50;background:rgba(248,249,248,.97);backdrop-filter:blur(12px);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding:10px;border:1px solid #dce2de;border-radius:16px;margin:19px 0 25px}.studio-bar button{min-height:48px;font-size:14px}.studio-upgrade-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.studio-label{font-size:10px;letter-spacing:.12em;color:#8b9790}#studioUpgradeFrame,#studioTaylorFrame{display:block;width:100%;min-height:1150px;border:0;background:transparent;border-radius:14px}#studioUpgrade .panel{margin-top:0}body.studio-in-upgrade{background:#f5f6f6}@media(max-width:700px){.studio-bar{top:0;padding:7px;gap:7px}.studio-bar button{font-size:12px;padding:12px 7px}} .ts-workspace-nav{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.ts-workspace-nav button{flex:1;min-width:175px;min-height:48px}.ts-workspace-nav a{white-space:nowrap;text-decoration:none}.studio-bar,.panel,.series-card,.brand-cluster,.group,.custom-row{border-radius:22px!important}.panel{box-shadow:0 12px 32px rgba(36,46,42,.035)}.studio-bar{border-radius:24px}.studio-bar button{border-radius:17px}.ts-workspace-nav .file-button{border-radius:18px}.ts-workspace-nav button{border-radius:18px}.brand-choice,.series-options label{border-radius:12px}.studio-bar{top:12px}@media(max-width:700px){.ts-workspace-nav button{min-width:0;flex:1 1 42%}}
+
+/* COMPACT TAYLOR STUDIO v6.1 — share the full screen with editor and live preview */
+body.studio-taylor-wide{background:#f6f3ef}
+body.studio-taylor-wide main{max-width:1700px;padding:15px clamp(13px,2vw,35px) 60px}
+body.studio-taylor-wide header{display:flex;align-items:center;gap:18px;padding:0 2px 11px;margin:0;border:0;flex-wrap:wrap}
+body.studio-taylor-wide header .eyebrow{font-size:9px;flex:0 0 100%;line-height:1}
+body.studio-taylor-wide header h1{font-size:clamp(22px,2.6vw,34px);letter-spacing:-.045em;line-height:1;margin:0}
+body.studio-taylor-wide header p{font-size:11px;line-height:1.4;margin:0;color:#89817a}
+body.studio-taylor-wide .studio-bar{top:5px;margin:8px 0 12px;padding:6px;gap:6px;border-radius:15px;background:rgba(249,247,244,.96)}
+body.studio-taylor-wide .studio-bar button{min-height:38px;padding:8px 12px;font-size:12px;border-radius:10px}
+body.studio-taylor-wide main>.actions{display:none}
+body.studio-taylor-wide #studioTaylor>.ts-control-panel{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:11px 15px;margin:0 0 10px;border-radius:16px}
+body.studio-taylor-wide .ts-section-title{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+body.studio-taylor-wide .ts-section-title strong{font-size:11px;letter-spacing:.09em}
+body.studio-taylor-wide .ts-section-title span{font-size:11px;color:#8d8378}
+body.studio-taylor-wide .ts-workspace-nav{display:flex;gap:7px;flex-wrap:nowrap;max-width:100%}
+body.studio-taylor-wide .ts-workspace-nav button{min-width:0;min-height:37px;font-size:11px;flex:0 1 auto;padding:9px 14px;border-radius:10px}
+body.studio-taylor-wide .ts-workspace-nav button.selected{background:#eae1d7;color:#3b332c;border-color:#d7c9bb}
+body.studio-taylor-wide #studioTaylorFrame{border-radius:0;min-height:1300px}
+@media(max-width:850px){body.studio-taylor-wide header p{display:none}body.studio-taylor-wide .ts-control-panel{align-items:stretch}body.studio-taylor-wide .ts-workspace-nav{width:100%}body.studio-taylor-wide .ts-workspace-nav button{flex:1}body.studio-taylor-wide .ts-section-title span{display:none}}
+body.studio-taylor-wide header{margin-bottom:0!important}body.studio-taylor-wide header p{display:none!important}body.studio-taylor-wide .studio-bar{margin-top:6px!important}body.studio-taylor-wide #studioTaylor .ts-control-panel{margin-top:0!important}body.studio-taylor-wide main{max-width:1800px!important;width:100%!important}body.studio-taylor-wide #studioManual{display:none!important}body.studio-taylor-wide #tsLandingMount{width:100%;min-width:0}body.studio-taylor-wide #studioTaylorFrame{width:100%;display:block}@media(min-width:900px){body.studio-taylor-wide #studioTaylorFrame{min-height:1400px}}</style></head><body><main>
+<header><div class="eyebrow">BY ELISS COLLECTION / MANAGEMENT</div><h1>COLLECTION STUDIO</h1><p>品牌與藝人的建立、編輯、備份、版本升級、完整代碼複製，現在都在同一個管理平台。</p></header>
+<div class="studio-bar" role="tablist" aria-label="Collection 工作模式">
+<button type="button" id="studioCreateTab" role="tab" aria-selected="true" aria-controls="studioCreate" class="selected">建立與編輯</button>
+<button type="button" id="studioUpgradeTab" role="tab" aria-selected="false" aria-controls="studioUpgrade" class="light">專案管理／自動升級</button>
+<button type="button" id="studioTaylorTab" role="tab" aria-selected="false" aria-controls="studioTaylor" class="light">Taylor Swift 落地頁</button>
+</div>
+<div class="actions" id="studioManual"><a href="manual.html" target="_blank" rel="noopener">COLLECTION PLAYBOOK ／ 操作指南 ↗</a></div>
+<div id="studioCreate" role="tabpanel" aria-labelledby="studioCreateTab">
+<section class="panel"><label>頁面類型</label><div class="switch"><button type="button" id="modeBrand" class="selected" aria-pressed="true">品牌 BRAND</button><button type="button" id="modeArtist" class="light" aria-pressed="false">藝人 ARTIST</button></div>
+<div class="grid" style="margin-top:19px"><div><label for="name">品牌／藝人名稱</label><input type="text" id="name" value="rhode"></div><div><label for="slug">英文識別碼（小寫、連字號）</label><input type="text" id="slug" value="rhode"></div></div></section>
+<section class="panel" id="brandFields">
+<h2>品牌商品分類</h2><p class="tip">不需要打字編排分類。先選品牌類型，再勾選實際販售的品項；不同產業可混合選取。</p>
+<div class="grid"><div><label for="brandIndustry">品牌類型／快速範本</label><select id="brandIndustry">
+<option value="beauty">美妝保養 BEAUTY</option><option value="apparel">服飾與鞋履 FASHION</option>
+<option value="drinkware">水瓶／杯具 DRINKWARE</option><option value="home">家居生活 HOME</option>
+<option value="lifestyle">生活選物 LIFESTYLE</option><option value="tech">3C 與配件 TECH</option>
+<option value="accessories">包袋／飾品 ACCESSORIES</option><option value="wellness">運動／戶外 ACTIVE</option>
+<option value="kids">親子／兒童 KIDS</option><option value="food">食品／飲品 FOOD</option>
+<option value="mixed">全品類自訂 MIXED</option></select></div>
+<div><label for="brandFilter">搜尋商品類型</label><input type="text" id="brandFilter" placeholder="例如：水瓶、外套、手機殼、保濕"></div></div>
+<div class="actions"><button type="button" class="light" id="rhode">套用 rhode 七分類</button><button type="button" class="light" id="brandSample">載入生活品牌範例</button><button type="button" class="light" id="brandClear">清除所有勾選</button></div>
+<div class="summary-bar"><span id="brandCount">全部商品 + 選擇的分類</span><span>所有品牌都可跨產業選取</span></div>
+<div id="brandCategories" class="brand-library"></div>
+<div class="custom-editor"><div class="custom-top"><div><h3>找不到商品類型？</h3><p class="muted">直接新增一個自訂分類，不需要輸入英文分隔符號。</p></div><button type="button" class="light" id="brandAddCustom">＋ 新增分類</button></div><div id="brandCustomRows"></div></div>
+<details class="advanced"><summary>從舊版品牌分類文字匯入（進階）</summary><p class="tip">僅限舊版三欄文字：顯示名稱 | 英文代碼 | 原生標題。匯入後可在可視化清單中管理。</p><textarea id="categories" spellcheck="false" style="min-height:92px" placeholder="護膚保養 | skincare | 護膚保養 SKINCARE"></textarea><div class="actions"><button type="button" class="light" id="brandImport">匯入舊版分類</button></div></details>
+</section>
+<section class="panel hide" id="artistFields"><h2>藝人分類配置</h2><p class="tip">先選擇主分類，再勾選子分類。產生後，顧客在藝人頁可先切換主分類，再選擇子分類。未選擇的分類不會出現。</p>
+<div id="artistGroups"></div>
+<div class="actions"><button type="button" id="presetAll" class="light">常用完整分類</button><button type="button" id="presetBasic" class="light">精簡藝人分類</button><button type="button" id="presetClear" class="light">清除選擇</button></div>
+<div class="custom-editor">
+<div class="custom-top"><div><h3>自訂子分類</h3><p class="muted">直接選主分類、輸入名稱即可。不用輸入任何分隔符號。</p></div><button type="button" id="addCustom" class="light">＋ 新增子分類</button></div>
+<div id="customRows"></div><div class="summary-bar"><span id="customCount">尚未新增自訂分類</span><span>輸入後自動更新輸出</span></div>
+<details class="advanced"><summary>從舊版四欄文字批次匯入（進階）</summary><p class="tip">適用於舊版輸入：主分類 | 顯示名稱 | 英文代碼 | 原生標題。僅在此區匯入一次，之後請使用可視化欄位編輯。</p>
+<textarea id="extra" spellcheck="false" placeholder="收藏品 | 擺飾 | decor | 擺飾 DECOR" style="min-height:82px"></textarea>
+<div class="actions"><button type="button" id="importExtra" class="light">匯入至上方欄位</button></div></details></div></section>
+<section class="panel hide" id="seriesFields"><div class="series-intro"><div><h2>作品／專輯系列</h2><p class="muted">每個系列只設定一次，再勾選它有哪些商品類型。自動產生「系列名稱＋商品類型」的分類與錨點。</p></div><button type="button" id="addSeries" class="light">＋ 新增系列</button></div>
+<div class="tip">例如：The Life of a Showgirl → 黑膠、上衣、杯具。所有商品仍在 1shop 只建立一次，需自行將商品加入對應分類並配置原生展示區塊。</div>
+<div id="seriesRows"></div>
+<div class="summary-bar"><span id="seriesCount">尚未加入系列</span><span>每個系列可複製分類配置</span></div>
+</section>
+<section class="panel"><h2>版本與草稿管理</h2>
+<p class="tip">目前正在編輯的品牌、藝人、專輯系列及勾選狀態會自動保存於此瀏覽器。可另存 JSON 備份，或把目前完整代碼放進專案庫，未來不必重新輸入。</p>
+<div class="actions"><button id="saveLibrary" type="button">儲存目前專案</button><button id="exportDraft" type="button" class="light">下載目前設定 JSON</button>
+<label class="file-button">匯入設定 JSON<input type="file" id="importDraft" accept=".json,application/json"></label></div>
+<p class="tip" id="draftStatus">目前尚未確認草稿儲存狀態。</p>
+</section>
+<section class="panel"><h2>產生完整代碼</h2><div class="summary-bar"><span id="summary">請設定分類</span><span id="previewMode">BRAND</span></div><div class="actions"><button type="button" id="generate">產生 1shop 程式</button><button type="button" class="light" id="copy">複製完整代碼</button></div><textarea id="output" readonly spellcheck="false"></textarea><p id="status" role="status" aria-live="polite"></p><p class="code-tip">一鍵複製後，貼入 1shop 單一「程式」區塊。產生器不會直接編輯商店內容。</p></section>
+<section class="panel"><h2>重要使用提醒</h2><p class="tip">・第一個「全部商品」會由共用 v1.2 建立必要錨點與標題（若不存在）。<br>・其餘子分類必須在 1shop 對應商品區塊前建立「原生文字」標題，文字要與設定的第三欄一致；否則放入明確的定位錨點。<br>・藝人前台先選「依專輯／系列」或「依商品類型」，再選系列／商品大類，最後才顯示細項。主分類本身不代表獨立商品區塊。<br>・一張 1shop 網頁只使用一份 BEC Collection 導覽設定。<br>・產生器不會新增、搬移、修改 1shop 的商品資料或商品展示區塊。<br>・共用資產採穩定版：CSS v1.1、JS v1.2；藝人模式額外載入 artist CSS／JS v1.0。</p></section>
+</div>
+<section id="studioUpgrade" role="tabpanel" aria-labelledby="studioUpgradeTab" class="hide">
+  <div class="panel"><div class="studio-upgrade-head">
+    <div><h2>專案管理與自動升級</h2><p class="tip">載入已儲存專案，或貼上 1shop 現有程式碼；保留所有專輯和分類，直接產生最新版完整代碼。</p></div>
+    <span class="studio-label">UNIFIED WORKSPACE</span>
+  </div></div>
+  <iframe id="studioUpgradeFrame" title="BEC Collection 專案與自動升級" loading="lazy"></iframe>
+</section>
+<section id="studioTaylor" class="hide" role="tabpanel" aria-labelledby="studioTaylorTab">
+<div class="panel ts-control-panel"><div class="ts-section-title"><strong>TAYLOR SWIFT / COLLECTION</strong><span>專輯展示、視覺設計與商品分類</span></div>
+<div class="ts-workspace-nav" aria-label="Taylor Swift 管理功能">
+<button type="button" id="tsWorkspaceCategories" class="light" aria-pressed="false">01 · 專輯／商品分類</button>
+<button type="button" id="tsWorkspaceLanding" class="selected" aria-pressed="true">視覺設計／即時預覽／專輯連結</button>
+
+</div></div>
+<div id="tsCategoryMount" class="hide"></div>
+<div id="tsLandingMount"><iframe id="studioTaylorFrame" title="Taylor Swift 專屬落地頁設定" loading="lazy"></iframe></div>
+</section>
+</main><script>
+(()=>{
+'use strict';
+const $=id=>document.getElementById(id);
+
+/* Unified Collection Studio tabs */
+const studioTabs={create:document.getElementById('studioCreateTab'),upgrade:document.getElementById('studioUpgradeTab'),taylor:document.getElementById('studioTaylorTab')};
+const studioFrames={upgrade:document.getElementById('studioUpgradeFrame'),taylor:document.getElementById('studioTaylorFrame')};
+const studioLoaded={upgrade:false,taylor:false};
+const createPanel=document.getElementById('studioCreate');
+const createHome=document.createComment('Original category editor location');
+createPanel.parentNode.insertBefore(createHome,createPanel);
+const tsCategoryMount=document.getElementById('tsCategoryMount');
+const tsLandingMount=document.getElementById('tsLandingMount');
+let tsInner='landing';
+function tsInnerMode(kind){
+ tsInner=kind;
+ const isCategories=kind==='categories';
+ tsCategoryMount.classList.toggle('hide',!isCategories);
+ tsLandingMount.classList.toggle('hide',isCategories);
+ document.getElementById('tsWorkspaceCategories').className=isCategories?'selected':'light';
+ document.getElementById('tsWorkspaceLanding').className=isCategories?'light':'selected';
+ document.getElementById('tsWorkspaceCategories').setAttribute('aria-pressed',String(isCategories));
+ document.getElementById('tsWorkspaceLanding').setAttribute('aria-pressed',String(!isCategories));
+ if(isCategories){
+  tsCategoryMount.appendChild(createPanel);
+  createPanel.classList.remove('hide');
+  setMode('artist');
+ }else if(createPanel.parentElement===tsCategoryMount){
+  createHome.parentNode.insertBefore(createPanel,createHome.nextSibling);
+  createPanel.classList.add('hide');
+ }
+}
+document.getElementById('tsWorkspaceCategories').addEventListener('click',()=>tsInnerMode('categories'));
+document.getElementById('tsWorkspaceLanding').addEventListener('click',()=>tsInnerMode('landing'));
+
+function studioMode(next,updateHash=true){
+ if(!studioTabs[next])next='create';
+ document.body.classList.toggle('studio-taylor-wide',next==='taylor');
+ if(next!=='taylor'&&createPanel.parentElement===tsCategoryMount){
+  createHome.parentNode.insertBefore(createPanel,createHome.nextSibling);
+ }
+ if(next==='taylor'&&tsInner==='categories')tsCategoryMount.appendChild(createPanel);
+ Object.keys(studioTabs).forEach(key=>{
+  const panel=document.getElementById('studio'+key[0].toUpperCase()+key.slice(1));
+  panel.classList.toggle('hide',key!==next&&(key!=='create'||createPanel.parentElement!==tsCategoryMount));
+  studioTabs[key].setAttribute('aria-selected',String(key===next));
+  studioTabs[key].className=key===next?'selected':'light';
+ });
+ if(next!=='create'&&!studioLoaded[next]){
+  studioFrames[next].src=next==='taylor'?'taylor-manager.html?ui=v7': 'upgrade.html?embed=1';
+  studioLoaded[next]=true;
+ }else if(next==='upgrade'){
+  studioFrames.upgrade.contentWindow?.postMessage({kind:'bec-refresh-projects'},location.origin);
+ }
+ if(updateHash)history.replaceState(null,'','#'+next);
+ requestAnimationFrame(()=>document.querySelector('.studio-bar')?.scrollIntoView({block:'start',behavior:'smooth'}));
+}
+Object.entries(studioTabs).forEach(([key,button])=>button.addEventListener('click',()=>studioMode(key)));
+addEventListener('message',event=>{
+ if(event.origin!==location.origin)return;
+ if(event.source===studioFrames.upgrade.contentWindow&&event.data?.kind==='bec-upgrade-height'){
+  const size=Number(event.data.height);
+  if(Number.isFinite(size))studioFrames.upgrade.style.height=Math.max(900,Math.min(15000,size+16))+'px';
+ }
+ if(event.source===studioFrames.taylor.contentWindow&&event.data?.kind==='bec-taylor-height'){
+  const size=Number(event.data.height);
+  if(Number.isFinite(size))studioFrames.taylor.style.height=Math.max(900,Math.min(18000,size+16))+'px';
+ }
+ if(event.source===studioFrames.taylor.contentWindow&&event.data?.kind==='bec-taylor-show-categories')tsInnerMode('categories');
+ if(event.source===studioFrames.upgrade.contentWindow&&event.data?.kind==='bec-show-builder')studioMode('create');
+});
+addEventListener('hashchange',()=>studioMode(location.hash.slice(1),false));
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const slug=s=>String(s).toLowerCase().trim().replace(/[^a-z0-9-]+/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'');
+const rootUrl='https://byelisseliss.github.io/bec-collection-assets/';
+const library=[
+ {name:'音樂',key:'music',options:[['黑膠','vinyl','黑膠 VINYL'],['CD','cd','CD'],['卡帶','cassette','卡帶 CASSETTE'],['數位音樂','digital','數位音樂 DIGITAL'],['簽名版本','signed','簽名版本 SIGNED'],['收納展示','organizer','收納展示 ORGANIZER']]},
+ {name:'服飾',key:'apparel',options:[['上衣','tops','上衣 TOPS'],['外套','outerwear','外套 OUTERWEAR'],['帽子','headwear','帽子 HEADWEAR'],['褲裝／裙裝','bottoms','褲裝／裙裝 BOTTOMS'],['其他服飾','other-clothing','其他服飾 OTHER CLOTHING']]},
+ {name:'配件',key:'accessories',options:[['包袋','bags','包袋 BAGS'],['手機配件','phone','手機配件 PHONE ACCESSORIES'],['鑰匙圈','keychains','鑰匙圈 KEYCHAINS'],['飾品','jewelry','飾品 JEWELRY'],['髮飾','hair','髮飾 HAIR ACCESSORIES']]},
+ {name:'收藏品',key:'collectibles',options:[['海報／印刷品','prints','海報／印刷品 PRINTS'],['卡片／照片','photocards','卡片／照片 PHOTOCARDS'],['公仔／模型','figures','公仔／模型 FIGURES'],['收藏盒','collectible-boxes','收藏盒 COLLECTIBLE BOXES'],['水晶球','snowglobe','水晶球 SNOWGLOBE']]},
+ {name:'居家生活',key:'home',options:[['杯具','drinkware','杯具 DRINKWARE'],['毯子','blankets','毯子 BLANKETS'],['文具','stationery','文具 STATIONERY'],['居家擺設','decor','居家擺設 DECOR']]},
+ {name:'巡演／活動',key:'tour',options:[['巡演商品','tour-merch','巡演商品 TOUR MERCH'],['活動限定','event-exclusive','活動限定 EVENT EXCLUSIVE'],['應援用品','fan-items','應援用品 FAN ITEMS']]}
+];
+let mode='brand',previousOutput='',autoSlug=true;
+
+/* Common cross-industry brand taxonomy. Each key is unique globally. */
+const brandTaxonomy=[
+ {name:'美妝／保養',items:[['skincare','護膚保養','護膚保養 SKINCARE'],['cleansers','清潔卸妝','清潔卸妝 CLEANSERS'],['serums','精華液','精華液 SERUMS'],['moisturizers','保濕乳霜','保濕乳霜 MOISTURIZERS'],['sun-care','防曬','防曬 SUN CARE'],['lips','唇部','唇部 LIPS'],['eyes','眼部','眼部 EYES'],['cheeks','臉頰','臉頰 CHEEKS'],['makeup','彩妝','彩妝 MAKEUP'],['tools','美妝工具','美妝工具 TOOLS'],['fragrance','香氛','香氛 FRAGRANCE'],['body-care','身體保養','身體保養 BODY CARE'],['hair-care','頭髮護理','頭髮護理 HAIR CARE'],['beauty-sets','美妝組合','美妝組合 BEAUTY SETS']]},
+ {name:'服飾／鞋履',items:[['clothing','服飾','服飾 CLOTHING'],['tops','上衣','上衣 TOPS'],['t-shirts','T-shirt','T-SHIRTS'],['shirts','襯衫','襯衫 SHIRTS'],['knitwear','針織／毛衣','針織／毛衣 KNITWEAR'],['hoodies','帽T／大學T','帽T／大學T HOODIES'],['outerwear','外套','外套 OUTERWEAR'],['dresses','洋裝','洋裝 DRESSES'],['bottoms','褲裝／裙裝','褲裝／裙裝 BOTTOMS'],['activewear','運動服飾','運動服飾 ACTIVEWEAR'],['swimwear','泳裝','泳裝 SWIMWEAR'],['shoes','鞋履','鞋履 SHOES'],['socks','襪子','襪子 SOCKS'],['headwear','帽子','帽子 HEADWEAR']]},
+ {name:'水瓶／杯具',items:[['drinkware','水瓶／杯具','水瓶／杯具 DRINKWARE'],['water-bottles','水瓶','水瓶 WATER BOTTLES'],['tumblers','隨行杯','隨行杯 TUMBLERS'],['travel-mugs','保溫杯','保溫杯 TRAVEL MUGS'],['cups','杯子','杯子 CUPS'],['straws','吸管／杯蓋','吸管／杯蓋 STRAWS & LIDS'],['bottle-accessories','水瓶配件','水瓶配件 BOTTLE ACCESSORIES'],['coolers','保冷箱／袋','保冷箱／袋 COOLERS']]},
+ {name:'家居生活',items:[['home','居家用品','居家用品 HOME'],['decor','家飾／擺飾','家飾／擺飾 DECOR'],['snowglobe','水晶球','水晶球 SNOWGLOBE'],['organizer','收納展示','收納展示 ORGANIZER'],['storage','收納用品','收納用品 STORAGE'],['kitchen','廚房用品','廚房用品 KITCHEN'],['tableware','餐具','餐具 TABLEWARE'],['bedding','寢具','寢具 BEDDING'],['blankets','毯子','毯子 BLANKETS'],['towels','毛巾','毛巾 TOWELS'],['lighting','燈具','燈具 LIGHTING'],['candles','蠟燭／擴香','蠟燭／擴香 CANDLES'],['furniture','家具','家具 FURNITURE'],['bath','衛浴用品','衛浴用品 BATH']]},
+ {name:'包袋／飾品',items:[['bags','包袋','包袋 BAGS'],['wallets','錢包／卡夾','錢包／卡夾 WALLETS'],['jewelry','飾品','飾品 JEWELRY'],['necklaces','項鍊','項鍊 NECKLACES'],['earrings','耳環','耳環 EARRINGS'],['bracelets','手鍊','手鍊 BRACELETS'],['keychains','鑰匙圈','鑰匙圈 KEYCHAINS'],['hair-accessories','髮飾','髮飾 HAIR ACCESSORIES'],['sunglasses','太陽眼鏡','太陽眼鏡 SUNGLASSES'],['accessories','其他配件','其他配件 ACCESSORIES']]},
+ {name:'3C／生活科技',items:[['tech','3C 用品','3C 用品 TECH'],['phone-cases','手機殼','手機殼 PHONE CASES'],['phone-accessories','手機配件','手機配件 PHONE ACCESSORIES'],['chargers','充電配件','充電配件 CHARGERS'],['audio','音訊用品','音訊用品 AUDIO'],['computer-accessories','電腦配件','電腦配件 COMPUTER ACCESSORIES'],['gadgets','科技小物','科技小物 GADGETS']]},
+ {name:'生活選物／運動',items:[['lifestyle','生活小物','生活小物 LIFESTYLE'],['stationery','文具','文具 STATIONERY'],['travel','旅行用品','旅行用品 TRAVEL'],['outdoor','戶外用品','戶外用品 OUTDOOR'],['fitness','健身用品','健身用品 FITNESS'],['sports','運動配件','運動配件 SPORTS'],['pet','寵物用品','寵物用品 PET'],['gifts','禮品／組合','禮品／組合 GIFTS']]},
+ {name:'親子／食品',items:[['baby','嬰幼兒用品','嬰幼兒用品 BABY'],['kids-clothing','童裝','童裝 KIDS CLOTHING'],['toys','玩具','玩具 TOYS'],['food','食品','食品 FOOD'],['snacks','零食','零食 SNACKS'],['coffee-tea','咖啡／茶','咖啡／茶 COFFEE & TEA'],['food-gifts','食品禮盒','食品禮盒 FOOD GIFTS']]}
+];
+const brandPresets={
+ beauty:['skincare','lips','eyes','cheeks','makeup','tools','body-care','fragrance'],
+ apparel:['clothing','tops','t-shirts','hoodies','outerwear','bottoms','shoes','headwear','bags'],
+ drinkware:['drinkware','water-bottles','tumblers','travel-mugs','cups','bottle-accessories','straws'],
+ home:['home','decor','storage','kitchen','tableware','bedding','blankets','candles'],
+ lifestyle:['lifestyle','drinkware','bags','stationery','travel','decor','gifts'],
+ tech:['tech','phone-cases','phone-accessories','chargers','audio','computer-accessories','gadgets'],
+ accessories:['bags','wallets','jewelry','keychains','hair-accessories','sunglasses'],
+ wellness:['activewear','fitness','sports','water-bottles','outdoor','travel'],
+ kids:['baby','kids-clothing','toys','drinkware','bags'],
+ food:['food','snacks','coffee-tea','food-gifts','drinkware'],
+ mixed:[]
+};
+function brandSelected(){return [...document.querySelectorAll('#brandCategories input:checked')].map(n=>n.value)}
+function renderBrandLibrary(){
+ const host=$('brandCategories');host.replaceChildren();
+ for(const g of brandTaxonomy){
+  const cluster=document.createElement('section');cluster.className='brand-cluster';
+  const title=document.createElement('h3');title.textContent=g.name;cluster.append(title);
+  const options=document.createElement('div');options.className='brand-checks';
+  for(const [key,name,heading] of g.items){
+   const label=document.createElement('label');label.className='brand-choice';
+   const input=document.createElement('input');input.type='checkbox';input.value=key;
+   Object.assign(input.dataset,{title:name,heading});
+   input.addEventListener('change',schedule);
+   const span=document.createElement('span');span.textContent=name;label.append(input,span);options.append(label);
+  }
+  cluster.append(options);host.append(cluster);
+ }
+}
+function brandApplyPreset(value){
+ const chosen=new Set(brandPresets[value]||[]);
+ document.querySelectorAll('#brandCategories input').forEach(n=>n.checked=chosen.has(n.value));
+ build();
+}
+function brandCustomRow(data={}){
+ const box=document.createElement('div');box.className='custom-row';
+ const grid=document.createElement('div');grid.className='brand-custom-grid';
+ const title=newInput(data.title||'','例如：水壺收納包');
+ const code=newInput(data.key||'','例如：bottle-bags');
+ const heading=newInput(data.heading||'','自動產生');
+ title.dataset.field='title';code.dataset.field='key';heading.dataset.field='heading';
+ let autoCode=!data.key,autoHeading=!data.heading;
+ const makeHeading=()=>{if(autoHeading)heading.value=(title.value.trim()+' '+code.value.trim().replace(/-/g,' ').toUpperCase()).trim()};
+ title.addEventListener('input',()=>{if(autoCode)code.value=slug(title.value);makeHeading();schedule()});
+ code.addEventListener('input',()=>{autoCode=false;code.value=slug(code.value);makeHeading();schedule()});
+ heading.addEventListener('input',()=>{autoHeading=false;schedule()});
+ const label=(name,el)=>{const l=document.createElement('label');l.textContent=name;l.append(el);return l};
+ grid.append(label('分類名稱',title),label('英文代碼',code),label('原生標題',heading));
+ makeHeading();
+ const foot=document.createElement('div');foot.className='row-actions';
+ const del=document.createElement('button');del.type='button';del.className='remove';del.textContent='移除此分類 ×';
+ del.onclick=()=>{box.remove();schedule()};
+ foot.append(del);box.append(grid,foot);$('brandCustomRows').append(box);
+ schedule();return title;
+}
+function brandRows(){
+ const rows=[{title:'全部商品',key:'all',heading:'全部商品 ALL',group:'全部商品'}];
+ for(const el of document.querySelectorAll('#brandCategories input:checked')){
+  rows.push({title:el.dataset.title,key:el.value,heading:el.dataset.heading,group:'全部商品'});
+ }
+ document.querySelectorAll('#brandCustomRows .custom-row').forEach((el,i)=>{
+  const field=k=>el.querySelector('[data-field="'+k+'"]')?.value.trim()||'';
+  const title=field('title'),key=slug(field('key')),heading=field('heading');
+  if(!title&&!key&&!heading)return;
+  if(!title||!key)throw Error('品牌自訂分類 '+(i+1)+'：請填寫分類名稱與英文代碼');
+  rows.push({title,key,heading:heading||title+' '+key.toUpperCase(),group:'全部商品'});
+ });
+ return rows;
+}
+function brandFilter(){
+ const term=$('brandFilter').value.trim().toLowerCase();
+ document.querySelectorAll('.brand-cluster').forEach(cluster=>{
+  let visible=0;
+  cluster.querySelectorAll('.brand-choice').forEach(item=>{
+   const show=!term||item.textContent.toLowerCase().includes(term)||item.querySelector('input').value.includes(term);
+   item.classList.toggle('is-filtered',!show);if(show)visible++;
+  });
+  cluster.classList.toggle('is-filtered',!visible);
+ });
+}
+function brandImport(){
+ const raw=$('categories').value.split(/\r?\n/).map(x=>x.trim()).filter(Boolean);
+ const data=[];
+ for(const [i,line] of raw.entries()){
+  const p=line.split(/[|｜]/).map(x=>x.trim());
+  if(p.length!==3||!p.every(Boolean)){announce('⚠ 第 '+(i+1)+' 行不符合三欄格式',true);return;}
+  data.push({title:p[0],key:slug(p[1]),heading:p[2]});
+ }
+ const indexed=new Map([...document.querySelectorAll('#brandCategories input')].map(x=>[x.value,x]));
+ let added=0;
+ for(const d of data){
+  if(d.key==='all')continue;
+  const option=indexed.get(d.key);
+  if(option&&option.dataset.title===d.title&&option.dataset.heading===d.heading){option.checked=true;}
+  else brandCustomRow(d);
+  added++;
+ }
+ $('categories').value='';build();
+ announce('✓ 已匯入 '+added+' 個品牌分類');
+}
+
+let timer=0;
+function announce(s,error=false){$('status').textContent=s;$('status').className=error?'status-warn':'status-good'}
+function schedule(){clearTimeout(timer);timer=setTimeout(build,140)}
+function labelInput(labelText,control){
+ const label=document.createElement('label');label.textContent=labelText;label.append(control);return label;
+}
+function newInput(value='',placeholder=''){
+ const input=document.createElement('input');input.type='text';input.value=value;input.placeholder=placeholder;return input;
+}
+function customRow(data={}){
+ const wrapper=document.createElement('div');wrapper.className='custom-row';
+ const grid=document.createElement('div');grid.className='custom-grid';
+ const group=document.createElement('select');
+ for(const g of library){const o=document.createElement('option');o.value=g.name;o.textContent=g.name;group.append(o)}
+ group.value=data.group||'收藏品';
+ const name=newInput(data.title||'','例如：擺飾');
+ const code=newInput(data.key||'','例如：decor');
+ const heading=newInput(data.heading||'','自動產生原生標題');
+ group.dataset.field='group';name.dataset.field='title';code.dataset.field='key';heading.dataset.field='heading';
+ let headingIsAuto=!data.heading;
+ function refreshHeading(){
+  if(headingIsAuto)heading.value=(name.value.trim()+(code.value.trim()?' '+slug(code.value).toUpperCase().replace(/-/g,' '):'')).trim();
+ }
+ refreshHeading();
+ const setHeading=()=>{headingIsAuto=false;schedule()};
+ name.addEventListener('input',()=>{refreshHeading();schedule()});
+ code.addEventListener('input',()=>{
+  const start=code.selectionStart;
+  const normalized=slug(code.value);
+  if(code.value!==normalized){code.value=normalized;try{code.setSelectionRange(start,start)}catch(e){}}
+  refreshHeading();schedule();
+ });
+ heading.addEventListener('input',setHeading);
+ group.addEventListener('change',schedule);
+ grid.append(labelInput('主分類',group),labelInput('顯示名稱',name),labelInput('英文代碼',code),labelInput('對應原生標題',heading));
+ const foot=document.createElement('div');foot.className='row-actions';
+ const remove=document.createElement('button');remove.type='button';remove.className='remove';remove.textContent='移除此分類 ×';
+ remove.onclick=()=>{wrapper.remove();schedule()};
+ foot.append(remove);wrapper.append(grid,foot);$('customRows').append(wrapper);
+ updateCustomCount();
+ return {wrapper,name,code};
+}
+function updateCustomCount(){
+ const n=$('customRows').children.length;
+ $('customCount').textContent=n?'已新增 '+n+' 個自訂子分類':'尚未新增自訂子分類';
+}
+function renderArtist(){
+ const host=$('artistGroups');host.replaceChildren();
+ for(const g of library){
+  const box=document.createElement('div');box.className='group';
+  const head=document.createElement('div');head.className='ghead';
+  const title=document.createElement('strong');title.textContent=g.name+' / '+g.key.toUpperCase();
+  const action=document.createElement('button');action.type='button';action.className='light';action.textContent='全選／取消';
+  action.onclick=()=>{const boxes=[...box.querySelectorAll('input[type=checkbox]')];const next=!boxes.every(x=>x.checked);boxes.forEach(x=>x.checked=next);schedule()};
+  head.append(title,action);box.append(head);
+  const options=document.createElement('div');options.className='options';
+  for(const [name,key,heading] of g.options){
+   const label=document.createElement('label');label.className='option';
+   const input=document.createElement('input');input.type='checkbox';
+   Object.assign(input.dataset,{group:g.name,key,title:name,heading});
+   input.checked=(g.key==='music'&&['vinyl','cd','cassette'].includes(key))||(g.key==='apparel'&&key==='tops')||(g.key==='accessories'&&key==='keychains');
+   input.addEventListener('change',schedule);
+   const text=document.createElement('span');text.textContent=name;label.append(input,text);options.append(label);
+  }
+  box.append(options);host.append(box);
+ }
+}
+
+/* Series cards are metadata for the existing artist two-level navigation.
+   The 1shop storefront still owns product membership and product displays. */
+const seriesProductTypes=[
+ ['music','音樂'],['vinyl','黑膠'],['cd','CD'],['cassette','卡帶'],
+ ['tops','上衣'],['outerwear','外套'],['headwear','帽子'],['bags','包袋'],
+ ['phone','手機配件'],['keychains','鑰匙圈'],['jewelry','飾品'],
+ ['prints','海報／印刷品'],['photocards','卡片／照片'],['figures','公仔／模型'],
+ ['drinkware','杯具'],['blankets','毯子'],['decor','家飾／擺飾'],
+ ['stationery','文具'],['tour-merch','巡演周邊']
+];
+
+/* One shared taxonomy powers artist options and every series.
+   Custom child categories appear in existing AND newly-added series. */
+function getCustomArtistTypes(){
+ const out=[];
+ document.querySelectorAll('#customRows .custom-row').forEach(row=>{
+  const get=k=>row.querySelector('[data-field="'+k+'"]')?.value.trim()||'';
+  const key=slug(get('key')),title=get('title'),heading=get('heading');
+  if(key&&title)out.push({key,title,heading,group:get('group')});
+ });
+ return out;
+}
+function seriesCatalog(){
+ const catalog=new Map();
+ for(const [key,title] of seriesProductTypes)catalog.set(key,{key,title});
+ for(const group of library){
+  for(const [title,key] of group.options){
+   if(!catalog.has(key))catalog.set(key,{key,title});
+  }
+ }
+ for(const item of getCustomArtistTypes()){
+  // Custom category metadata overrides the matching preset label without
+  // creating a duplicate checkbox or a second product category.
+  catalog.set(item.key,{key:item.key,title:item.title});
+ }
+ return [...catalog.values()];
+}
+function createSeriesOption(key,title,checked){
+ const label=document.createElement('label');
+ const input=document.createElement('input');input.type='checkbox';
+ input.value=key;input.checked=!!checked;input.addEventListener('change',schedule);
+ const caption=document.createElement('span');caption.textContent=title;
+ label.append(input,caption);return label;
+}
+function synchronizeSeriesOptions(){
+ const catalog=seriesCatalog();
+ for(const box of $('seriesRows').children){
+  const area=box.querySelector('.series-options');
+  if(!area)continue;
+  const old=new Map([...area.querySelectorAll('label')].map(label=>[label.querySelector('input')?.value,label]));
+  const fragment=document.createDocumentFragment();
+  for(const item of catalog){
+   let label=old.get(item.key);
+   if(label){
+    const span=label.querySelector('span');
+    if(span)span.textContent=item.title;
+   }else label=createSeriesOption(item.key,item.title,false);
+   fragment.append(label);
+  }
+  area.replaceChildren(fragment);
+ }
+}
+
+function seriesName(s){return s.trim().replace(/\s+/g,' ')}
+function addSeriesCard(data={}){
+ const box=document.createElement('div');box.className='series-card';
+ const fields=document.createElement('div');fields.className='series-fields';
+ function field(title,element){const label=document.createElement('label');label.textContent=title;label.append(element);return label}
+ const name=newInput(data.name||'','例如 The Life of a Showgirl');
+ const code=newInput(data.key||'','例如 the-life-of-a-showgirl');
+ const kind=document.createElement('select');
+ for(const k of ['專輯','巡演','企劃／限定','其他系列']){const opt=document.createElement('option');opt.value=k;opt.textContent=k;kind.append(opt)}
+ kind.value=data.kind||'專輯';
+ let codeManual=!!data.key;
+ name.addEventListener('input',()=>{if(!codeManual)code.value=slug(name.value);schedule()});
+ code.addEventListener('input',()=>{codeManual=true;code.value=slug(code.value);schedule()});
+ kind.addEventListener('change',schedule);
+ fields.append(field('作品／系列名稱',name),field('英文代碼',code),field('系列類型',kind));
+ const options=document.createElement('div');options.className='series-options';
+ for(const {key,title} of seriesCatalog()){
+  const checked=Array.isArray(data.selected)?data.selected.includes(key):['vinyl','cd','tops','decor'].includes(key);
+  options.append(createSeriesOption(key,title,checked));
+ }
+ const actions=document.createElement('div');actions.className='row-actions';
+ const hint=document.createElement('span');hint.className='series-info';hint.textContent='勾選這個系列實際販售的商品類型';
+ const buttons=document.createElement('div');buttons.className='series-actions';
+ const copy=document.createElement('button');copy.type='button';copy.className='light';copy.textContent='複製設定';
+ const remove=document.createElement('button');remove.type='button';remove.className='light';remove.textContent='移除系列';
+ copy.onclick=()=>{addSeriesCard({name:name.value?name.value+' (Copy)':'',key:code.value?code.value+'-copy':'',kind:kind.value,selected:[...options.querySelectorAll('input:checked')].map(i=>i.value)});schedule()};
+ remove.onclick=()=>{box.remove();schedule()};
+ buttons.append(copy,remove);actions.append(hint,buttons);
+ box.append(fields,options,actions);$('seriesRows').append(box);schedule();return box;
+}
+function seriesEntries(){
+ const result=[],seen=new Set();
+ for(const [index,box] of [...$('seriesRows').children].entries()){
+  const name=seriesName(box.querySelector('.series-fields input:nth-of-type(1)')?.value||box.querySelectorAll('.series-fields input')[0]?.value||'');
+  const key=slug(box.querySelectorAll('.series-fields input')[1]?.value||'');
+  const kind=box.querySelector('.series-fields select')?.value||'專輯';
+  const selected=[...box.querySelectorAll('.series-options input:checked')].map(x=>x.value);
+  if(!name&&!key&&!selected.length)continue;
+  if(!name||!key)throw Error('作品系列 '+(index+1)+'：請填寫系列名稱及英文代碼。');
+  if(seen.has(key))throw Error('作品系列英文代碼重複：'+key);
+  seen.add(key);
+  if(!selected.length)throw Error('作品系列「'+name+'」至少要勾選一個商品類型。');
+  const group='系列 · '+name;
+  result.push({seriesName:name,seriesKey:key,kind,selected,group});
+ }
+ return result;
+}
+
+function setMode(next){
+ mode=next;
+ $('brandFields').classList.toggle('hide',next!=='brand');$('artistFields').classList.toggle('hide',next!=='artist');$('seriesFields').classList.toggle('hide',next!=='artist');
+ $('modeBrand').className=next==='brand'?'selected':'light';$('modeArtist').className=next==='artist'?'selected':'light';
+ $('modeBrand').setAttribute('aria-pressed',String(next==='brand'));$('modeArtist').setAttribute('aria-pressed',String(next==='artist'));
+ $('previewMode').textContent=next.toUpperCase();build();
+}
+function entries(){
+ let rows=[];
+ if(mode==='brand'){
+  rows=brandRows();
+ }else{
+  rows.push({title:'全部商品',key:'all',heading:'全部商品 ALL',group:'全部商品'});
+  document.querySelectorAll('#artistGroups input:checked').forEach(i=>rows.push({title:i.dataset.title,key:i.dataset.key,heading:i.dataset.heading,group:i.dataset.group}));
+  document.querySelectorAll('#customRows .custom-row').forEach((row,index)=>{
+   const field=name=>row.querySelector('[data-field="'+name+'"]')?.value.trim()||'';
+   const title=field('title'),key=slug(field('key')),heading=field('heading'),group=field('group');
+   // Fully blank placeholder rows are ignored, but a partly filled row must be corrected.
+   if(!title&&!key&&!heading)return;
+   if(!title||!key)throw Error('自訂分類 '+(index+1)+'：請填寫顯示名稱與英文代碼（例如 decor）。');
+   const duplicate=rows.find(r=>r.key===key);
+   if(duplicate){
+    if(duplicate.title===title)return; // same preset selected in custom editor: do not duplicate
+    throw Error('自訂分類 '+(index+1)+' 的英文代碼「'+key+'」已被「'+duplicate.title+'」使用');
+   }
+   rows.push({title,key,heading:heading||title+' '+key.toUpperCase(),group});
+  });
+ }
+ if(mode==='artist'){
+  for(const series of seriesEntries()){
+   for(const key of series.selected){
+    const pair=seriesCatalog().find(t=>t.key===key);
+    const label=pair?pair.title:key;
+    rows.push({title:label,key:'series-'+series.seriesKey+'-'+key,heading:series.seriesName+' ／ '+label,group:series.group});
+   }
+  }
+ }
+ if(!rows.length)throw Error('至少要有一個分類');
+ const seen=new Map();
+ for(const row of rows){
+  if(!row.key)throw Error('「'+row.title+'」的英文代碼無效。僅限 a-z、0-9、-。');
+  if(seen.has(row.key))throw Error('分類代碼「'+row.key+'」重複：'+seen.get(row.key)+' 與 '+row.title+'，請修改其中一個。');
+  seen.set(row.key,row.title);
+ }
+ return rows;
+}
+function build(){
+ updateCustomCount();
+ synchronizeSeriesOptions();
+ try{
+  const name=$('name').value.trim(),id=slug($('slug').value);
+  if(!name||!id)throw Error('請先填寫名稱與有效英文識別碼。');
+  const rows=entries();
+  const lines=[
+   '<!-- BEC COLLECTION | '+esc(name)+' | '+mode.toUpperCase()+' -->',
+   '<link rel="stylesheet" href="'+rootUrl+'bec-collection.css?v=1.1">',
+   ...(mode==='artist'?['<link rel="stylesheet" href="'+rootUrl+'bec-artist-compact.css?v=2.2">']:[]),
+   '<nav data-bec-collection '+(mode==='artist'?'data-bec-artist-v2 ':'')+'class="'+(mode==='artist'?'bec-artist':'')+'" aria-label="'+esc(name)+' 商品分類導覽">',
+   '  <div class="bec-col-brand"><small>DISCOVER / '+esc(name.toUpperCase())+'</small><strong>Explore Categories</strong></div>',
+   '  <div class="bec-col-links">'
+  ];
+  if(mode==='brand'){
+   for(const r of rows)lines.push('    <a href="#bec-'+id+'-'+r.key+'" data-heading="'+esc(r.heading)+'">'+esc(r.title)+'</a>');
+  }else{
+   // LEVEL 1: exactly two browse modes, not 18 album buttons in one row.
+   // LEVEL 2: series names or product category groups.
+   // LEVEL 3: actual anchor links to native 1shop section headings.
+   const typeRows=rows.filter(r=>!r.group.startsWith('系列 · '));
+   const seriesRows=rows.filter(r=>r.group.startsWith('系列 · '));
+   const writeView=(view,source)=>{
+    const names=[...new Set(source.map(r=>r.group))];
+    lines.push('      <div class="bec-artist-view" data-view="'+view+'">');
+    lines.push('        <div class="bec-artist-main" aria-label="'+(view==='series'?'專輯與系列':'商品大類')+'">');
+    for(const group of names){
+     const label=view==='series'?group.replace(/^系列 · /,''):group;
+     lines.push('          <button type="button" data-group="'+esc(group)+'" aria-pressed="false">'+esc(label)+'</button>');
+    }
+    lines.push('        </div>','        <div class="bec-artist-panels">');
+    for(const group of names){
+     lines.push('          <div class="bec-artist-panel" data-group="'+esc(group)+'">');
+     for(const r of source.filter(x=>x.group===group)){
+      lines.push('            <a href="#bec-'+id+'-'+r.key+'" data-heading="'+esc(r.heading)+'">'+esc(r.title)+'</a>');
+     }
+     lines.push('          </div>');
+    }
+    lines.push('        </div>','      </div>');
+   };
+   lines.push('    <div class="bec-artist-switch" aria-label="瀏覽方式">',
+    '      <button type="button" data-view="series" aria-pressed="false">依專輯／系列</button>',
+    '      <button type="button" data-view="type" aria-pressed="false">依商品類型</button>',
+    '    </div>',
+    '    <div class="bec-artist-views">');
+   writeView('series',seriesRows);
+   writeView('type',typeRows);
+   lines.push('    </div>');
+  }
+  lines.push('  </div>','</nav>','<script defer src="'+rootUrl+'bec-collection.js?v=1.2"><'+'/script>');
+  if(mode==='artist')lines.push('<script defer src="'+rootUrl+'bec-artist-compact.js?v=2.2"><'+'/script>');
+  $('output').value=lines.join('\n');
+  $('seriesCount').textContent=$('seriesRows').children.length+' 個作品系列';
+  $('brandCount').textContent='全部商品 + '+brandSelected().length+' 個選取分類 + '+$('brandCustomRows').children.length+' 個自訂分類';
+  $('summary').textContent=rows.length+' 個分類'+(mode==='artist'?' / '+new Set(rows.map(x=>x.group)).size+' 組主分類':'');
+  announce('已準備完整代碼，可以直接複製。');
+ }catch(e){
+  $('output').value='';
+  $('seriesCount').textContent=$('seriesRows').children.length+' 個作品系列';
+  $('summary').textContent='請完成設定';
+  announce('⚠ '+e.message,true);
+ }
+}
+function importOld(){
+ const lines=$('extra').value.split(/\r?\n/).map(x=>x.trim()).filter(Boolean);
+ let added=0;
+ for(const [i,line] of lines.entries()){
+  const p=line.split(/[|｜]/).map(x=>x.trim());
+  if(p.length!==4||!p.every(Boolean)){announce('⚠ 舊版第 '+(i+1)+' 行格式不完整，請確認四個欄位。',true);return;}
+  if(!library.some(g=>g.name===p[0])){announce('⚠ 第 '+(i+1)+' 行主分類「'+p[0]+'」不存在。',true);return;}
+ }
+ for(const line of lines){
+  const p=line.split(/[|｜]/).map(x=>x.trim());
+  customRow({group:p[0],title:p[1],key:p[2],heading:p[3]});added++;
+ }
+ $('extra').value='';
+ build();
+ announce('已匯入 '+added+' 個自訂分類，之後可以直接在上方編輯。');
+}
+$('addSeries').onclick=()=>{const box=addSeriesCard();box.querySelector('input').focus()};
+$('addCustom').onclick=()=>{const row=customRow();row.name.focus();schedule()};
+$('importExtra').onclick=importOld;
+$('modeBrand').onclick=()=>setMode('brand');$('modeArtist').onclick=()=>setMode('artist');
+$('rhode').onclick=()=>{$('brandCustomRows').replaceChildren();$('name').value='rhode';$('slug').value='rhode';$('brandIndustry').value='mixed';document.querySelectorAll('#brandCategories input').forEach(x=>x.checked=['skincare','lips','eyes','cheeks','tools','clothing'].includes(x.value));build()};
+$('brandSample').onclick=()=>{$('name').value='NEW BRAND';$('slug').value='new-brand';$('brandIndustry').value='lifestyle';brandApplyPreset('lifestyle')};
+$('presetAll').onclick=()=>{document.querySelectorAll('#artistGroups input').forEach(i=>i.checked=true);build()};
+$('presetBasic').onclick=()=>{document.querySelectorAll('#artistGroups input').forEach(i=>i.checked=['vinyl','cd','cassette','tops','keychains'].includes(i.dataset.key));build()};
+$('presetClear').onclick=()=>{document.querySelectorAll('#artistGroups input').forEach(i=>i.checked=false);build()};
+$('name').addEventListener('input',()=>{if(autoSlug){$('slug').value=slug($('name').value)}schedule()});
+$('slug').addEventListener('input',()=>{autoSlug=false;schedule()});
+$('brandIndustry').addEventListener('change',()=>brandApplyPreset($('brandIndustry').value));
+$('brandFilter').addEventListener('input',brandFilter);
+$('brandClear').onclick=()=>{document.querySelectorAll('#brandCategories input').forEach(x=>x.checked=false);build()};
+$('brandAddCustom').onclick=()=>brandCustomRow().focus();
+$('brandImport').onclick=brandImport;
+$('generate').onclick=build;
+$('copy').onclick=async()=>{
+ build();if(!$('output').value)return;
+ try{await navigator.clipboard.writeText($('output').value);announce('✓ 已複製完整代碼，可以貼入 1shop。')}
+ catch(e){$('output').focus();$('output').select();announce('請按 Command + C 複製已選取的完整代碼。')}
+};
+
+/* v2.6: autosave all editor state, including 100+ series selections */
+const DRAFT_KEY='bec-collection-builder-draft-v1';
+const LIBRARY_KEY='bec-collection-projects-v1';
+let saveTimer=0,loadingDraft=false;
+const valueOf=(row,key)=>row.querySelector('[data-field="'+key+'"]')?.value||'';
+function captureDraft(){
+ return {
+  format:'bec-builder-draft-v1',mode,name:$('name').value,slug:$('slug').value,
+  autoSlug,industry:$('brandIndustry').value,brandFilter:$('brandFilter').value,
+  brandKeys:brandSelected(),
+  brandCustom:[...$('brandCustomRows').children].map(row=>({title:valueOf(row,'title'),key:valueOf(row,'key'),heading:valueOf(row,'heading')})),
+  artistKeys:[...document.querySelectorAll('#artistGroups input:checked')].map(i=>i.dataset.key),
+  artistCustom:[...$('customRows').children].map(row=>({group:valueOf(row,'group'),title:valueOf(row,'title'),key:valueOf(row,'key'),heading:valueOf(row,'heading')})),
+  series:[...$('seriesRows').children].map(row=>{
+   const fields=row.querySelectorAll('.series-fields input');
+   return {name:fields[0]?.value||'',key:fields[1]?.value||'',kind:row.querySelector('.series-fields select')?.value||'專輯',
+    selected:[...row.querySelectorAll('.series-options input:checked')].map(i=>i.value)};
+  })
+ };
+}
+function saveDraft(){
+ if(loadingDraft)return;
+ try{localStorage.setItem(DRAFT_KEY,JSON.stringify(captureDraft()));$('draftStatus').textContent='目前草稿已保存在這個瀏覽器。'}
+ catch(e){$('draftStatus').textContent='⚠ 無法儲存草稿；請使用「下載目前設定 JSON」。'}
+}
+function queueSave(){
+ if(loadingDraft)return;
+ clearTimeout(saveTimer);saveTimer=setTimeout(saveDraft,600);
+}
+function restoreDraft(d){
+ if(d?.format!=='bec-builder-draft-v1'||!['brand','artist'].includes(d.mode))throw Error('不是相容的 BEC Builder 設定備份。');
+ loadingDraft=true;
+ try{
+  $('name').value=d.name||'';$('slug').value=d.slug||'';autoSlug=!!d.autoSlug;
+  $('brandIndustry').value=d.industry||'mixed';$('brandFilter').value=d.brandFilter||'';
+  const brandKeys=new Set(d.brandKeys||[]);
+  document.querySelectorAll('#brandCategories input').forEach(i=>i.checked=brandKeys.has(i.value));
+  $('brandCustomRows').replaceChildren();
+  for(const item of d.brandCustom||[])brandCustomRow(item);
+  const artistKeys=new Set(d.artistKeys||[]);
+  document.querySelectorAll('#artistGroups input').forEach(i=>i.checked=artistKeys.has(i.dataset.key));
+  $('customRows').replaceChildren();
+  for(const item of d.artistCustom||[])customRow(item);
+  $('seriesRows').replaceChildren();
+  for(const item of d.series||[])addSeriesCard(item);
+  setMode(d.mode);brandFilter();
+  build();
+ }finally{loadingDraft=false}
+ saveDraft();
+}
+function downloadDraft(name,content){
+ const file=new Blob([content],{type:'application/json;charset=utf-8'});
+ const url=URL.createObjectURL(file),a=document.createElement('a');a.href=url;a.download=name;
+ document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1200);
+}
+$('exportDraft').onclick=()=>downloadDraft('BEC_Builder_'+(slug($('name').value)||'draft')+'.json',JSON.stringify(captureDraft(),null,2));
+$('importDraft').onchange=async e=>{
+ const file=e.target.files?.[0];if(!file)return;
+ try{
+  if(file.size>3000000)throw Error('檔案超過 3 MB。');
+  const data=JSON.parse(await file.text());
+  if(!confirm('是否以這份設定取代目前的編輯內容？建議先下載現有草稿。'))return;
+  restoreDraft(data);$('draftStatus').textContent='已匯入設定；所有系列和商品勾選已恢復。';
+ }catch(error){$('draftStatus').textContent='⚠ 匯入失敗：'+error.message}
+ finally{e.target.value=''}
+};
+$('saveLibrary').onclick=()=>{
+ build();if(!$('output').value){$('draftStatus').textContent='⚠ 程式碼未通過檢查，請先修正分類錯誤。';return}
+ const name=$('name').value.trim(),key=name.toLowerCase()+'-'+mode;
+ try{
+  const collection=JSON.parse(localStorage.getItem(LIBRARY_KEY)||'{}')||{};
+  if(collection[key]&&!confirm('此品牌／藝人在專案庫已有備份。是否以現在的版本取代？'))return;
+  collection[key]={name,mode,source:$('output').value,updated:new Date().toISOString().slice(0,16).replace('T',' ')};
+  localStorage.setItem(LIBRARY_KEY,JSON.stringify(collection));
+  saveDraft();$('draftStatus').textContent='✓ 已儲存「'+name+'」到自動升級中心的專案庫。';
+ }catch(error){$('draftStatus').textContent='⚠ 專案庫儲存失敗，請下載 JSON 備份。'}
+};
+document.addEventListener('input',queueSave,true);
+document.addEventListener('change',queueSave,true);
+document.addEventListener('click',e=>{
+ if(e.target.closest('button'))queueSave();
+},true);
+addEventListener('pagehide',saveDraft);
+renderBrandLibrary();brandApplyPreset('beauty');renderArtist();
+try{
+ const stored=localStorage.getItem(DRAFT_KEY);
+ if(stored){restoreDraft(JSON.parse(stored));$('draftStatus').textContent='✓ 已自動恢復上次編輯的品牌／藝人與系列設定。'}
+ else {build();saveDraft()}
+}catch(error){build();$('draftStatus').textContent='現有草稿無法還原，請匯入 JSON 備份。'}
+
+if(['#upgrade','#taylor'].includes(location.hash))studioMode(location.hash.slice(1),false);
+})();
+</script></body></html>
