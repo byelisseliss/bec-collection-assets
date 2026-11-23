@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>BEC Collection Builder v2.4</title>
+<title>BEC Collection Builder v2.5</title>
 <style>
 :root{font-family:Helvetica,Arial,"PingFang TC",sans-serif;background:#f5f6f6;color:#253034}
 *{box-sizing:border-box}body{margin:0}main{max-width:1060px;margin:auto;padding:44px 20px 100px}
@@ -57,7 +57,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px soli
 <div class="summary-bar"><span id="seriesCount">尚未加入系列</span><span>每個系列可複製分類配置</span></div>
 </section>
 <section class="panel"><h2>產生完整代碼</h2><div class="summary-bar"><span id="summary">請設定分類</span><span id="previewMode">BRAND</span></div><div class="actions"><button type="button" id="generate">產生 1shop 程式</button><button type="button" class="light" id="copy">複製完整代碼</button></div><textarea id="output" readonly spellcheck="false"></textarea><p id="status" role="status" aria-live="polite"></p><p class="code-tip">一鍵複製後，貼入 1shop 單一「程式」區塊。產生器不會直接編輯商店內容。</p></section>
-<section class="panel"><h2>重要使用提醒</h2><p class="tip">・第一個「全部商品」會由共用 v1.2 建立必要錨點與標題（若不存在）。<br>・其餘子分類必須在 1shop 對應商品區塊前建立「原生文字」標題，文字要與設定的第三欄一致；否則放入明確的定位錨點。<br>・藝人模式的「主分類」是導覽分組，不代表有獨立商品區塊；實際錨點屬於勾選的子分類。<br>・一張 1shop 網頁只使用一份 BEC Collection 導覽設定。<br>・產生器不會新增、搬移、修改 1shop 的商品資料或商品展示區塊。<br>・共用資產採穩定版：CSS v1.1、JS v1.2；藝人模式額外載入 artist CSS／JS v1.0。</p></section>
+<section class="panel"><h2>重要使用提醒</h2><p class="tip">・第一個「全部商品」會由共用 v1.2 建立必要錨點與標題（若不存在）。<br>・其餘子分類必須在 1shop 對應商品區塊前建立「原生文字」標題，文字要與設定的第三欄一致；否則放入明確的定位錨點。<br>・藝人前台先選「依專輯／系列」或「依商品類型」，再選系列／商品大類，最後才顯示細項。主分類本身不代表獨立商品區塊。<br>・一張 1shop 網頁只使用一份 BEC Collection 導覽設定。<br>・產生器不會新增、搬移、修改 1shop 的商品資料或商品展示區塊。<br>・共用資產採穩定版：CSS v1.1、JS v1.2；藝人模式額外載入 artist CSS／JS v1.0。</p></section>
 </main><script>
 (()=>{
 'use strict';
@@ -423,27 +423,48 @@ function build(){
   const lines=[
    '<!-- BEC COLLECTION | '+esc(name)+' | '+mode.toUpperCase()+' -->',
    '<link rel="stylesheet" href="'+rootUrl+'bec-collection.css?v=1.1">',
-   ...(mode==='artist'?['<link rel="stylesheet" href="'+rootUrl+'bec-artist.css?v=1.0">']:[]),
-   '<nav data-bec-collection class="'+(mode==='artist'?'bec-artist':'')+'" aria-label="'+esc(name)+' 商品分類導覽">',
+   ...(mode==='artist'?['<link rel="stylesheet" href="'+rootUrl+'bec-artist-v2.css?v=2.0">']:[]),
+   '<nav data-bec-collection '+(mode==='artist'?'data-bec-artist-v2 ':'')+'class="'+(mode==='artist'?'bec-artist':'')+'" aria-label="'+esc(name)+' 商品分類導覽">',
    '  <div class="bec-col-brand"><small>DISCOVER / '+esc(name.toUpperCase())+'</small><strong>Explore Categories</strong></div>',
    '  <div class="bec-col-links">'
   ];
   if(mode==='brand'){
    for(const r of rows)lines.push('    <a href="#bec-'+id+'-'+r.key+'" data-heading="'+esc(r.heading)+'">'+esc(r.title)+'</a>');
   }else{
-   const groups=[...new Set(rows.map(r=>r.group))];
-   lines.push('    <div class="bec-artist-main" role="tablist" aria-label="主分類">');
-   groups.forEach((g,i)=>lines.push('      <button type="button" data-group="'+esc(g)+'" aria-selected="'+(i===0?'true':'false')+'" role="tab">'+esc(g)+'</button>'));
-   lines.push('    </div>','    <div class="bec-artist-panels">');
-   groups.forEach((g,i)=>{
-    lines.push('      <div class="bec-artist-panel'+(i===0?' is-current':'')+'" data-group="'+esc(g)+'">');
-    for(const r of rows.filter(x=>x.group===g))lines.push('        <a href="#bec-'+id+'-'+r.key+'" data-heading="'+esc(r.heading)+'">'+esc(r.title)+'</a>');
-    lines.push('      </div>');
-   });
+   // LEVEL 1: exactly two browse modes, not 18 album buttons in one row.
+   // LEVEL 2: series names or product category groups.
+   // LEVEL 3: actual anchor links to native 1shop section headings.
+   const typeRows=rows.filter(r=>!r.group.startsWith('系列 · '));
+   const seriesRows=rows.filter(r=>r.group.startsWith('系列 · '));
+   const writeView=(view,source)=>{
+    const names=[...new Set(source.map(r=>r.group))];
+    lines.push('      <div class="bec-artist-view" data-view="'+view+'">');
+    lines.push('        <div class="bec-artist-main" aria-label="'+(view==='series'?'專輯與系列':'商品大類')+'">');
+    for(const group of names){
+     const label=view==='series'?group.replace(/^系列 · /,''):group;
+     lines.push('          <button type="button" data-group="'+esc(group)+'" aria-pressed="false">'+esc(label)+'</button>');
+    }
+    lines.push('        </div>','        <div class="bec-artist-panels">');
+    for(const group of names){
+     lines.push('          <div class="bec-artist-panel" data-group="'+esc(group)+'">');
+     for(const r of source.filter(x=>x.group===group)){
+      lines.push('            <a href="#bec-'+id+'-'+r.key+'" data-heading="'+esc(r.heading)+'">'+esc(r.title)+'</a>');
+     }
+     lines.push('          </div>');
+    }
+    lines.push('        </div>','      </div>');
+   };
+   lines.push('    <div class="bec-artist-switch" aria-label="瀏覽方式">',
+    '      <button type="button" data-view="series" aria-pressed="false">依專輯／系列</button>',
+    '      <button type="button" data-view="type" aria-pressed="false">依商品類型</button>',
+    '    </div>',
+    '    <div class="bec-artist-views">');
+   writeView('series',seriesRows);
+   writeView('type',typeRows);
    lines.push('    </div>');
   }
   lines.push('  </div>','</nav>','<script defer src="'+rootUrl+'bec-collection.js?v=1.2"><'+'/script>');
-  if(mode==='artist')lines.push('<script defer src="'+rootUrl+'bec-artist.js?v=1.0"><'+'/script>');
+  if(mode==='artist')lines.push('<script defer src="'+rootUrl+'bec-artist-v2.js?v=2.0"><'+'/script>');
   $('output').value=lines.join('\n');
   $('seriesCount').textContent=$('seriesRows').children.length+' 個作品系列';
   $('brandCount').textContent='全部商品 + '+brandSelected().length+' 個選取分類 + '+$('brandCustomRows').children.length+' 個自訂分類';
