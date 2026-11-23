@@ -260,6 +260,12 @@ $('importBackup').onchange=async event=>{
  }catch(e){$('storageStatus').textContent='匯入失敗：'+e.message}
  event.target.value='';
 };
+addEventListener('message',event=>{
+ if(event.origin!==location.origin||event.source!==parent)return;
+ if(event.data?.kind==='bec-refresh-projects'){
+  projects=readSaved();renderProjects();
+ }
+});
 projects=readSaved();renderProjects();refreshManifest();
 if(document.body.classList.contains('bec-embedded')){
  const sendHeight=()=>{
