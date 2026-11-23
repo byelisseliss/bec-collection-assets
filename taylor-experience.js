@@ -93,6 +93,32 @@ function create(){
  const field=root.querySelector('#bw-object-field');
  kind.forEach(([id,zh,symbol],i)=>{const a=document.createElement('a');a.className='bw-object';a.href=typeHref(id);a.style.setProperty('--index',i);a.innerHTML='<span class="bw-object-symbol">'+esc(symbol)+'</span><strong>'+esc(zh)+'</strong><small>OBJECT '+String(i+1).padStart(2,'0')+'</small><b>↗</b>';field.append(a)});
  scatter(0);
+ // A light source follows the pointer in a restrained manner. The paper grain
+ // remains fixed, so movement feels like real objects under studio lighting.
+ const canHover=window.matchMedia&&window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+ const reducedMotion=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+ if(canHover&&!reducedMotion){
+  let queued=false,mx=0,my=0,gx=64,gy=45;
+  surface.addEventListener('pointermove',e=>{
+   if(drag)return;
+   const bounds=surface.getBoundingClientRect();
+   mx=Math.max(-1,Math.min(1,((e.clientX-bounds.left)/bounds.width-.5)*2));
+   my=Math.max(-1,Math.min(1,((e.clientY-bounds.top)/bounds.height-.5)*2));
+   gx=64+mx*17;gy=45+my*12;
+   if(queued)return;queued=true;
+   requestAnimationFrame(()=>{
+    queued=false;
+    root.style.setProperty('--bw-mx',mx.toFixed(3));
+    root.style.setProperty('--bw-my',my.toFixed(3));
+    root.style.setProperty('--bw-glow-x',gx.toFixed(1)+'%');
+    root.style.setProperty('--bw-glow-y',gy.toFixed(1)+'%');
+   });
+  },{passive:true});
+  surface.addEventListener('pointerleave',()=>{
+   root.style.setProperty('--bw-mx','0');root.style.setProperty('--bw-my','0');
+   root.style.setProperty('--bw-glow-x','64%');root.style.setProperty('--bw-glow-y','45%');
+  });
+ }
  if(location.hash==='#shop-by-type')root.querySelector('#bw-objects').scrollIntoView();
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',create,{once:true});else create();
