@@ -1,5 +1,5 @@
 <!-- BEC / TAYLOR SWIFT LANDING v1.0 — 在 1shop 自訂「程式」區塊貼上全部內容 -->
-<link rel="stylesheet" href="https://byelisseliss.github.io/bec-collection-assets/taylor-landing.css?v=1.0">
+<link rel="stylesheet" href="https://byelisseliss.github.io/bec-collection-assets/taylor-landing.css?v=1.1">
 <div id="bec-ts-landing"></div>
 <script defer src="https://byelisseliss.github.io/bec-collection-assets/taylor-landing.js?v=1.0"></script>
 <!-- 若 1shop 編輯器會刪掉 script，需改由網站允許的自訂程式入口載入該 JS。 -->
