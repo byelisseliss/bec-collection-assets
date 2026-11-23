@@ -1,0 +1,28 @@
+/* BEC Artist v2.2 | compact dropdown, never a full-page sticky catalog */
+.bec-artist.bec-collection-nav .bec-col-links,
+.bec-artist.bec-collection-float .bec-col-links{display:block!important;position:relative!important;overflow:visible!important}
+.bec-artist .bec-artist-switch{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.bec-artist .bec-artist-switch button{appearance:none;box-sizing:border-box;display:flex;justify-content:center;align-items:center;gap:7px;width:100%;min-width:0;min-height:43px;padding:11px 12px;border:1px solid #dfe5e2;border-radius:999px;background:#fff;color:#56635c;font:500 12px/1.35 Helvetica,Arial,sans-serif;cursor:pointer;transition:background .18s,border-color .18s}
+.bec-artist .bec-artist-switch button[aria-pressed=true],.bec-artist .bec-artist-switch button:hover{background:#e2e8e4;border-color:#d4dfd9;color:#2e3933}
+.bec-artist .bec-artist-switch button::after{content:"⌄";font-size:16px;line-height:1;opacity:.7}
+.bec-artist .bec-artist-switch button[aria-pressed=true]::after{transform:rotate(180deg)}
+.bec-artist .bec-artist-views{display:none;position:absolute;top:calc(100% + 9px);left:0;right:0;z-index:15;box-sizing:border-box;width:100%;padding:16px;border:1px solid #dfe5e0;border-radius:16px;background:rgba(252,253,252,.99);box-shadow:0 14px 32px rgba(28,40,34,.12);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);max-height:min(66vh,490px);overflow-y:auto;overscroll-behavior:contain}
+.bec-artist.bec-artist-open .bec-artist-views{display:block}
+.bec-artist .bec-artist-view{display:none}
+.bec-artist .bec-artist-view.is-current{display:block}
+.bec-artist .bec-artist-main{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,160px),1fr));gap:8px}
+.bec-artist .bec-artist-main button{appearance:none;display:flex;align-items:center;justify-content:center;box-sizing:border-box;min-width:0;min-height:44px;padding:10px 12px;border:1px solid #e0e7e3;border-radius:999px;background:white;color:#56645c;font:500 12px/1.45 Helvetica,Arial,sans-serif;text-align:center;overflow-wrap:anywhere;cursor:pointer}
+.bec-artist .bec-artist-main button[aria-pressed=true],.bec-artist .bec-artist-main button:hover{background:#e2e9e4;border-color:#d5e0d8;color:#2d3932}
+.bec-artist .bec-artist-panel{display:none}
+.bec-artist .bec-artist-panel.is-current{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));gap:8px;margin-top:13px;padding-top:13px;border-top:1px solid #e3e9e5}
+.bec-artist .bec-artist-panel a{box-sizing:border-box!important;display:flex!important;align-items:center;justify-content:center;min-width:0!important;width:100%!important;min-height:44px;padding:10px 12px!important;white-space:normal!important;overflow-wrap:anywhere;text-align:center}
+.bec-artist button:focus-visible,.bec-artist a:focus-visible{outline:2px solid #7d9683;outline-offset:2px}
+body.bec-collection-enabled .bec-collection-nav.bec-artist.bec-artist-open{z-index:90!important}
+@media(max-width:767px){
+.bec-artist .bec-artist-switch{gap:7px}
+.bec-artist .bec-artist-switch button{padding:9px 5px;min-height:42px;font-size:12px}
+.bec-artist .bec-artist-views{padding:12px;max-height:min(60vh,420px);border-radius:13px}
+.bec-artist .bec-artist-main,.bec-artist .bec-artist-panel.is-current{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;overflow:visible!important}
+.bec-artist .bec-artist-main button,.bec-artist .bec-artist-panel a{min-height:41px;font-size:11px!important;padding:9px 7px!important;white-space:normal!important}
+}
+@media(prefers-reduced-motion:reduce){.bec-artist .bec-artist-switch button{transition:none}}
