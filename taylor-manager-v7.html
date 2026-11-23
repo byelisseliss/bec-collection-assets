@@ -277,7 +277,7 @@ async function scanAlbum(id){
  const index=albums.findIndex(a=>a[0]===id);
  document.querySelectorAll('#albumList .album-products')[index]?.querySelectorAll('.album-product-choices input').forEach(cb=>cb.checked=chosen.includes(cb.dataset.type));
  if(badge)badge.textContent='✓ '+productCount+' 筆相關商品／'+chosen.length+' 種類別'+(fail?'（部分來源無法讀取）':'');
- save();return true;
+ save();sendDesign();return true;
 }
 async function scanAllAlbums(){
  const btn=$('scanAll'),info=$('scanAllStatus');btn.disabled=true;let n=0;
@@ -315,7 +315,7 @@ function renderDesigner(){
 }
 function sendDesign(){
  const f=$('designFrame');if(!f||!f.contentWindow)return;
- f.contentWindow.postMessage({kind:'bec-visual-design',design:normalizeDesign(data.design)},location.origin);
+ f.contentWindow.postMessage({kind:'bec-visual-design',design:normalizeDesign(data.design),albumTypes:data.albumTypes},location.origin);
 }
 $('designFrame').addEventListener('load',()=>setTimeout(sendDesign,90));
 $('designReset').onclick=()=>{data.design={...DESIGN_DEFAULT};renderDesigner();save()};
