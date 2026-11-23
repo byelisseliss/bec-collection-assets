@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BEC Collection / Upgrade Center</title>
+<meta name="description" content="BEC 品牌與藝人專頁升級、草稿備份與管理工具">
+<style>
+:root{font-family:Helvetica,Arial,"PingFang TC",sans-serif;color:#283331;background:#f5f6f4}
+*{box-sizing:border-box}body{margin:0}a{color:inherit}button,input,select,textarea{font:inherit}button{cursor:pointer}
+main{max-width:1120px;margin:auto;padding:34px 20px 90px}
+.top{display:flex;align-items:center;justify-content:space-between;padding-bottom:28px;border-bottom:1px solid #dee3df}
+.top b{font-size:15px}.top a{font-size:12px;text-decoration:none;border-bottom:1px solid #9aa8a0;padding-bottom:4px}
+.eyebrow{font-size:10px;letter-spacing:.16em;color:#819087}
+.hero{padding:53px 0 30px}.hero h1{font-size:clamp(35px,6vw,64px);font-weight:500;line-height:1.06;letter-spacing:-.065em;margin:15px 0}.hero p{font-size:14px;line-height:1.85;color:#7b8680;max-width:670px}
+.layout{display:grid;grid-template-columns:290px minmax(0,1fr);gap:20px;align-items:start}
+.panel{background:white;border:1px solid #dde4df;border-radius:16px;padding:22px;margin-bottom:16px;min-width:0}
+h2{font-weight:500;font-size:19px;margin:0 0 18px}h3{font-weight:500;font-size:14px}
+label{display:block;font-size:12px;font-weight:600;color:#53615a;margin-bottom:8px}
+textarea,input[type=text]{display:block;background:#fff;border:1px solid #d8e0db;border-radius:10px;padding:12px 13px;width:100%;color:#283331;font-size:13px}
+textarea{min-height:270px;resize:vertical;font:12px/1.6 ui-monospace,Menlo,monospace}
+#upgraded{min-height:360px}button{border:1px solid #263730;background:#263730;color:white;border-radius:999px;padding:12px 17px;font-size:12px}
+button.light{background:#fff;color:#304038;border-color:#cfd9d3}
+button:disabled{cursor:not-allowed;opacity:.45}
+button:focus-visible,a:focus-visible,textarea:focus-visible,input:focus-visible{outline:2px solid #789881;outline-offset:3px}
+.actions{display:flex;flex-wrap:wrap;gap:9px;margin:14px 0}
+.hint{color:#84918a;font-size:12px;line-height:1.75}
+.status{font-size:12px;color:#4e765b;line-height:1.7}
+.error{color:#aa4040!important}
+.notice{border-radius:10px;background:#eff4e9;color:#5f6f5c;padding:15px 17px;font-size:12px;line-height:1.75}
+.meta{display:flex;gap:8px;flex-wrap:wrap}.pill{border:1px solid #d9e0da;background:#fafbf9;border-radius:999px;padding:7px 11px;font-size:11px;color:#66766e}
+#projectList{display:grid;gap:8px}.project{border:1px solid #e2e8e4;border-radius:10px;padding:12px 13px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.project small{font-size:10px;color:#919b95}.project strong{font-size:12px;font-weight:500}
+.project .actions{margin:0;flex-wrap:nowrap}.project button{padding:8px 12px}
+#report{font-size:12px;line-height:1.9;white-space:pre-wrap;color:#52675a;overflow-wrap:anywhere}
+details{border-top:1px solid #e2e8e4;padding:17px 0}summary{cursor:pointer;font-size:13px;color:#52645a}
+details p{font-size:12px;line-height:1.8;color:#7b8880}
+.file-button{display:inline-block;background:#fff;border:1px solid #cfd9d3;border-radius:999px;padding:11px 17px;color:#304038;font-size:12px;cursor:pointer}
+.file-button input{display:none}
+@media(max-width:850px){.layout{grid-template-columns:1fr}.hero{padding-top:36px}}
+@media(max-width:500px){main{padding:18px 12px 70px}.panel{padding:17px}.project{align-items:flex-start;flex-wrap:wrap}}
+</style></head><body><main>
+<div class="top"><b>BEC.</b><a href="builder.html">COLLECTION BUILDER ↗</a></div>
+<header class="hero"><div class="eyebrow">BY ELISS COLLECTION / RELEASE MANAGEMENT</div>
+<h1>Build once.<br>Upgrade anytime.</h1>
+<p>現有品牌與藝人頁面都從完整 1shop 程式碼匯入；未來核心版本更新時，讀取正式版本清單，一鍵產生新的完整替換代碼。專輯名稱、分類與原錨點不必重新輸入。</p>
+<div class="meta"><span class="pill" id="release">檢查正式版本中</span><span class="pill" id="assetSummary">共用資產版本</span><span class="pill">1shop 內容不會被自動修改</span></div></header>
+<div class="layout">
+<aside>
+<section class="panel"><h2>已儲存的專案</h2><p class="hint">只儲存在目前瀏覽器，不會上傳 GitHub 或其他伺服器；建議定期下載備份。</p>
+<div id="projectList"></div><div class="actions">
+<button class="light" type="button" id="exportBackup">匯出全部專案 JSON</button>
+<label class="file-button">匯入 JSON 備份<input id="importBackup" type="file" accept=".json,application/json"></label>
+</div><p id="storageStatus" class="hint" role="status"></p></section>
+<section class="panel"><h2>安全升級流程</h2>
+<div class="notice">1. 先保留現在使用中的 HTML。<br>2. 匯入 → 比對分類數 → 預覽新版。<br>3. 複製最新版 → 只替換 1shop 原本那一個程式區塊。<br>4. 測試成功後再正式發布。</div></section>
+</aside>
+<div>
+<section class="panel"><h2>01 / 匯入現有頁面</h2>
+<label for="source">貼入 1shop 原本 BEC Collection「程式」區塊完整代碼</label>
+<textarea id="source" spellcheck="false" placeholder="貼入現有 rhode、Taylor Swift、BTS、alo 等頁面的 BEC Collection 導覽程式。可以是舊版藝人兩層導覽，或新版三階層導覽。"></textarea>
+<div class="actions"><button id="inspect" type="button">分析原始代碼</button><button id="upgrade" type="button">自動升級到正式版</button><button id="save" class="light" type="button">儲存目前專案</button></div>
+<p id="status" role="status" class="status">請貼入完整代碼。</p></section>
+<section class="panel"><h2>02 / 升級檢查</h2><div id="report">尚未分析。</div></section>
+<section class="panel"><h2>03 / 最新完整代碼</h2>
+<label for="upgraded">替換 1shop 原程式區塊所需的整份 HTML</label><textarea id="upgraded" readonly spellcheck="false"></textarea>
+<div class="actions"><button id="copy" type="button">複製最新版完整代碼</button><button id="download" class="light" type="button">下載 HTML 備份</button><button id="restore" class="light" type="button">恢復匯入時的原碼</button></div>
+<p class="hint">升級器保留原有錨點和分類文字，不建立或修改 1shop 商品及原生文字標題。若有無法辨識的分類，會停止輸出，避免默默遺失資料。</p></section>
+<section class="panel"><h2>維護原則</h2>
+<details><summary>未來有新版本，會自動更新我的 1shop 嗎？</summary><p>不會。建立平台讀取 GitHub 上的正式版本清單，按「自動升級」後即可取得新版完整代碼，再自行貼回 1shop。這樣不會未經驗收就更改商店前台。</p></details>
+<details><summary>新增專輯／商品類別之後，怎麼保留？</summary><p>先在 1shop 儲存產生的新完整導覽程式；下一次以那一份為來源，就可保留所有新增連結。此工具也可保存多份原碼到瀏覽器，並下載 JSON 備份。</p></details>
+<details><summary>我換電腦會有相同專案嗎？</summary><p>目前沒有自動雲端同步。請先匯出專案 JSON，到另一台電腦手動匯入。瀏覽器私人模式或清除網站資料可能會遺失本機草稿。</p></details>
+<details><summary>為什麼不能直接從 1shop 網址抓取我的設定？</summary><p>網頁公開顯示的 DOM 可能沒有原始程式碼，也不一定含完整分類。為避免誤刪系列，使用 1shop 後台的原始「程式」區塊匯入才比較可靠。</p></details></section>
+</div></div></main>
+<script>
+(()=>{
+'use strict';
+const $=id=>document.getElementById(id);
+const BASE='https://byelisseliss.github.io/bec-collection-assets/';
+const STORAGE='bec-collection-projects-v1';
+const DEFAULT={schema:1,release:'2026.11.23',assets:{commonCSS:{path:'bec-collection.css',version:'1.1'},commonJS:{path:'bec-collection.js',version:'1.2'},artistCSS:{path:'bec-artist-v2.css',version:'2.0'},artistJS:{path:'bec-artist-v2.js',version:'2.0'}}};
+let manifest=DEFAULT,converted='',rawSnapshot='',currentName='',currentMode='',projects={};
+function status(msg,error=false){$('status').textContent=msg;$('status').classList.toggle('error',error)}
+function safe(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function url(asset){const a=manifest.assets[asset];return BASE+a.path+'?v='+encodeURIComponent(a.version)}
+function parse(html){
+ const doc=new DOMParser().parseFromString(html,'text/html');
+ const navs=[...doc.querySelectorAll('nav[data-bec-collection]')];
+ if(navs.length!==1)throw Error('需要恰好一份 BEC Collection 導覽程式；目前找到 '+navs.length+' 份。');
+ const nav=navs[0],artist=nav.classList.contains('bec-artist')||!!nav.querySelector('.bec-artist-panel');
+ const name=nav.querySelector('.bec-col-brand small')?.textContent.replace(/^DISCOVER\s*\/\s*/i,'').trim()||nav.getAttribute('aria-label')?.replace(/商品分類導覽/,'').trim()||'BEC';
+ const links=[...nav.querySelectorAll('.bec-col-links a[href^="#"]')];
+ if(!links.length)throw Error('沒有分類連結，請貼入完整原始程式。');
+ const issues=[],seen=new Set(),items=[];
+ for(const link of links){
+  const href=link.getAttribute('href'),heading=link.getAttribute('data-heading');
+  if(!heading||!href||!/^#[a-zA-Z][\w-]*$/.test(href))issues.push('缺少有效錨點／原生標題：'+link.textContent.trim());
+  if(seen.has(href))issues.push('重複錨點：'+href);seen.add(href);
+  const panel=link.closest('.bec-artist-panel');
+  let group=panel?.dataset.group||'';
+  const view=link.closest('.bec-artist-view')?.dataset.view||(group.startsWith('系列 · ')?'series':'type');
+  if(artist&&!panel)issues.push('藝人分類缺少群組：'+link.textContent.trim());
+  items.push({href,heading,title:link.textContent.trim(),group,view});
+ }
+ if(issues.length)throw Error(issues.join('；'));
+ return {doc,nav,name,artist,items};
+}
+function buildGroups(doc,nav,items){
+ const root=doc.createElement('div');root.className='bec-col-links';
+ const switcher=doc.createElement('div');switcher.className='bec-artist-switch';
+ switcher.setAttribute('aria-label','瀏覽方式');
+ for(const [key,label] of [['series','依專輯／系列'],['type','依商品類型']]){
+  const button=doc.createElement('button');button.type='button';button.dataset.view=key;
+  button.setAttribute('aria-pressed','false');button.textContent=label;switcher.appendChild(button);
+ }
+ root.appendChild(switcher);
+ const views=doc.createElement('div');views.className='bec-artist-views';
+ for(const view of ['series','type']){
+  const area=doc.createElement('div');area.className='bec-artist-view';area.dataset.view=view;
+  const controls=doc.createElement('div');controls.className='bec-artist-main';
+  controls.setAttribute('aria-label',view==='series'?'專輯與系列':'商品大類');
+  const panels=doc.createElement('div');panels.className='bec-artist-panels';
+  const groups=[...new Set(items.filter(it=>it.view===view).map(it=>it.group))];
+  for(const group of groups){
+   const button=doc.createElement('button');button.type='button';button.dataset.group=group;
+   button.setAttribute('aria-pressed','false');button.textContent=view==='series'?group.replace(/^系列 · /,''):group;controls.appendChild(button);
+   const panel=doc.createElement('div');panel.className='bec-artist-panel';panel.dataset.group=group;
+   for(const item of items.filter(it=>it.group===group&&it.view===view)){
+    const a=doc.createElement('a');a.setAttribute('href',item.href);a.dataset.heading=item.heading;a.textContent=item.title;panel.appendChild(a);
+   }
+   panels.appendChild(panel);
+  }
+  area.append(controls,panels);views.append(area);
+ }
+ root.append(views);nav.querySelector('.bec-col-links').replaceWith(root);
+ nav.classList.add('bec-artist');nav.setAttribute('data-bec-artist-v2','');
+}
+function analyze(){
+ const source=$('source').value.trim();if(!source)throw Error('請先貼入 1shop 程式原碼。');
+ const parsed=parse(source);
+ const series=parsed.artist?[...new Set(parsed.items.filter(x=>x.view==='series').map(x=>x.group))].length:0;
+ const groups=parsed.artist?[...new Set(parsed.items.filter(x=>x.view==='type').map(x=>x.group))].length:0;
+ $('report').textContent='模式：'+(parsed.artist?'藝人 ARTIST':'品牌 BRAND')+'\n名稱：'+parsed.name+'\n分類連結：'+parsed.items.length+' 個'+(parsed.artist?'\n作品系列：'+series+' 組\n商品大類：'+groups+' 組':'')+'\n重複錨點：0\n原生標題設定：'+parsed.items.length+' 個\n來源：完整 1shop 程式（待升級）';
+ return parsed;
+}
+function generate(){
+ const source=$('source').value.trim();
+ const p=analyze();
+ let nav=p.nav;
+ // Preserve the entire brand nav when switching only its versioned dependencies.
+ if(p.artist)buildGroups(p.doc,nav,p.items);
+ const lines=[
+ '<!-- BEC COLLECTION | AUTO UPGRADED | RELEASE '+safe(manifest.release)+' | '+(p.artist?'ARTIST':'BRAND')+' -->',
+ '<link rel="stylesheet" href="'+url('commonCSS')+'">',
+ ...(p.artist?['<link rel="stylesheet" href="'+url('artistCSS')+'">']:[]),
+ nav.outerHTML,
+ '<script defer src="'+url('commonJS')+'"><'+'/script>',
+ ...(p.artist?['<script defer src="'+url('artistJS')+'"><'+'/script>']:[])
+ ];
+ const out=lines.join('\n');
+ const before=p.items.map(x=>x.href).sort().join('|');
+ const after=parse(out).items.map(x=>x.href).sort().join('|');
+ if(before!==after)throw Error('升級後分類錨點數或內容不一致，已停止輸出，請保留原始碼。');
+ converted=out;rawSnapshot=source;currentName=p.name;currentMode=p.artist?'artist':'brand';
+ $('upgraded').value=out;
+ $('report').textContent+='\n\n驗證結果：錨點、分類數與原生標題均保留\n正式資產版本：'+manifest.release+'\n狀態：已產生最新版完整代碼（尚未貼回 1shop）';
+ status('已安全產生最新版！請先比對分類數，再複製貼回 1shop。');
+}
+async function refreshManifest(){
+ try{
+  const response=await fetch('versions.json?refresh='+Date.now(),{cache:'no-store'});
+  if(!response.ok)throw Error('HTTP '+response.status);
+  const fresh=await response.json();
+  for(const key of ['commonCSS','commonJS','artistCSS','artistJS']){
+   if(!fresh.assets?.[key]?.path||!fresh.assets[key].version||!/^[-\w.]+$/.test(fresh.assets[key].path))throw Error('版本清單格式錯誤');
+  }
+  if(fresh.schema!==1)throw Error('不支援此版本清單');
+  manifest=fresh;
+  $('release').textContent='正式版 '+fresh.release;
+  $('assetSummary').textContent='核心 '+fresh.assets.commonJS.version+' ／ 藝人 '+fresh.assets.artistJS.version;
+ }catch(e){
+  manifest=DEFAULT;$('release').textContent='離線備援版本 '+DEFAULT.release;
+  $('assetSummary').textContent='無法驗證最新版本';
+  $('storageStatus').textContent='版本清單暫時不可讀，將使用本頁內建的已知穩定版。';
+ }
+}
+function readSaved(){try{const data=JSON.parse(localStorage.getItem(STORAGE)||'{}');return data&&typeof data==='object'&&!Array.isArray(data)?data:{}}catch(e){return {}}}
+function persist(){
+ try{localStorage.setItem(STORAGE,JSON.stringify(projects));return true}
+ catch(e){$('storageStatus').textContent='瀏覽器儲存失敗，請立即匯出 JSON 備份。';return false}
+}
+function renderProjects(){
+ const host=$('projectList');host.replaceChildren();
+ const list=Object.entries(projects).sort((a,b)=>(b[1].updated||'').localeCompare(a[1].updated||''));
+ if(!list.length){const p=document.createElement('p');p.className='hint';p.textContent='還沒有儲存的專案。';host.append(p);return}
+ for(const [key,item] of list){
+  const box=document.createElement('div');box.className='project',info=document.createElement('div');
+  const name=document.createElement('strong');name.textContent=item.name||key;
+  const sub=document.createElement('small');sub.style.display='block';sub.textContent=(item.mode==='artist'?'藝人':'品牌')+' · '+(item.updated||'');
+  info.append(name,sub);
+  const actions=document.createElement('div');actions.className='actions';
+  const load=document.createElement('button');load.className='light';load.type='button';load.textContent='載入';
+  load.onclick=()=>{$('source').value=item.source||'';$('upgraded').value='';converted='';$('report').textContent='';status('已載入 '+(item.name||key)+' 的備份，可按自動升級。');window.scrollTo({top:0,behavior:'smooth'})};
+  const remove=document.createElement('button');remove.className='light';remove.type='button';remove.textContent='刪除';
+  remove.onclick=()=>{if(confirm('確定刪除這份本機備份？請先匯出 JSON。')){delete projects[key];persist();renderProjects()}};
+  actions.append(load,remove);box.append(info,actions);host.append(box);
+ }
+}
+function save(){
+ try{
+  const parsed=analyze(),key=parsed.name.trim().toLowerCase()+'-'+(parsed.artist?'artist':'brand');
+  const item={name:parsed.name,mode:parsed.artist?'artist':'brand',source:$('source').value.trim(),updated:new Date().toISOString().slice(0,16).replace('T',' ')};
+  if(projects[key]&&!confirm('同名專案已存在。是否用目前原碼覆蓋該份本機備份？'))return;
+  projects[key]=item;if(persist()){renderProjects();status('已儲存本機專案 '+parsed.name+'；建議匯出 JSON 備份。')}
+ }catch(e){status(e.message,true)}
+}
+function download(name,data,type){
+ const blob=new Blob([data],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');
+ a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1200);
+}
+$('inspect').onclick=()=>{try{analyze();status('分析完成，尚未更動原碼。')}catch(e){$('report').textContent='';status(e.message,true)}};
+$('upgrade').onclick=async()=>{converted='';$('upgraded').value='';await refreshManifest();try{generate()}catch(e){status(e.message,true)}};
+$('save').onclick=save;
+$('restore').onclick=()=>{
+ if(!rawSnapshot){status('沒有可恢復的原始碼；請先使用自動升級。',true);return}
+ $('upgraded').value=rawSnapshot;converted=rawSnapshot;status('目前顯示的是升級前原始碼，供你備份或復原。');
+};
+$('copy').onclick=async()=>{
+ if(!converted){status('請先按自動升級產生代碼。',true);return}
+ try{await navigator.clipboard.writeText($('upgraded').value);status('已複製目前顯示的完整代碼。')}
+ catch(e){$('upgraded').select();status('已選取全部，請按 Command + C 複製。')}
+};
+$('download').onclick=()=>{if(!converted){status('沒有可下載的代碼，請先升級。',true);return}
+ const title=(currentName||'bec-collection').toLowerCase().replace(/[^a-z0-9-]+/g,'-');
+ download(title+'-backup.html',$('upgraded').value,'text/html;charset=utf-8');
+};
+$('exportBackup').onclick=()=>download('BEC_Collection_Projects_Backup.json',JSON.stringify({format:'bec-projects-v1',exported:new Date().toISOString(),projects},null,2),'application/json;charset=utf-8');
+$('importBackup').onchange=async event=>{
+ const file=event.target.files?.[0];if(!file)return;
+ try{
+  if(file.size>8_000_000)throw Error('備份檔超過 8 MB，請檢查檔案內容。');
+  const data=JSON.parse(await file.text());
+  if(data.format!=='bec-projects-v1'||!data.projects||Array.isArray(data.projects))throw Error('不是 BEC 專案備份格式。');
+  const verified={};for(const [key,item] of Object.entries(data.projects)){
+   if(typeof item.source!=='string'||!item.source.includes('data-bec-collection'))throw Error('發現格式錯誤的專案：'+key);
+   parse(item.source);
+   verified[key]=item;
+  }
+  const count=Object.keys(verified).length;
+  if(count&&!confirm('將合併 '+count+' 份專案，名稱重複者會以備份檔內容取代。要繼續嗎？'))return;
+  projects={...projects,...verified};persist();renderProjects();
+  $('storageStatus').textContent='已匯入 '+count+' 份專案。';
+ }catch(e){$('storageStatus').textContent='匯入失敗：'+e.message}
+ event.target.value='';
+};
+projects=readSaved();renderProjects();refreshManifest();
+})();
+</script></body></html>
