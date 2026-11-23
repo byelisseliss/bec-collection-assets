@@ -60,7 +60,7 @@ aside nav a:hover{color:#222}aside nav span{font-size:10px;color:#abb3b0}
 </nav><a class="side-action" href="builder.html">CREATE A COLLECTION ↗</a></aside>
 <div class="article">
 <section class="section" id="overview"><div class="kicker">01 / START HERE</div><h2>先選擇，<br>再開始建立。</h2><p class="lede">BEC 的品牌與藝人頁面使用同一套核心程式，但分類方式不同。第一步先決定這張頁面適合哪一種模式。</p>
-<div class="mode"><article><div class="tag">01 / BRAND</div><h3>品牌專頁</h3><p>單層分類。適合 rhode、alo 及一般選物品牌。分類清楚、頁面簡潔，適用於商品類型相對集中的品牌。</p></article><article><div class="tag">02 / ARTIST</div><h3>藝人專頁</h3><p>兩層分類。先選音樂、服飾、配件、收藏品等主分類，再切換黑膠、CD、卡帶等子分類。適合 Taylor Swift、BTS。</p></article></div>
+<div class="mode"><article><div class="tag">01 / BRAND</div><h3>品牌專頁</h3><p>單層分類。適合 rhode、alo 及一般選物品牌。分類清楚、頁面簡潔，適用於商品類型相對集中的品牌。</p></article><article><div class="tag">02 / ARTIST</div><h3>藝人專頁</h3><p>兩層分類。先選「依專輯／系列」或「依商品類型」兩大入口；接著挑選專輯或商品大類，最後才顯示黑膠、CD、上衣等細項。適合 Taylor Swift、BTS。</p></article></div>
 <div class="note">已完成的 rhode 是品牌模式的穩定範例，保留七個分類：全部商品、護膚保養、唇部、眼部、臉頰、美妝工具、<strong>服飾 CLOTHING</strong>。沒有必要為了更新手冊而重新改動它。</div>
 </section>
 <section class="section" id="workflow"><div class="kicker">02 / THE WORKFLOW</div><h2>一張頁面，<br>六個步驟。</h2><p class="lede">以下流程適用於未來的每一位管理者。只要依順序操作，就不需要接觸共用 CSS 或 JavaScript 原始碼。</p>
@@ -78,7 +78,7 @@ aside nav a:hover{color:#222}aside nav span{font-size:10px;color:#abb3b0}
 <div class="example" id="sample-artist"><div class="diagram"><div class="bar accent">藝人導覽第一層｜全部商品　音樂　服飾　配件　…</div><div class="bar">導覽第二層｜黑膠　CD　卡帶（依主分類切換）</div><div class="arr">↓</div><div class="bar">全部商品 ALL（可自動產生）</div><div class="sub">1shop 全部商品展示</div><div class="arr">↓</div><div class="bar">黑膠 VINYL（原生文字標題）</div><div class="sub">1shop 黑膠展示</div><div class="arr">↓</div><div class="bar">CD（原生文字標題）</div><div class="sub">1shop CD 展示</div></div></div>
 <div class="note">藝人「主分類」只是導覽群組，不代表 1shop 自動新增一整組商品。真正需要和商品展示對齊的是每個選用的「子分類」。</div>
 </section>
-<section class="section" id="series"><div class="kicker">03A / SERIES MANAGEMENT</div><h2>一張專輯，<br>所有周邊。</h2><p class="lede">藝人頁新增「作品／專輯系列」管理。每張專輯、巡演或期間限定企劃只需新增一次，再勾選它販售的商品類型，便能產生專屬的系列分類與錨點。藝人模式自訂的子分類也會自動同步到每個既有與新建立的系列，不需要重複輸入。</p><div class="step"><div class="num">01</div><div><h3>建立系列</h3><p>在 Collection Builder 選 ARTIST，向下找到「作品／專輯系列」，點「＋ 新增系列」。輸入完整正式名稱、英文代碼及系列類型。</p></div></div><div class="step"><div class="num">02</div><div><h3>勾選系列商品類型</h3><p>例如 The Life of a Showgirl 勾選黑膠、CD、上衣與杯具。可按「複製設定」快速建立下一個系列，不必重新勾選全部。</p></div></div><div class="step"><div class="num">03</div><div><h3>產生並配置商品</h3><p>產生器會建立「系列 · 名稱」主分類和商品類型子分類。請在 1shop 對應商品展示上方加入原生文字標題，文字需對應產生器產生的「系列名稱 ／ 商品類型」。同一商品可以從作品系列和商品類型兩個方向被展示，但不需要建立兩個商品紀錄。</p></div></div><div class="note">目前是第一階段：產生分類導覽與錨點配置，尚未自動抓取 1shop 商品並建立交叉篩選。系列群組會顯示在藝人頁的主分類列；系列多時需檢查手機版橫向導覽。已成功的 rhode 品牌模式不受影響。</div></section>
+<section class="section" id="series"><div class="kicker">03A / SERIES MANAGEMENT</div><h2>一張專輯，<br>所有周邊。</h2><p class="lede">藝人頁新增「作品／專輯系列」管理。前台固定先顯示「依專輯／系列」與「依商品類型」兩個入口，不會把專輯名稱與商品分類全部鋪在同一排。每張專輯、巡演或期間限定企劃只需新增一次，再勾選它販售的商品類型，便能產生專屬的系列分類與錨點。藝人模式自訂的子分類也會自動同步到每個既有與新建立的系列，不需要重複輸入。</p><div class="step"><div class="num">01</div><div><h3>建立系列</h3><p>在 Collection Builder 選 ARTIST，向下找到「作品／專輯系列」，點「＋ 新增系列」。輸入完整正式名稱、英文代碼及系列類型。</p></div></div><div class="step"><div class="num">02</div><div><h3>勾選系列商品類型</h3><p>例如 The Life of a Showgirl 勾選黑膠、CD、上衣與杯具。可按「複製設定」快速建立下一個系列，不必重新勾選全部。</p></div></div><div class="step"><div class="num">03</div><div><h3>產生並配置商品</h3><p>產生器會建立「系列 · 名稱」主分類和商品類型子分類。請在 1shop 對應商品展示上方加入原生文字標題，文字需對應產生器產生的「系列名稱 ／ 商品類型」。同一商品可以從作品系列和商品類型兩個方向被展示，但不需要建立兩個商品紀錄。</p></div></div><div class="note">目前是第一階段：產生分類導覽與錨點配置，尚未自動抓取 1shop 商品並建立交叉篩選。系列群組會顯示在藝人頁的主分類列；系列多時需檢查手機版橫向導覽。已成功的 rhode 品牌模式不受影響。</div></section>
 <section class="section" id="launch"><div class="kicker">04 / QUALITY CONTROL</div><h2>發布前，<br>快速檢查。</h2><p class="lede">可直接勾選以下項目，確認每張新頁面的基本品質。勾選狀態只用於本次瀏覽，不會儲存到伺服器。</p>
 <div class="meter"><span id="meter"></span></div><p class="progress" id="progress">0 / 10 CHECKED</p>
 <div class="checklist" id="checks">
@@ -94,7 +94,7 @@ aside nav a:hover{color:#222}aside nav span{font-size:10px;color:#abb3b0}
 <label class="check"><input type="checkbox">SEO、封面及選單入口已確認</label>
 </div></section>
 <section class="section" id="maintenance"><div class="kicker">05 / KEEP IT UPDATED</div><h2>維護很簡單，<br>但要分清楚。</h2><div class="mode"><article><div class="tag dark">PAGE CONTENT</div><h3>只改這個品牌</h3><p>調整這一頁的分類：品牌模式使用產業範本與勾選清單；在 Builder 重新產生完整設定，替換原本唯一的「程式」區塊，再同步更新 1shop 標題與商品展示。無須碰共用核心。</p></article><article><div class="tag dark">SHARED SYSTEM</div><h3>修改全部頁面</h3><p>吸頂、動畫及外觀等共用功能由 GitHub 程式庫管理。先用測試頁驗證，再安排更新與快取版本；共用檔案改動可能影響所有引用頁面。</p></article></div>
-<div class="note">目前參考版本：共用 CSS <strong>v1.1</strong>、共用 JavaScript <strong>v1.2</strong>；藝人模式額外使用 Artist CSS／JS <strong>v1.0</strong>。不要為了更新手冊而修改已成功的 rhode 共用設定。</div>
+<div class="note">目前參考版本：共用 CSS <strong>v1.1</strong>、共用 JavaScript <strong>v1.2</strong>；藝人新版三階層導覽使用 Artist CSS／JS <strong>v2.0</strong>。不要為了更新手冊而修改已成功的 rhode 共用設定。</div>
 </section>
 <section class="section" id="support"><div class="kicker">06 / QUICK HELP</div><h2>遇到問題，<br>先看這裡。</h2>
 <div class="faq">
