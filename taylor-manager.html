@@ -46,7 +46,7 @@ function code(){
  const album=values('albums',defaults),type=values('types',typeDefaults),images=values('images');
  const config=(name,obj)=>'window.'+name+' = '+JSON.stringify(obj).replace(/</g,'\\u003c').replace(/\\u2028/g,'\\\\u2028')+';';
  return '<!-- BEC TAYLOR SWIFT · COLLECTION LANDING v1.0 -->\n'+
- '<link rel="stylesheet" href="'+root+'taylor-landing.css?v=1.0">\n'+
+ '<link rel="stylesheet" href="'+root+'taylor-landing.css?v=1.1">\n'+
  '<div id="bec-ts-landing"></div>\n<script>\n'+config('BEC_TS_ALBUM_URLS',album)+'\n'+config('BEC_TS_TYPE_URLS',type)+'\n'+config('BEC_TS_IMAGES',images)+'\n<'+'/script>\n'+
  '<script defer src="'+root+'taylor-landing.js?v=1.0"><'+'/script>';
 }
