@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>BEC Collection Builder v2.8</title>
+<title>BEC Collection Studio v3.0</title>
 <style>
 :root{font-family:Helvetica,Arial,"PingFang TC",sans-serif;background:#f5f6f6;color:#253034}
 *{box-sizing:border-box}body{margin:0}main{max-width:1060px;margin:auto;padding:44px 20px 100px}
@@ -21,10 +21,14 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px soli
 .option input{accent-color:#577468}
 #status{font-size:13px;min-height:20px;color:#496e59}
 @media(max-width:700px){main{padding:27px 14px}.panel{padding:17px}.grid{grid-template-columns:1fr}.options{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.custom-editor{margin-top:24px;padding-top:20px;border-top:1px solid #e6e9e8}.custom-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.custom-top h3{font-size:16px;font-weight:500;margin:0}.custom-row{background:#f7f9f8;border:1px solid #e0e7e4;padding:15px;border-radius:13px;margin:11px 0}.custom-grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:11px}.custom-row label{font-size:11px;color:#5d6965}.custom-row input,.custom-row select{min-width:0}.custom-row .row-actions{display:flex;justify-content:flex-end;align-items:center;margin-top:10px}.custom-row .remove{background:none;color:#687571;border:0;padding:6px 10px;font-size:12px}.custom-row .remove:hover{color:#b13a3a}.inline-actions{display:flex;gap:8px;flex-wrap:wrap}.muted{font-size:12px;color:#77817e}.error{color:#a0443f!important}.summary-bar{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;color:#66746e;font-size:12px;margin:9px 0}.code-tip{font-size:12px;color:#79817d}.status-good{color:#426854}.status-warn{color:#a0443f}.advanced{border-top:1px solid #eef0ef;padding-top:13px;margin-top:18px}details.advanced summary{cursor:pointer;font-size:12px;color:#727f78}@media(max-width:800px){.custom-grid{grid-template-columns:1fr 1fr}}@media(max-width:480px){.custom-grid{grid-template-columns:1fr}.custom-row{padding:12px}}.series-editor{border-top:1px solid #e5e9e6;margin-top:26px;padding-top:24px}.series-intro{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}.series-card{border:1px solid #dce3df;border-radius:14px;background:#fafbfa;padding:17px;margin-top:14px}.series-fields{display:grid;grid-template-columns:2fr 1fr 1fr;gap:11px}.series-options{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-top:14px}.series-options label{border:1px solid #e3e8e5;border-radius:8px;padding:10px 8px;font-size:12px;font-weight:400;display:flex;gap:7px;align-items:center;margin:0}.series-options input{accent-color:#536e60}.series-card .row-actions{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:14px}.series-card .row-actions button{font-size:12px;padding:9px 14px}.series-info{font-size:12px;color:#75817a}.series-actions{display:flex;flex-wrap:wrap;gap:7px}.series-card input,.series-card select{width:100%;min-width:0}@media(max-width:700px){.series-fields{grid-template-columns:1fr}.series-options{grid-template-columns:1fr 1fr}}.brand-library{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.brand-cluster{padding:17px;border:1px solid #e1e7e4;border-radius:13px;background:#fbfcfb}.brand-cluster h3{font-size:13px;font-weight:600;margin:0 0 13px;color:#34423d}.brand-checks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.brand-choice{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:400;margin:0;padding:9px;border:1px solid #e6eae7;border-radius:8px;background:#fff;cursor:pointer}.brand-choice input{accent-color:#557266}.brand-choice:has(input:checked){background:#eaf0ec;border-color:#c8d8cf}.brand-cluster.is-filtered{display:none}.brand-choice.is-filtered{display:none}.brand-custom-grid{display:grid;grid-template-columns:1fr 1fr 1.4fr;gap:10px}.brand-custom-grid input{width:100%;min-width:0}@media(max-width:800px){.brand-library{grid-template-columns:1fr}.brand-custom-grid{grid-template-columns:1fr 1fr}}@media(max-width:480px){.brand-checks,.brand-custom-grid{grid-template-columns:1fr}}.file-button{display:inline-block;padding:12px 17px;background:white;color:#344041;border:1px solid #d4dddd;border-radius:999px;font-size:13px;cursor:pointer}.file-button input{display:none}</style></head><body><main>
-<header><div class="eyebrow">BY ELISS COLLECTION / MANAGEMENT</div><h1>COLLECTION BUILDER</h1><p>建立品牌或藝人專頁，一鍵產生 1shop 程式區塊。所有頁面仍使用 BEC 共用程式，不須修改全站 CSS／JS。</p></header>
-<div class="actions"><a href="upgrade.html" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;text-decoration:none;color:#283335;font-size:13px;border:1px solid #cbd4d4;padding:11px 17px;border-radius:100px">版本管理／自動升級中心 ↗</a></div>
+.custom-editor{margin-top:24px;padding-top:20px;border-top:1px solid #e6e9e8}.custom-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.custom-top h3{font-size:16px;font-weight:500;margin:0}.custom-row{background:#f7f9f8;border:1px solid #e0e7e4;padding:15px;border-radius:13px;margin:11px 0}.custom-grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:11px}.custom-row label{font-size:11px;color:#5d6965}.custom-row input,.custom-row select{min-width:0}.custom-row .row-actions{display:flex;justify-content:flex-end;align-items:center;margin-top:10px}.custom-row .remove{background:none;color:#687571;border:0;padding:6px 10px;font-size:12px}.custom-row .remove:hover{color:#b13a3a}.inline-actions{display:flex;gap:8px;flex-wrap:wrap}.muted{font-size:12px;color:#77817e}.error{color:#a0443f!important}.summary-bar{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;color:#66746e;font-size:12px;margin:9px 0}.code-tip{font-size:12px;color:#79817d}.status-good{color:#426854}.status-warn{color:#a0443f}.advanced{border-top:1px solid #eef0ef;padding-top:13px;margin-top:18px}details.advanced summary{cursor:pointer;font-size:12px;color:#727f78}@media(max-width:800px){.custom-grid{grid-template-columns:1fr 1fr}}@media(max-width:480px){.custom-grid{grid-template-columns:1fr}.custom-row{padding:12px}}.series-editor{border-top:1px solid #e5e9e6;margin-top:26px;padding-top:24px}.series-intro{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}.series-card{border:1px solid #dce3df;border-radius:14px;background:#fafbfa;padding:17px;margin-top:14px}.series-fields{display:grid;grid-template-columns:2fr 1fr 1fr;gap:11px}.series-options{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-top:14px}.series-options label{border:1px solid #e3e8e5;border-radius:8px;padding:10px 8px;font-size:12px;font-weight:400;display:flex;gap:7px;align-items:center;margin:0}.series-options input{accent-color:#536e60}.series-card .row-actions{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:14px}.series-card .row-actions button{font-size:12px;padding:9px 14px}.series-info{font-size:12px;color:#75817a}.series-actions{display:flex;flex-wrap:wrap;gap:7px}.series-card input,.series-card select{width:100%;min-width:0}@media(max-width:700px){.series-fields{grid-template-columns:1fr}.series-options{grid-template-columns:1fr 1fr}}.brand-library{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.brand-cluster{padding:17px;border:1px solid #e1e7e4;border-radius:13px;background:#fbfcfb}.brand-cluster h3{font-size:13px;font-weight:600;margin:0 0 13px;color:#34423d}.brand-checks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.brand-choice{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:400;margin:0;padding:9px;border:1px solid #e6eae7;border-radius:8px;background:#fff;cursor:pointer}.brand-choice input{accent-color:#557266}.brand-choice:has(input:checked){background:#eaf0ec;border-color:#c8d8cf}.brand-cluster.is-filtered{display:none}.brand-choice.is-filtered{display:none}.brand-custom-grid{display:grid;grid-template-columns:1fr 1fr 1.4fr;gap:10px}.brand-custom-grid input{width:100%;min-width:0}@media(max-width:800px){.brand-library{grid-template-columns:1fr}.brand-custom-grid{grid-template-columns:1fr 1fr}}@media(max-width:480px){.brand-checks,.brand-custom-grid{grid-template-columns:1fr}}.file-button{display:inline-block;padding:12px 17px;background:white;color:#344041;border:1px solid #d4dddd;border-radius:999px;font-size:13px;cursor:pointer}.file-button input{display:none}.studio-bar{position:sticky;top:10px;z-index:50;background:rgba(248,249,248,.97);backdrop-filter:blur(12px);display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px;border:1px solid #dce2de;border-radius:16px;margin:19px 0 25px}.studio-bar button{min-height:48px;font-size:14px}.studio-upgrade-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.studio-label{font-size:10px;letter-spacing:.12em;color:#8b9790}#studioUpgradeFrame{display:block;width:100%;min-height:1150px;border:0;background:transparent;border-radius:14px}#studioUpgrade .panel{margin-top:0}body.studio-in-upgrade{background:#f5f6f6}@media(max-width:700px){.studio-bar{top:0;padding:7px;gap:7px}.studio-bar button{font-size:12px;padding:12px 7px}} </style></head><body><main>
+<header><div class="eyebrow">BY ELISS COLLECTION / MANAGEMENT</div><h1>COLLECTION STUDIO</h1><p>品牌與藝人的建立、編輯、備份、版本升級、完整代碼複製，現在都在同一個管理平台。</p></header>
+<div class="studio-bar" role="tablist" aria-label="Collection 工作模式">
+<button type="button" id="studioCreateTab" role="tab" aria-selected="true" aria-controls="studioCreate" class="selected">建立與編輯</button>
+<button type="button" id="studioUpgradeTab" role="tab" aria-selected="false" aria-controls="studioUpgrade" class="light">專案管理／自動升級</button>
+</div>
 <div class="actions"><a href="manual.html" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;text-decoration:none;color:#283335;font-size:13px;border:1px solid #cbd4d4;padding:11px 17px;border-radius:100px">COLLECTION PLAYBOOK ／ 操作指南 ↗</a></div>
+<div id="studioCreate" role="tabpanel" aria-labelledby="studioCreateTab">
 <section class="panel"><label>頁面類型</label><div class="switch"><button type="button" id="modeBrand" class="selected" aria-pressed="true">品牌 BRAND</button><button type="button" id="modeArtist" class="light" aria-pressed="false">藝人 ARTIST</button></div>
 <div class="grid" style="margin-top:19px"><div><label for="name">品牌／藝人名稱</label><input type="text" id="name" value="rhode"></div><div><label for="slug">英文識別碼（小寫、連字號）</label><input type="text" id="slug" value="rhode"></div></div></section>
 <section class="panel" id="brandFields">
@@ -59,16 +63,61 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px soli
 </section>
 <section class="panel"><h2>版本與草稿管理</h2>
 <p class="tip">目前正在編輯的品牌、藝人、專輯系列及勾選狀態會自動保存於此瀏覽器。可另存 JSON 備份，或把目前完整代碼放進專案庫，未來不必重新輸入。</p>
-<div class="actions"><button id="saveLibrary" type="button">儲存目前專案到升級中心</button><button id="exportDraft" type="button" class="light">下載目前設定 JSON</button>
+<div class="actions"><button id="saveLibrary" type="button">儲存目前專案</button><button id="exportDraft" type="button" class="light">下載目前設定 JSON</button>
 <label class="file-button">匯入設定 JSON<input type="file" id="importDraft" accept=".json,application/json"></label></div>
 <p class="tip" id="draftStatus">目前尚未確認草稿儲存狀態。</p>
 </section>
 <section class="panel"><h2>產生完整代碼</h2><div class="summary-bar"><span id="summary">請設定分類</span><span id="previewMode">BRAND</span></div><div class="actions"><button type="button" id="generate">產生 1shop 程式</button><button type="button" class="light" id="copy">複製完整代碼</button></div><textarea id="output" readonly spellcheck="false"></textarea><p id="status" role="status" aria-live="polite"></p><p class="code-tip">一鍵複製後，貼入 1shop 單一「程式」區塊。產生器不會直接編輯商店內容。</p></section>
 <section class="panel"><h2>重要使用提醒</h2><p class="tip">・第一個「全部商品」會由共用 v1.2 建立必要錨點與標題（若不存在）。<br>・其餘子分類必須在 1shop 對應商品區塊前建立「原生文字」標題，文字要與設定的第三欄一致；否則放入明確的定位錨點。<br>・藝人前台先選「依專輯／系列」或「依商品類型」，再選系列／商品大類，最後才顯示細項。主分類本身不代表獨立商品區塊。<br>・一張 1shop 網頁只使用一份 BEC Collection 導覽設定。<br>・產生器不會新增、搬移、修改 1shop 的商品資料或商品展示區塊。<br>・共用資產採穩定版：CSS v1.1、JS v1.2；藝人模式額外載入 artist CSS／JS v1.0。</p></section>
+</div>
+<section id="studioUpgrade" role="tabpanel" aria-labelledby="studioUpgradeTab" class="hide">
+  <div class="panel"><div class="studio-upgrade-head">
+    <div><h2>專案管理與自動升級</h2><p class="tip">載入已儲存專案，或貼上 1shop 現有程式碼；保留所有專輯和分類，直接產生最新版完整代碼。</p></div>
+    <span class="studio-label">UNIFIED WORKSPACE</span>
+  </div></div>
+  <iframe id="studioUpgradeFrame" title="BEC Collection 專案與自動升級" loading="lazy"></iframe>
+</section>
 </main><script>
 (()=>{
 'use strict';
 const $=id=>document.getElementById(id);
+
+/* Unified Studio navigation; the legacy upgrade engine is embedded on the same
+   GitHub Pages origin, sharing existing localStorage without data migration. */
+const studioCreateTab=document.getElementById('studioCreateTab');
+const studioUpgradeTab=document.getElementById('studioUpgradeTab');
+const upgradeFrame=document.getElementById('studioUpgradeFrame');
+let upgradeFrameLoaded=false;
+function studioMode(next,updateHash=true){
+ const upgrade=next==='upgrade';
+ document.getElementById('studioCreate').classList.toggle('hide',upgrade);
+ document.getElementById('studioUpgrade').classList.toggle('hide',!upgrade);
+ studioCreateTab.setAttribute('aria-selected',String(!upgrade));
+ studioUpgradeTab.setAttribute('aria-selected',String(upgrade));
+ studioCreateTab.className=upgrade?'light':'selected';
+ studioUpgradeTab.className=upgrade?'selected':'light';
+ document.body.classList.toggle('studio-in-upgrade',upgrade);
+ if(upgrade){
+  // Refresh the embedded project index on each visit: Builder may have just
+  // saved a new project to the same-origin project storage.
+  upgradeFrame.src='upgrade.html?embed=1';
+  upgradeFrameLoaded=true;
+ }
+ if(updateHash)history.replaceState(null,'',upgrade?'#upgrade':'#create');
+ requestAnimationFrame(()=>document.querySelector('.studio-bar')?.scrollIntoView({block:'start',behavior:'smooth'}));
+}
+studioCreateTab.addEventListener('click',()=>studioMode('create'));
+studioUpgradeTab.addEventListener('click',()=>studioMode('upgrade'));
+addEventListener('message',event=>{
+ if(event.origin!==location.origin||event.source!==upgradeFrame.contentWindow)return;
+ if(event.data?.kind==='bec-upgrade-height'){
+  const size=Number(event.data.height);
+  if(Number.isFinite(size))upgradeFrame.style.height=Math.max(900,Math.min(15000,size+16))+'px';
+ }
+ if(event.data?.kind==='bec-show-builder')studioMode('create');
+});
+addEventListener('hashchange',()=>studioMode(location.hash==='#upgrade'?'upgrade':'create',false));
+
 const esc=s=>String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 const slug=s=>String(s).toLowerCase().trim().replace(/[^a-z0-9-]+/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'');
 const rootUrl='https://byelisseliss.github.io/bec-collection-assets/';
@@ -613,5 +662,6 @@ try{
  else {build();saveDraft()}
 }catch(error){build();$('draftStatus').textContent='現有草稿無法還原，請匯入 JSON 備份。'}
 
+if(location.hash==='#upgrade')studioMode('upgrade',false);
 })();
 </script></body></html>
