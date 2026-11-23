@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>BEC Collection Builder v2.6</title>
+<title>BEC Collection Builder v2.7</title>
 <style>
 :root{font-family:Helvetica,Arial,"PingFang TC",sans-serif;background:#f5f6f6;color:#253034}
 *{box-sizing:border-box}body{margin:0}main{max-width:1060px;margin:auto;padding:44px 20px 100px}
@@ -430,7 +430,7 @@ function build(){
   const lines=[
    '<!-- BEC COLLECTION | '+esc(name)+' | '+mode.toUpperCase()+' -->',
    '<link rel="stylesheet" href="'+rootUrl+'bec-collection.css?v=1.1">',
-   ...(mode==='artist'?['<link rel="stylesheet" href="'+rootUrl+'bec-artist-v2.css?v=2.0">']:[]),
+   ...(mode==='artist'?['<link rel="stylesheet" href="'+rootUrl+'bec-artist-v2-1.css?v=2.1">']:[]),
    '<nav data-bec-collection '+(mode==='artist'?'data-bec-artist-v2 ':'')+'class="'+(mode==='artist'?'bec-artist':'')+'" aria-label="'+esc(name)+' 商品分類導覽">',
    '  <div class="bec-col-brand"><small>DISCOVER / '+esc(name.toUpperCase())+'</small><strong>Explore Categories</strong></div>',
    '  <div class="bec-col-links">'
