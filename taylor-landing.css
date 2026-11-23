@@ -96,3 +96,30 @@
 :is(#bec-ts-landing,#bec-ts-detail) .ts-feature-copy>span:last-child{font-size:11px;letter-spacing:.12em}
 :is(#bec-ts-landing,#bec-ts-detail) .ts-feature-index{position:absolute;right:24px;top:22px;z-index:2;font-size:10px;letter-spacing:.15em;color:#e4eae5}
 @media(max-width:760px){:is(#bec-ts-landing,#bec-ts-detail) .ts-feature{min-height:270px;padding:25px}}
+
+/* BEC FLOATING ISLANDS 1.1 — unified radius system, airy neutral canvas */
+:is(#bec-ts-landing,#bec-ts-detail){--ts-radius:27px;--ts-radius-sm:19px;--ts-island-shadow:0 12px 37px rgba(38,48,44,.045);background:#f2f4f3!important;padding:clamp(12px,2.3vw,30px) 0 18px!important}
+:is(#bec-ts-landing,#bec-ts-detail) .ts-shell{max-width:1360px}
+:is(#bec-ts-landing,#bec-ts-detail) .ts-hero{width:calc(100% - clamp(24px,4.6vw,60px));max-width:1300px;background:#fff!important;border:1px solid #e5eae7!important;border-radius:var(--ts-radius);box-shadow:var(--ts-island-shadow);padding:clamp(25px,4.2vw,58px)!important;min-height:330px;overflow:hidden}
+:is(#bec-ts-landing,#bec-ts-detail) .ts-pathbar{padding-top:18px;padding-bottom:18px}
+:is(#bec-ts-landing,#bec-ts-detail) .ts-path{border-radius:var(--ts-radius-sm)!important;box-shadow:var(--ts-island-shadow);border-color:#e0e6e2;padding:23px 26px}
+:is(#bec-ts-landing,#bec-ts-detail) .ts-section{background:#fff;border:1px solid #e5eae7;border-radius:var(--ts-radius);box-shadow:var(--ts-island-shadow);margin:0 auto 18px;padding:clamp(20px,3.2vw,43px)!important;width:calc(100% - clamp(24px,4.6vw,60px));max-width:1300px;scroll-margin-top:110px}
+:is(#bec-ts-landing,#bec-ts-detail) .ts-feature-wrap{margin-bottom:18px!important}
+:is(#bec-ts-landing,#bec-ts-detail) .ts-feature{border-radius:var(--ts-radius)!important;box-shadow:var(--ts-island-shadow)}
+:is(#bec-ts-landing,#bec-ts-detail) .ts-card-art{border-radius:var(--ts-radius-sm)!important}
+:is(#bec-ts-landing,#bec-ts-detail) .ts-card-art img{border-radius:inherit}
+:is(#bec-ts-landing,#bec-ts-detail) .ts-card-footer{padding:13px 7px 4px}
+:is(#bec-ts-landing,#bec-ts-detail) .ts-type-card{border-radius:var(--ts-radius-sm)!important;box-shadow:0 4px 15px rgba(42,53,49,.025)}
+:is(#bec-ts-landing,#bec-ts-detail) .ts-type-card:hover{transform:translateY(-3px);box-shadow:0 14px 28px rgba(42,53,49,.075)}
+:is(#bec-ts-landing,#bec-ts-detail) .ts-strip{margin:2px clamp(12px,2.3vw,30px) 16px;border:1px solid #e2e9e3!important;border-radius:var(--ts-radius);background:#e9efeb!important;box-shadow:var(--ts-island-shadow);overflow:hidden}
+:is(#bec-ts-landing,#bec-ts-detail) .ts-strip a{border-radius:999px;background:#fff}
+:is(#bec-ts-landing,#bec-ts-detail) .ts-bottom{border-top:1px solid #e2e8e3;padding-top:26px}
+:is(#bec-ts-landing,#bec-ts-detail) .ts-search{border-radius:12px}
+:is(#bec-ts-landing,#bec-ts-detail) .ts-card:hover .ts-card-art{box-shadow:0 13px 28px rgba(42,52,48,.12)}
+@media(max-width:760px){
+:is(#bec-ts-landing,#bec-ts-detail){--ts-radius:21px;--ts-radius-sm:15px}
+:is(#bec-ts-landing,#bec-ts-detail) .ts-hero{min-height:280px!important;padding:26px!important}
+:is(#bec-ts-landing,#bec-ts-detail) .ts-section{padding:18px!important}
+:is(#bec-ts-landing,#bec-ts-detail) .ts-path{padding:18px!important}
+:is(#bec-ts-landing,#bec-ts-detail) .ts-strip{margin:0 12px 15px}
+}
