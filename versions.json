@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "release": "2026.11.23",
-  "builder": "2.5",
+  "builder": "2.6",
   "description": "BEC Collection stable production asset manifest",
   "assets": {
     "commonCSS": {
@@ -24,6 +24,12 @@
   "upgrade": {
     "brand": "original-category-links",
     "artist": "series-type-three-stage",
-    "requiresManualVerification": true
-  }
+    "requiresManualVerification": true,
+    "supportedInput": [
+      "brand shared nav v1.x",
+      "artist group nav v1.x",
+      "artist three-stage nav v2.x"
+    ]
+  },
+  "manager": "1.0"
 }
