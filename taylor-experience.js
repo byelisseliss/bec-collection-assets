@@ -43,11 +43,11 @@ const DESIGN_KEYS={
  text:'--v-text',muted:'--v-muted',secondary:'--v-secondary',border:'--v-border',
  buttonBg:'--v-button-bg',buttonText:'--v-button-text',tileHover:'--v-tile-hover',
  font:'--v-font',headingFont:'--v-heading-font',
- heroSize:'--v-hero-size',titleSize:'--v-title-size',typeSize:'--v-type-size',
+ heroSize:'--v-hero-size',titleSize:'--v-title-size',typeSize:'--v-type-size',bodyWeight:'--v-body-weight',headingWeight:'--v-heading-weight',
  cardWidth:'--v-card-width',cardRadius:'--v-card-radius',lift:'--v-lift',
  hoverScale:'--v-hover-scale',shadow:'--v-shadow',stageRadius:'--v-stage-radius',sectionRadius:'--v-section-radius'
 };
-const DESIGN_NUM={heroSize:[40,110,'px'],titleSize:[18,54,'px'],typeSize:[12,26,'px'],cardWidth:[180,380,'px'],
+const DESIGN_NUM={bodyWeight:[300,800,''],headingWeight:[300,900,''],heroSize:[40,110,'px'],titleSize:[18,54,'px'],typeSize:[12,26,'px'],cardWidth:[180,380,'px'],
  cardRadius:[0,34,'px'],lift:[0,35,'px'],hoverScale:[1,1.12,''],shadow:[0,40,''],stageRadius:[0,50,'px'],sectionRadius:[0,50,'px']};
 const DESIGN_FONT=['Helvetica,Arial,sans-serif','Arial,Helvetica,sans-serif','Outfit,Arial,sans-serif','Inter,Helvetica,Arial,sans-serif','Georgia,serif','-apple-system,BlinkMacSystemFont,Helvetica,sans-serif'];
 function applyDesign(v){
@@ -92,7 +92,7 @@ function create(){
  const cards=albums.map((a,i)=>{
   const el=document.createElement('button');el.type='button';el.className='bc-card';el.dataset.i=i;
   el.setAttribute('aria-label','探索 '+a.title);el.style.setProperty('--card-tone',a.tone);
-  el.innerHTML='<span class="bc-card-face"></span><span class="bc-card-title">'+escTitle(a.title)+'</span>';
+  el.innerHTML='<span class="bc-card-face"></span>';
   host.append(el);art(el.querySelector('.bc-card-face'),a);return el;
  });
  let index=0;let down=null;let wasDragged=false;let wheelTime=0;
