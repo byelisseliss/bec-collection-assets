@@ -56,7 +56,8 @@ aside nav a:hover{color:#222}aside nav span{font-size:10px;color:#abb3b0}
 <a href="#launch">04　發布前檢查 <span>↗</span></a>
 <a href="#maintenance">05　維護與更新 <span>↗</span></a>
 <a href="#support">06　問題排除 <span>↗</span></a>
-<a href="#resources">07　工具與資源 <span>↗</span></a>
+<a href="#upgrades">07　升級與備份 <span>↗</span></a>
+<a href="#resources">08　工具與資源 <span>↗</span></a>
 </nav><a class="side-action" href="builder.html">CREATE A COLLECTION ↗</a></aside>
 <div class="article">
 <section class="section" id="overview"><div class="kicker">01 / START HERE</div><h2>先選擇，<br>再開始建立。</h2><p class="lede">BEC 的品牌與藝人頁面使用同一套核心程式，但分類方式不同。第一步先決定這張頁面適合哪一種模式。</p>
@@ -106,7 +107,7 @@ aside nav a:hover{color:#222}aside nav span{font-size:10px;color:#abb3b0}
 <details><summary>更新後還是舊版本，或出現 404</summary><p>檢查 GitHub Pages 是否從 main /(root) 發布、檔案 URL 是否能打開，並確認網址的 ?v= 版本參數。不要直接刪除已上線的商品頁。</p></details>
 <details><summary>商品圖片出現 .avif 404</summary><p>這是獨立於 Collection 導覽的圖片 Hover 問題。需要在 Safari Network 核對來源，勿直接修改共用導覽以處理。</p></details>
 </div></section>
-<section class="section" id="resources"><div class="kicker">07 / YOUR TOOLKIT</div><h2>需要的工具，<br>都在這裡。</h2>
+<section class="section" id="upgrades"><div class="kicker">08 / VERSION CONTROL</div><h2>更新版本，<br>不重建專案。</h2><p class="lede">Collection Builder 會在本機自動保存正在編輯的分類與專輯設定。編輯完成後，按「儲存目前專案到升級中心」，下次只需載入專案並按自動升級，就能直接複製最新版完整 HTML。</p><div class="step"><div class="num">01</div><div><h3>保留目前專案</h3><p>在 Builder 按「儲存目前專案到升級中心」。新專案可以直接建立；既有 1shop 頁面請先貼入該頁「程式」區塊原碼。避免重新逐張輸入專輯。</p></div></div><div class="step"><div class="num">02</div><div><h3>讀取正式版本並升級</h3><p>開啟 <a href="upgrade.html" style="text-decoration:underline">自動升級中心</a>，載入已儲存的品牌／藝人專案，按「自動升級到正式版」。系統從 versions.json 讀取正式資產版本並比對原始分類、標題、錨點與群組。</p></div></div><div class="step"><div class="num">03</div><div><h3>完整替換與驗收</h3><p>比對專輯與分類數量後，複製完整代碼，貼回 1shop 原本的單一程式區塊。確認頁面吸頂、錨點、Mega Menu、手機版及商品展示皆正常。升級工具不會自動修改 1shop。</p></div></div><div class="note">資料保存在 Safari 本機。請定期在 Builder 下載設定 JSON，並在升級中心匯出全部專案 JSON；切換電腦或清除瀏覽器資料前務必備份。共用版本的重大架構變動仍需要專門的相容性遷移，不能保證任何未來版本都可以直接升級。</div></section><section class="section" id="resources"><div class="kicker">07 / YOUR TOOLKIT</div><h2>需要的工具，<br>都在這裡。</h2>
 <div class="cols"><a class="tile" href="builder.html"><small>01 / CREATE</small><strong>Collection Builder ↗</strong><p>輸入品牌或藝人名稱、選擇分類，產生完整 1shop 程式碼。</p></a><a class="tile" href="https://github.com/byelisseliss/bec-collection-assets" target="_blank" rel="noopener"><small>02 / MANAGE</small><strong>GitHub Repository ↗</strong><p>存放品牌和藝人共用資產。正式改版前先備份並驗收。</p></a><a class="tile" href="https://byelisscollection.my1shop.com/rhode-collection" target="_blank" rel="noopener"><small>03 / REFERENCE</small><strong>rhode Collection ↗</strong><p>目前已驗證的品牌頁穩定範本，含服飾 CLOTHING。</p></a></div>
 <div class="note">安全提醒：此管理指南與 Builder 均為公開可開啟的靜態頁面，不是受密碼保護的管理後台。不要輸入密碼、Token、客戶資料。建立平台目前不會自動保存歷史品牌設定。</div>
 </section></div></div>
