@@ -1,0 +1,98 @@
+/* BEC / LIVING COLLECTION — spatial tactile archive, v3.0 */
+#bec-ts-landing.bec-world{--bw-ink:#1f2b26;--bw-paper:#f0f2ef;--bw-selected:#699988;color:var(--bw-ink);font-family:Helvetica,Arial,"PingFang TC",sans-serif;background:#eef1ed;position:relative;isolation:isolate;overflow:hidden;padding:clamp(12px,2.7vw,32px);width:100%;box-sizing:border-box}
+#bec-ts-landing.bec-world *{box-sizing:border-box}
+#bec-ts-landing.bec-world button,#bec-ts-landing.bec-world a{font:inherit}
+#bec-ts-landing.bec-world button{cursor:pointer}
+#bec-ts-landing.bec-world a{text-decoration:none;color:inherit}
+#bec-ts-landing .bw-main{max-width:1500px;margin:0 auto}
+#bec-ts-landing .bw-top{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:12px 8px 24px;font-size:10px;letter-spacing:.15em;color:#64716a}
+#bec-ts-landing .bw-light{width:8px;height:8px;background:#d9f34e;display:inline-block;border-radius:50%;margin-right:10px;box-shadow:0 0 0 4px #e4eecb}
+#bec-ts-landing .bw-room{position:relative;isolation:isolate;min-height:760px;background:linear-gradient(135deg,#fafbfa,#e6ece7);border:1px solid #dfe5e0;border-radius:36px;overflow:hidden;box-shadow:0 25px 70px rgba(21,43,29,.065)}
+#bec-ts-landing .bw-room-copy{position:absolute;top:clamp(25px,4vw,60px);left:clamp(25px,4vw,60px);z-index:8;pointer-events:none;width:39%;max-width:420px}
+#bec-ts-landing .bw-room-copy>span,#bec-ts-landing .bw-objects-copy>small{font-size:10px;letter-spacing:.16em;color:#6e7970}
+#bec-ts-landing .bw-room-copy h1{font-size:clamp(46px,6.7vw,105px);line-height:.88;font-weight:500;letter-spacing:-.077em;margin:25px 0 17px}
+#bec-ts-landing .bw-room-copy h1 em{font-weight:500;font-style:normal;color:#9ca9a0}
+#bec-ts-landing .bw-room-copy p{font-size:13px;line-height:1.8;color:#6c7b71;max-width:315px;margin:0}
+#bec-ts-landing .bw-surface{position:absolute;inset:0;overflow:hidden;touch-action:pan-y}
+#bec-ts-landing .bw-gridline{position:absolute;inset:0;opacity:.26;background-image:linear-gradient(#cad6cc 1px,transparent 1px),linear-gradient(90deg,#cad6cc 1px,transparent 1px);background-size:84px 84px;mask-image:linear-gradient(90deg,transparent,#000 28%,#000 90%)}
+#bec-ts-landing .bw-surface:after{content:"BEC / ARCHIVE OBJECTS";position:absolute;right:31px;top:30px;font-size:9px;letter-spacing:.22em;color:#8d9c92}
+#bec-ts-landing .bw-pieces{position:absolute;inset:0}
+#bec-ts-landing .bw-piece{position:absolute;width:clamp(160px,16vw,260px);aspect-ratio:4/5;padding:0;display:block;text-align:left;border:0;border-radius:9px;background:#859f8e;box-shadow:4px 14px 17px rgba(29,43,35,.17),0 5px 0 rgba(30,35,33,.16);transform-origin:center;transition:box-shadow .22s,filter .22s;touch-action:none;overflow:hidden;cursor:grab}
+#bec-ts-landing .bw-piece:hover,#bec-ts-landing .bw-piece.is-active{box-shadow:5px 25px 39px rgba(23,41,32,.3),0 7px 0 rgba(30,35,33,.17);filter:saturate(1.06)}
+#bec-ts-landing .bw-piece.dragging{cursor:grabbing;transition:none}
+#bec-ts-landing .bw-sleeve{position:absolute;inset:0;display:block;background:linear-gradient(130deg,var(--tone),#24322b)}
+#bec-ts-landing .bw-sleeve img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;pointer-events:none;user-select:none;-webkit-user-drag:none}
+#bec-ts-landing .bw-sleeve:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.7),transparent 48%)}
+#bec-ts-landing .bw-piece-title{position:absolute;z-index:2;bottom:14px;left:12px;right:12px;color:#fff;font-size:clamp(16px,1.5vw,24px);line-height:1.06;letter-spacing:-.04em;font-weight:500;overflow-wrap:anywhere}
+#bec-ts-landing .bw-help{position:absolute;bottom:28px;left:30px;z-index:10;font-size:10px;letter-spacing:.15em;color:#68796b;background:rgba(249,252,248,.76);padding:10px 15px;border:1px solid #dfe7dc;border-radius:100px;pointer-events:none}
+#bec-ts-landing .bw-tools{position:absolute;bottom:22px;right:24px;z-index:12;display:flex;align-items:center;gap:7px}
+#bec-ts-landing .bw-tools button,#bec-ts-landing .bw-tools a{font-size:10px;letter-spacing:.1em;padding:13px 16px;border:1px solid #d4ded5;border-radius:100px;background:rgba(255,255,255,.9);color:#314037;min-height:42px}
+#bec-ts-landing .bw-tools a{background:#2a382f;color:#fff}
+#bec-ts-landing .bw-detail[hidden]{display:none}
+#bec-ts-landing .bw-detail{position:absolute;inset:0;z-index:100;background:rgba(31,44,35,.22);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:flex;justify-content:flex-end;align-items:stretch}
+#bec-ts-landing .bw-detail-pane{width:min(590px,90%);height:100%;background:rgba(251,252,250,.95);border-left:1px solid rgba(255,255,255,.8);border-radius:30px 0 0 30px;box-shadow:-20px 0 50px rgba(24,39,26,.13);padding:clamp(21px,3vw,35px);display:flex;flex-direction:column;overflow-y:auto}
+#bec-ts-landing .bw-detail-top{display:flex;justify-content:space-between;align-items:center;font-size:10px;letter-spacing:.15em;color:#748479;margin-bottom:22px}
+#bec-ts-landing .bw-detail-top button{font-size:29px;line-height:1;border:1px solid #dfe6df;width:44px;height:44px;border-radius:50%;background:#fff;color:#344537}
+#bec-ts-landing .bw-detail-cover{height:clamp(225px,33vh,340px);max-width:100%;border-radius:20px;overflow:hidden;position:relative;flex:none}
+#bec-ts-landing .bw-detail-cover img{width:100%;height:100%;object-fit:contain;position:absolute;inset:0}
+#bec-ts-landing .bw-detail-info{padding:23px 2px 7px;display:flex;flex-direction:column;flex:1}
+#bec-ts-landing .bw-detail-info small{font-size:10px;letter-spacing:.15em;color:#798880}
+#bec-ts-landing .bw-detail-info h2{font-weight:500;line-height:1;letter-spacing:-.065em;font-size:clamp(33px,4vw,62px);margin:14px 0}
+#bec-ts-landing .bw-detail-info p{font-size:14px;line-height:1.8;color:#6f7e74;margin:0 0 22px}
+#bec-ts-landing .bw-detail-info a{display:flex;justify-content:space-between;align-items:center;margin-top:auto;gap:20px;padding:18px 21px;border-radius:100px;background:#25372d;color:#fff;font-size:11px;letter-spacing:.12em}
+#bec-ts-landing .bw-detail-info a:hover{background:#445e4a}
+#bec-ts-landing .bw-index{z-index:110;position:absolute;top:0;right:0;bottom:0;width:min(495px,92%);overflow-y:auto;padding:24px;background:#f9fbf8;box-shadow:-25px 0 60px rgba(34,52,38,.15);border-radius:29px 0 0 29px}
+#bec-ts-landing .bw-index-head{display:flex;justify-content:space-between;align-items:center;font-size:11px;letter-spacing:.13em;padding:10px 0 23px;border-bottom:1px solid #dce5dc}
+#bec-ts-landing .bw-index-head button{border:0;background:transparent;font-size:27px;color:#405147}
+#bec-ts-landing .bw-index-item{display:flex;align-items:center;text-align:left;width:100%;gap:14px;border:0;border-bottom:1px solid #e2e9e3;background:transparent;padding:18px 3px}
+#bec-ts-landing .bw-index-item:hover{background:#edf3ee}
+#bec-ts-landing .bw-index-item small{font-size:10px;color:#95a498}
+#bec-ts-landing .bw-index-item span{font-size:20px;font-weight:500;letter-spacing:-.045em;flex:1}
+#bec-ts-landing .bw-index-item b{font-size:18px;font-weight:400}
+#bec-ts-landing .bw-objects{margin-top:19px;min-height:540px;border-radius:33px;border:1px solid #e1e7df;overflow:hidden;background:#f8faf8;position:relative;display:grid;grid-template-columns:.74fr 1.26fr;box-shadow:0 16px 40px rgba(30,44,35,.035)}
+#bec-ts-landing .bw-objects-copy{padding:clamp(27px,4.5vw,65px);z-index:2;align-self:center}
+#bec-ts-landing .bw-objects-copy h2{font-size:clamp(43px,6vw,88px);font-weight:500;letter-spacing:-.075em;line-height:.92;margin:25px 0 18px}
+#bec-ts-landing .bw-objects-copy p{font-size:14px;line-height:1.8;color:#708073;max-width:280px}
+#bec-ts-landing .bw-object-field{position:relative;min-height:540px;background:radial-gradient(ellipse at 51% 53%,#ecf2eb,transparent 75%);isolation:isolate}
+#bec-ts-landing .bw-object{position:absolute;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:7px;width:clamp(114px,11vw,160px);height:clamp(114px,11vw,160px);border-radius:40%;border:1px solid rgba(255,255,255,.9);background:rgba(237,243,236,.94);box-shadow:0 10px 20px rgba(53,71,57,.08),inset 0 0 30px rgba(255,255,255,.9);text-align:center;transition:transform .22s,background .22s;transform:translate(-50%,-50%) rotate(var(--angle,0deg))}
+#bec-ts-landing .bw-object:hover{z-index:25;transform:translate(-50%,-50%) scale(1.13) rotate(0);background:#e2eedc}
+#bec-ts-landing .bw-object:nth-child(1){left:38%;top:22%;--angle:-9deg}
+#bec-ts-landing .bw-object:nth-child(2){left:69%;top:17%;--angle:9deg}
+#bec-ts-landing .bw-object:nth-child(3){left:83%;top:48%;--angle:-12deg}
+#bec-ts-landing .bw-object:nth-child(4){left:52%;top:50%;--angle:10deg}
+#bec-ts-landing .bw-object:nth-child(5){left:21%;top:55%;--angle:-8deg}
+#bec-ts-landing .bw-object:nth-child(6){left:36%;top:82%;--angle:12deg}
+#bec-ts-landing .bw-object:nth-child(7){left:66%;top:84%;--angle:-10deg}
+#bec-ts-landing .bw-object:nth-child(8){left:92%;top:84%;--angle:6deg}
+#bec-ts-landing .bw-object-symbol{font-size:30px;font-weight:300;color:#697f70}
+#bec-ts-landing .bw-object strong{font-size:16px;letter-spacing:-.04em}
+#bec-ts-landing .bw-object small{font-size:8px;letter-spacing:.12em;color:#91a091}
+#bec-ts-landing .bw-object b{position:absolute;right:17px;top:13px;font-size:14px;font-weight:400;color:#6e8970}
+#bec-ts-landing .bw-end{display:flex;justify-content:space-between;gap:15px;padding:26px 10px 8px;color:#7c8980;font-size:10px;letter-spacing:.11em}
+#bec-ts-landing.bec-world button:focus-visible,#bec-ts-landing.bec-world a:focus-visible{outline:3px solid #8bb795;outline-offset:4px}
+@media(max-width:980px){#bec-ts-landing .bw-room{min-height:710px}#bec-ts-landing .bw-room-copy{width:50%}#bec-ts-landing .bw-objects{grid-template-columns:1fr}#bec-ts-landing .bw-objects-copy{padding:30px 30px 0}#bec-ts-landing .bw-objects-copy h2{font-size:50px}#bec-ts-landing .bw-object-field{min-height:460px}}
+@media(max-width:640px){
+#bec-ts-landing.bec-world{padding:10px}
+#bec-ts-landing .bw-top{font-size:9px}
+#bec-ts-landing .bw-room{min-height:720px;border-radius:24px}
+#bec-ts-landing .bw-room-copy{width:78%;top:20px;left:20px}
+#bec-ts-landing .bw-room-copy h1{font-size:55px;margin:17px 0 12px}
+#bec-ts-landing .bw-room-copy p{font-size:12px}
+#bec-ts-landing .bw-piece{width:157px;border-radius:7px}
+#bec-ts-landing .bw-surface{top:190px;bottom:55px}
+#bec-ts-landing .bw-help{bottom:10px;left:13px;font-size:8px;padding:8px}
+#bec-ts-landing .bw-tools{bottom:8px;left:8px;right:8px;justify-content:space-between}
+#bec-ts-landing .bw-tools button,#bec-ts-landing .bw-tools a{font-size:8px;letter-spacing:0;padding:10px 9px}
+#bec-ts-landing .bw-detail-pane{width:100%;border-radius:24px;padding:22px}
+#bec-ts-landing .bw-detail-cover{height:260px}
+#bec-ts-landing .bw-objects{border-radius:24px}
+#bec-ts-landing .bw-objects-copy h2{font-size:45px}
+#bec-ts-landing .bw-object-field{min-height:400px}
+#bec-ts-landing .bw-object{width:105px;height:105px}
+#bec-ts-landing .bw-object-symbol{font-size:22px}
+#bec-ts-landing .bw-object strong{font-size:13px}
+#bec-ts-landing .bw-object small{font-size:7px}
+#bec-ts-landing .bw-object:nth-child(8){left:87%;top:80%}
+#bec-ts-landing .bw-end{flex-direction:column}
+}
+@media(prefers-reduced-motion:reduce){#bec-ts-landing.bec-world *{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
