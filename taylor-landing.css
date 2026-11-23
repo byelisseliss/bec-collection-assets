@@ -82,3 +82,17 @@
 }
 @media(max-width:390px){:is(#bec-ts-landing,#bec-ts-detail) .ts-card-title{font-size:15px}:is(#bec-ts-landing,#bec-ts-detail) .ts-card-footer{align-items:start}:is(#bec-ts-landing,#bec-ts-detail) .ts-type-grid{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){:is(#bec-ts-landing,#bec-ts-detail) *,:is(#bec-ts-landing,#bec-ts-detail) *:before,:is(#bec-ts-landing,#bec-ts-detail) *:after{transition:none!important;scroll-behavior:auto!important}}
+
+/* Featured showgirl chapter: restrained image editorial instead of another navigation wall. */
+:is(#bec-ts-landing,#bec-ts-detail) .ts-feature-wrap{padding-bottom:6px}
+:is(#bec-ts-landing,#bec-ts-detail) .ts-feature{display:flex;align-items:end;position:relative;overflow:hidden;background:linear-gradient(120deg,#1c6359,#a36c42);min-height:310px;padding:clamp(26px,4vw,52px);color:white!important}
+:is(#bec-ts-landing,#bec-ts-detail) .ts-feature:before{content:"";z-index:1;position:absolute;inset:0;background:linear-gradient(90deg,rgba(12,34,29,.86),rgba(12,34,29,.3) 65%,rgba(0,0,0,.05))}
+:is(#bec-ts-landing,#bec-ts-detail) .ts-feature-image{position:absolute;inset:0;overflow:hidden}
+:is(#bec-ts-landing,#bec-ts-detail) .ts-feature-image img{width:100%;height:100%;object-fit:cover;object-position:50% 37%;opacity:.76;transition:transform .5s}
+:is(#bec-ts-landing,#bec-ts-detail) .ts-feature:hover .ts-feature-image img{transform:scale(1.04)}
+:is(#bec-ts-landing,#bec-ts-detail) .ts-feature-copy{position:relative;z-index:2;display:flex;flex-direction:column;gap:16px}
+:is(#bec-ts-landing,#bec-ts-detail) .ts-feature-copy .ts-kicker{color:#d6e9dd}
+:is(#bec-ts-landing,#bec-ts-detail) .ts-feature-copy strong{font-size:clamp(42px,6vw,85px);line-height:.92;font-weight:500;letter-spacing:-.065em}
+:is(#bec-ts-landing,#bec-ts-detail) .ts-feature-copy>span:last-child{font-size:11px;letter-spacing:.12em}
+:is(#bec-ts-landing,#bec-ts-detail) .ts-feature-index{position:absolute;right:24px;top:22px;z-index:2;font-size:10px;letter-spacing:.15em;color:#e4eae5}
+@media(max-width:760px){:is(#bec-ts-landing,#bec-ts-detail) .ts-feature{min-height:270px;padding:25px}}
