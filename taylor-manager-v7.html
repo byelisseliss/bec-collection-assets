@@ -201,6 +201,7 @@ function normalizeDesign(o={}){
 }
 
 const SHOP='https://byelisscollection.my1shop.com';
+const scanCache=new Map();
 const albumPatterns={
  showgirl:/the life of a showgirl|星夢人生/i,ttpd:/the tortured poets department|苦難詩社/i,
  midnights:/midnights|午夜/i,evermore:/evermore|恆久傳說/i,folklore:/folklore|美麗傳說/i,
@@ -217,7 +218,7 @@ const productPatterns={
  home:/杯|毯|抱枕|家居|蠟燭|mug|blanket|tray|candle/i,
  tour:/巡演|演唱會|tour|concert/i
 };
-async function shopText(url){
+async function fetchShopText(url){
  const parsed=new URL(url);
  if(parsed.hostname!=='byelisscollection.my1shop.com'||parsed.protocol!=='https:')throw Error('非 BEC 1shop 網址');
  let last;
@@ -230,6 +231,7 @@ async function shopText(url){
  }
  throw Error('無法跨網域讀取：'+(last?.message||'未知錯誤'));
 }
+function shopText(url){if(!scanCache.has(url))scanCache.set(url,fetchShopText(url));return scanCache.get(url)}
 function extractProducts(html){
  const out=[];
  if(/<html|<!doctype/i.test(html)){
@@ -241,7 +243,7 @@ function extractProducts(html){
  }else{
   for(const line of html.split('\n')){
    if(/\/products\/|NT\$/.test(line)){
-    const cleaned=line.replace(/https?:\/\/\S+/g,' ').replace(/\]\(/g,' ').replace(/\[[^\]]*\]/g,' ').trim();
+    const cleaned=line.replace(/\[([^\]]+)\]\([^)]+\)/g,'$1').replace(/https?:\/\/\S+/g,' ').trim();
     if(cleaned.length>5)out.push(cleaned)
    }
   }
