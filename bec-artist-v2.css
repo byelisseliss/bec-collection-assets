@@ -1,0 +1,24 @@
+/* BEC Artist Navigation v2 | choose browse mode > group > subcategory */
+.bec-artist.bec-collection-nav .bec-col-links,.bec-artist.bec-collection-float .bec-col-links{display:block!important}
+.bec-artist .bec-artist-switch{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.bec-artist .bec-artist-switch button{appearance:none;box-sizing:border-box;display:flex;justify-content:center;align-items:center;width:100%;min-height:47px;border:1px solid #dbe2e0;border-radius:999px;background:#fff;color:#55615e;font:500 13px/1.3 Helvetica,Arial,sans-serif;cursor:pointer;transition:background .2s,border-color .2s}
+.bec-artist .bec-artist-switch button[aria-pressed=true],.bec-artist .bec-artist-switch button:hover{background:#e3e8e7;border-color:#d9e2df;color:#293532}
+.bec-artist .bec-artist-views{margin-top:0}
+.bec-artist .bec-artist-view{display:none}
+.bec-artist .bec-artist-view.is-current{display:block;margin-top:12px;padding-top:12px;border-top:1px solid #e4e9e7}
+.bec-artist .bec-artist-main{display:flex;gap:8px;flex-wrap:wrap}
+.bec-artist .bec-artist-main button{appearance:none;flex:0 1 auto;min-width:80px;max-width:100%;padding:10px 16px;border:1px solid #e0e5e3;border-radius:999px;background:#fff;color:#5d6865;font:500 12px/1.45 Helvetica,Arial,sans-serif;cursor:pointer;overflow-wrap:anywhere;transition:background .2s,border-color .2s}
+.bec-artist .bec-artist-main button[aria-pressed=true],.bec-artist .bec-artist-main button:hover{background:#e2e8e5;border-color:#d7e1dc;color:#303d38}
+.bec-artist .bec-artist-panels{margin-top:0}
+.bec-artist .bec-artist-panel{display:none}
+.bec-artist .bec-artist-panel.is-current{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid #e5e9e6}
+.bec-artist .bec-artist-panel a{flex:0 1 auto;min-width:90px;width:auto!important;padding:10px 16px!important}
+.bec-artist button:focus-visible,.bec-artist a:focus-visible{outline:2px solid #718a7b;outline-offset:3px}
+@media(max-width:767px){
+.bec-artist .bec-artist-switch{gap:7px}
+.bec-artist .bec-artist-switch button{font-size:12px;min-height:42px;padding:10px}
+.bec-artist .bec-artist-main,.bec-artist .bec-artist-panel.is-current{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding-bottom:4px}
+.bec-artist .bec-artist-main::-webkit-scrollbar,.bec-artist .bec-artist-panel::-webkit-scrollbar{display:none}
+.bec-artist .bec-artist-main button,.bec-artist .bec-artist-panel a{flex:0 0 auto;min-width:0!important;white-space:nowrap}
+}
+@media(prefers-reduced-motion:reduce){.bec-artist .bec-artist-switch button,.bec-artist .bec-artist-main button{transition:none}}
