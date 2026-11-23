@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>BEC Collection Builder v2.7</title>
+<title>BEC Collection Builder v2.8</title>
 <style>
 :root{font-family:Helvetica,Arial,"PingFang TC",sans-serif;background:#f5f6f6;color:#253034}
 *{box-sizing:border-box}body{margin:0}main{max-width:1060px;margin:auto;padding:44px 20px 100px}
@@ -430,7 +430,7 @@ function build(){
   const lines=[
    '<!-- BEC COLLECTION | '+esc(name)+' | '+mode.toUpperCase()+' -->',
    '<link rel="stylesheet" href="'+rootUrl+'bec-collection.css?v=1.1">',
-   ...(mode==='artist'?['<link rel="stylesheet" href="'+rootUrl+'bec-artist-v2-1.css?v=2.1">']:[]),
+   ...(mode==='artist'?['<link rel="stylesheet" href="'+rootUrl+'bec-artist-compact.css?v=2.2">']:[]),
    '<nav data-bec-collection '+(mode==='artist'?'data-bec-artist-v2 ':'')+'class="'+(mode==='artist'?'bec-artist':'')+'" aria-label="'+esc(name)+' 商品分類導覽">',
    '  <div class="bec-col-brand"><small>DISCOVER / '+esc(name.toUpperCase())+'</small><strong>Explore Categories</strong></div>',
    '  <div class="bec-col-links">'
@@ -471,7 +471,7 @@ function build(){
    lines.push('    </div>');
   }
   lines.push('  </div>','</nav>','<script defer src="'+rootUrl+'bec-collection.js?v=1.2"><'+'/script>');
-  if(mode==='artist')lines.push('<script defer src="'+rootUrl+'bec-artist-v2.js?v=2.0"><'+'/script>');
+  if(mode==='artist')lines.push('<script defer src="'+rootUrl+'bec-artist-compact.js?v=2.2"><'+'/script>');
   $('output').value=lines.join('\n');
   $('seriesCount').textContent=$('seriesRows').children.length+' 個作品系列';
   $('brandCount').textContent='全部商品 + '+brandSelected().length+' 個選取分類 + '+$('brandCustomRows').children.length+' 個自訂分類';
