@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "release": "2026.11.23.2",
-  "builder": "2.6",
+  "release": "2026.11.23.3",
+  "builder": "3.0",
   "description": "BEC Collection stable production asset manifest",
   "assets": {
     "commonCSS": {
@@ -31,5 +31,5 @@
       "artist three-stage nav v2.x"
     ]
   },
-  "manager": "1.0"
+  "manager": "studio-3.0"
 }
