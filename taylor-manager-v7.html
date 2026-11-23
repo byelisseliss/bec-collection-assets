@@ -70,7 +70,7 @@ body.bec-embedded .manager-sync[hidden]{display:none!important}
 <details><summary>04　按鈕與商品分類</summary><div class="design-grid" id="designTypes"></div></details>
 <details><summary>05　文案編輯</summary><div class="design-grid" id="designCopy"></div></details>
 </div>
-<div class="design-preview"><div class="design-preview-top"><strong>LIVE PREVIEW</strong><div class="design-preview-modes"><button type="button" id="designDesktop" class="selected">桌面</button><button type="button" id="designMobile" class="light">手機</button><button type="button" id="designReload" class="light">重新整理</button></div></div><div class="design-frame-wrap"><iframe id="designFrame" title="Taylor Swift 落地頁即時預覽" loading="lazy" src="taylor-landing.html?v=7-20261124"></iframe></div></div>
+<div class="design-preview"><div class="design-preview-top"><strong>LIVE PREVIEW</strong><div class="design-preview-modes"><button type="button" id="designDesktop" class="selected">桌面</button><button type="button" id="designMobile" class="light">手機</button><button type="button" id="designReload" class="light">重新整理</button></div></div><div class="design-frame-wrap"><iframe id="designFrame" title="Taylor Swift 落地頁即時預覽" loading="lazy" src="taylor-landing.html?v=7-20261124-b"></iframe></div></div>
 </div></section>
 <section class="box"><h2>專輯系列 · 封面與分類連結</h2><div class="actions"><button class="light" id="scanAll" type="button">↻ 自動掃描 12 張專輯</button><span class="hint" id="scanAllStatus" role="status">依 1shop 公開商品資料辨識</span></div><p>「前往網址」請填入你在 1shop 建立的實際專輯分類頁 URL。封面圖建議使用已取得使用權的圖片並存放於自己的 BEC 站點。空白不代表已完成連結，會使用示範的系列目錄頁。</p><div id="albumList"></div></section>
 <section class="box"><h2>共用商品類型網址</h2><p>貼上各分類頁的完整網址。只有 URL 已確定時才填寫，避免顧客被帶到錯誤商品頁。</p><div id="typeList"></div></section>
@@ -322,7 +322,7 @@ $('designReset').onclick=()=>{data.design={...DESIGN_DEFAULT};renderDesigner();s
 document.querySelectorAll('[data-preset]').forEach(b=>b.onclick=()=>{data.design={...DESIGN_PRESETS[b.dataset.preset]};renderDesigner();save()});
 $('designDesktop').onclick=()=>{ $('designFrame').classList.remove('mobile');$('designDesktop').className='selected';$('designMobile').className='light';};
 $('designMobile').onclick=()=>{ $('designFrame').classList.add('mobile');$('designMobile').className='selected';$('designDesktop').className='light';};
-$('designReload').onclick=()=>{const f=$('designFrame');f.src='taylor-landing.html?v=7-20261124&t='+Date.now()};
+$('designReload').onclick=()=>{const f=$('designFrame');f.src='taylor-landing.html?v=7-20261124-b&t='+Date.now()};
 
 $('openCategories').onclick=()=>{
  if(window.parent!==window)parent.postMessage({kind:'bec-taylor-show-categories'},location.origin);
