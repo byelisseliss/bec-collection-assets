@@ -100,8 +100,12 @@ function studioMode(next,updateHash=true){
  if(upgrade){
   // Refresh the embedded project index on each visit: Builder may have just
   // saved a new project to the same-origin project storage.
-  upgradeFrame.src='upgrade.html?embed=1';
-  upgradeFrameLoaded=true;
+  if(!upgradeFrameLoaded){
+   upgradeFrame.src='upgrade.html?embed=1';
+   upgradeFrameLoaded=true;
+  }else{
+   upgradeFrame.contentWindow?.postMessage({kind:'bec-refresh-projects'},location.origin);
+  }
  }
  if(updateHash)history.replaceState(null,'',upgrade?'#upgrade':'#create');
  requestAnimationFrame(()=>document.querySelector('.studio-bar')?.scrollIntoView({block:'start',behavior:'smooth'}));
