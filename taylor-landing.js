@@ -91,6 +91,7 @@ function initLanding(){
  '<div class="ts-shell ts-pathbar" aria-label="選擇瀏覽方式">'+
  '<button class="ts-path" data-path="album" aria-pressed="true" type="button"><span><span class="ts-path-title">依專輯／系列探索</span><span class="ts-path-sub">BROWSE BY ALBUM · 12 ERAS</span></span><span class="ts-path-icon">↗</span></button>'+
  '<button class="ts-path" data-path="type" aria-pressed="false" type="button"><span><span class="ts-path-title">依商品類型探索</span><span class="ts-path-sub">BROWSE BY CATEGORY · 08 TYPES</span></span><span class="ts-path-icon">↗</span></button></div>'+
+ '<div class="ts-shell ts-feature-wrap"><a class="ts-feature" href="'+escapeHtml(albumHref(albums[0]))+'"><div class="ts-feature-image" data-art="showgirl"></div><div class="ts-feature-copy"><span class="ts-kicker">FEATURED ERA / 2025 · 12TH CHAPTER</span><strong>Step into<br>the show.</strong><span>THE LIFE OF A SHOWGIRL &nbsp; ↗</span></div><span class="ts-feature-index">01 / 12</span></a></div>'+
  '<section class="ts-shell ts-section" id="bec-ts-albums"><div class="ts-section-head"><div><div class="ts-kicker">01 / THE DISCOGRAPHY</div><h2>Choose your era.</h2></div><div class="ts-count">12 STORIES / 12 CHAPTERS</div></div>'+
  '<div class="ts-filters"><div class="ts-search"><label for="bec-ts-search">⌕</label><input id="bec-ts-search" type="search" placeholder="搜尋專輯名稱／年份" autocomplete="off"></div><button type="button" class="ts-reset" id="bec-ts-reset">CLEAR SEARCH ×</button></div>'+
  '<div class="ts-grid" id="bec-ts-album-grid">'+albums.map(albumCard).join('')+'</div></section>'+
