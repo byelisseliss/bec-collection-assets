@@ -18,7 +18,7 @@ const albums=rows.map(([id,title,year,tone,story])=>({id,title,year,tone,story})
 const kind=[['vinyl','黑膠','◉'],['cd','CD','◎'],['cassette','卡帶','▣'],['clothing','服飾','▤'],['accessories','配件','✳'],['collectibles','收藏品','◇'],['home','居家生活','⌂'],['tour','巡演／活動','✦']];
 const albumLinks={showgirl:'https://byelisscollection.my1shop.com/TheLifeofaShowgirl',...(window.BEC_TS_ALBUM_URLS||{})};
 const typeLinks={...(window.BEC_TS_TYPE_URLS||{})};const coverLinks=window.BEC_TS_IMAGES||{};
-const albumTypes=window.BEC_TS_ALBUM_TYPES||{};const albumTypeUrls=window.BEC_TS_ALBUM_TYPE_URLS||{};
+const albumTypes={...(window.BEC_TS_ALBUM_TYPES||{})};const albumTypeUrls=window.BEC_TS_ALBUM_TYPE_URLS||{};
 const safe=x=>typeof x==='string'&&/^https:\/\//i.test(x)?x:null;
 const href=a=>safe(albumLinks[a.id])||BASE+'taylor-discover.html?era='+encodeURIComponent(a.id);
 const typeHref=id=>safe(typeLinks[id])||BASE+'taylor-discover.html?type='+encodeURIComponent(id);
@@ -75,7 +75,7 @@ function create(){
  const root=document.querySelector('#bec-ts-landing');if(!root)return;
  root.classList.add('bec-deck-v4');root.classList.remove('bec-world');
  const escTitle=s=>esc(s);
- const productTypes=(a)=>{const configured=albumTypes[a.id];const selected=Array.isArray(configured)?configured:kind.map(k=>k[0]);return kind.filter(k=>selected.includes(k[0]));};
+ const productTypes=(a)=>{const configured=albumTypes[a.id];const selected=Array.isArray(configured)?configured:[];return kind.filter(k=>selected.includes(k[0]));};
  const typeHtml=(a)=>productTypes(a).map(([id,zh],i)=>{const link=safe(albumTypeUrls[a.id+':'+id])||safe(albumLinks[a.id])||typeHref(id);return '<a href="'+esc(link)+'"><small>'+String(i+1).padStart(2,'0')+'</small><strong>'+escTitle(zh)+'</strong><span>↗</span></a>'}).join('');
  root.innerHTML='<main class="bc-shell">'+
  '<div class="bc-top"><span>BY ELISS COLLECTION <i></i> TAYLOR SWIFT</span><span>THE COLLECTION / 12 ERAS</span></div>'+
@@ -117,6 +117,7 @@ function create(){
  deck.addEventListener('pointercancel',()=>down=null);
  deck.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();change(index+(e.key==='ArrowRight'?1:-1))}});
  deck.addEventListener('wheel',e=>{if(Math.abs(e.deltaX)<8||Math.abs(e.deltaX)<Math.abs(e.deltaY))return;e.preventDefault();if(Date.now()-wheelTime<420)return;wheelTime=Date.now();change(index+(e.deltaX>0?1:-1))},{passive:false});
+ addEventListener('message',e=>{if(e.origin!==location.origin||e.data?.kind!=='bec-visual-design')return;if(e.data.albumTypes&&typeof e.data.albumTypes==='object'){Object.assign(albumTypes,e.data.albumTypes);render()}});
  render();applyDesign(window.BEC_TS_DESIGN||{});
  if(location.hash==='#shop-by-type')root.querySelector('#bc-types').scrollIntoView();
 }
