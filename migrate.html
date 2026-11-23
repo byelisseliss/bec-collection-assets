@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BEC Collection｜舊版導覽一鍵升級</title>
+<style>
+:root{font-family:Helvetica,Arial,"PingFang TC",sans-serif;color:#29322f;background:#f5f6f4}*{box-sizing:border-box}
+body{margin:0}main{max-width:990px;margin:auto;padding:45px 22px 100px}
+header{padding-bottom:28px;border-bottom:1px solid #d9e0db;margin-bottom:27px}
+.kicker{letter-spacing:.17em;font-size:10px;color:#8a9790}h1{font-size:clamp(29px,5vw,48px);font-weight:500;letter-spacing:-.06em;line-height:1.12;margin:14px 0}
+p{color:#6a7670;font-size:13px;line-height:1.8}a{color:#273d32}section{background:#fff;border:1px solid #dce3df;border-radius:16px;padding:25px;margin-bottom:17px}
+h2{font-size:19px;font-weight:500;margin:0 0 14px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+label{display:block;font-size:13px;font-weight:600;margin-bottom:10px}textarea{width:100%;padding:14px;border:1px solid #d7dfda;border-radius:10px;background:white;color:#27332c;font:12px/1.6 ui-monospace,Menlo,monospace;resize:vertical;min-height:230px}
+#out{min-height:290px}button{border:1px solid #29382f;border-radius:100px;background:#29382f;color:#fff;font:13px Helvetica,Arial,sans-serif;padding:12px 23px;cursor:pointer}
+button.secondary{background:white;color:#29382f;border-color:#ced8d1}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:17px}#status{min-height:20px;font-size:13px;color:#55745c}
+ol{padding-left:22px;font-size:13px;color:#66736b;line-height:2}.notice{border-left:3px solid #adc23b;background:#f4f6ea;padding:14px 18px;color:#5c6b50;font-size:12px;line-height:1.8;margin-top:15px}
+nav{display:flex;justify-content:space-between;gap:10px;align-items:center;margin:0 0 26px}
+nav a{font-size:12px;text-decoration:none}pre{white-space:pre-wrap;word-break:break-word;color:#3d5245;font-size:12px;line-height:1.7}
+@media(max-width:600px){main{padding:28px 14px}section{padding:17px}.grid{grid-template-columns:1fr}}
+</style></head><body><main>
+<nav><strong>BEC.</strong><a href="builder.html">返回 Collection Builder ↗</a></nav>
+<header><div class="kicker">BY ELISS COLLECTION / MIGRATION ASSISTANT</div><h1>已經建立好的專輯，<br>不用重新輸入。</h1><p>將 1shop 目前使用的舊版藝人導覽「程式」區塊整份貼進來，保留全部專輯、商品類型、子分類及錨點，一鍵轉換成新版三階層導覽。</p></header>
+<section><h2>01 / 貼入目前使用的完整程式</h2><label for="old">原本的 1shop「BEC Collection」程式區塊</label>
+<textarea id="old" spellcheck="false" placeholder="在 1shop 開啟 Taylor Swift 的 BEC Collection 程式區塊，Command + A → Command + C，然後貼在這裡。"></textarea>
+<div class="actions"><button type="button" id="convert">保留原資料，升級成新版</button><button type="button" class="secondary" id="clear">清空</button></div>
+<div class="notice">請複製「導覽程式區塊」的原始 HTML，而不是整張網頁的商品 HTML。這個轉換只在你的瀏覽器內執行，不會傳送或儲存商品資料。</div>
+</section>
+<section><h2>02 / 檢查轉換結果</h2><p id="status" role="status" aria-live="polite">尚未轉換。</p>
+<pre id="report" aria-label="系列和分類統計"></pre>
+<label for="out">可直接貼回 1shop 的新版完整程式碼</label><textarea id="out" readonly spellcheck="false"></textarea>
+<div class="actions"><button type="button" id="copy">複製新版完整程式</button></div></section>
+<section><h2>03 / 只替換一次，不重建分類</h2>
+<ol><li>先把 1shop 舊版程式原文備份到 Mac 的純文字檔案。</li>
+<li>用這個轉換器產生新程式後，確認顯示的專輯、主分類、細項數量合理。</li>
+<li>回到原本的 1shop「程式」區塊，整份貼上新程式並儲存，**不必重新建立原生標題或商品展示**。</li>
+<li>打開 Taylor Swift 前台，確認「依專輯／系列 → 專輯 → 細項」和「依商品類型 → 商品大類 → 細項」都正常。</li></ol>
+<p>如果舊代碼有分類未被辨識，轉換器會顯示錯誤並保持輸出空白，不會自行丟棄你的專輯。</p></section>
+</main><script>
+(()=>{
+'use strict';
+const $=id=>document.getElementById(id);
+const rootUrl='https://byelisseliss.github.io/bec-collection-assets/';
+let generated='';
+function say(message,error=false){$('status').textContent=message;$('status').style.color=error?'#b04444':'#51745c'}
+function convert(){
+ generated='';$('out').value='';$('report').textContent='';
+ const text=$('old').value.trim();
+ if(!text){say('請先貼入舊版導覽區塊的完整 HTML。',true);return}
+ const doc=new DOMParser().parseFromString(text,'text/html');
+ const nav=doc.querySelector('nav[data-bec-collection]');
+ if(!nav){say('找不到 BEC Collection 導覽。請貼「程式區塊」的完整原始碼。',true);return}
+ const brand=nav.querySelector('.bec-col-brand');
+ const previousGroups=[...nav.querySelectorAll('.bec-artist-panel[data-group]')];
+ if(!previousGroups.length){say('找不到舊版藝人分類。請確認貼入的是尚未升級的藝人頁導覽程式。',true);return}
+ const sections={series:[],type:[]};
+ const keys=new Set(),issues=[];
+ for(const panel of previousGroups){
+  const group=panel.dataset.group?.trim();
+  const links=[...panel.querySelectorAll('a[href^="#"]')].map(a=>a.cloneNode(true));
+  if(!group||!links.length){issues.push('發現缺少名稱或內容的分類群組');continue}
+  const view=group.startsWith('系列 · ')?'series':'type';
+  const label=view==='series'?group.replace(/^系列 · /,''):group;
+  for(const a of links){
+   const href=a.getAttribute('href');
+   if(!href||!a.dataset.heading){issues.push(group+'：分類連結缺少錨點或原生標題');continue}
+   if(keys.has(href)){issues.push('重複錨點：'+href);continue}
+   keys.add(href);
+  }
+  sections[view].push({group,label,links});
+ }
+ if(issues.length){say('轉換前檢查未通過：請先核對舊代碼，原資料不會被覆蓋。',true);$('report').textContent=issues.join('\n');return}
+ if(!sections.type.length&&!sections.series.length){say('沒有發現可轉換的分類。',true);return}
+ const replacement=doc.createElement('div');replacement.className='bec-col-links';
+ const switcher=doc.createElement('div');switcher.className='bec-artist-switch';switcher.setAttribute('aria-label','瀏覽方式');
+ for(const [view,title] of [['series','依專輯／系列'],['type','依商品類型']]){
+  const b=doc.createElement('button');b.type='button';b.dataset.view=view;b.setAttribute('aria-pressed','false');b.textContent=title;switcher.append(b);
+ }
+ replacement.append(switcher);
+ const views=doc.createElement('div');views.className='bec-artist-views';
+ for(const view of ['series','type']){
+  const container=doc.createElement('div');container.className='bec-artist-view';container.dataset.view=view;
+  const groups=doc.createElement('div');groups.className='bec-artist-main';groups.setAttribute('aria-label',view==='series'?'專輯與系列':'商品大類');
+  const panels=doc.createElement('div');panels.className='bec-artist-panels';
+  for(const item of sections[view]){
+   const button=doc.createElement('button');button.type='button';button.dataset.group=item.group;button.setAttribute('aria-pressed','false');button.textContent=item.label;groups.append(button);
+   const panel=doc.createElement('div');panel.className='bec-artist-panel';panel.dataset.group=item.group;
+   item.links.forEach(a=>panel.append(a));panels.append(panel);
+  }
+  container.append(groups,panels);views.append(container);
+ }
+ replacement.append(views);
+ const oldLinks=nav.querySelector('.bec-col-links');if(!oldLinks){say('無法找到舊版分類容器。',true);return}
+ oldLinks.replaceWith(replacement);
+ nav.setAttribute('data-bec-artist-v2','');nav.classList.add('bec-artist');
+ nav.removeAttribute('data-bec-initialized');
+ let out='<!-- BEC COLLECTION | ARTIST MIGRATED v2.0 -->\n';
+ out+='<link rel="stylesheet" href="'+rootUrl+'bec-collection.css?v=1.1">\n';
+ out+='<link rel="stylesheet" href="'+rootUrl+'bec-artist-v2.css?v=2.0">\n';
+ out+=nav.outerHTML+'\n';
+ out+='<script defer src="'+rootUrl+'bec-collection.js?v=1.2"><'+'/script>\n';
+ out+='<script defer src="'+rootUrl+'bec-artist-v2.js?v=2.0"><'+'/script>';
+ generated=out;$('out').value=out;
+ const seriesLinks=sections.series.reduce((n,x)=>n+x.links.length,0);
+ const typeLinks=sections.type.reduce((n,x)=>n+x.links.length,0);
+ $('report').textContent='專輯／作品系列：'+sections.series.length+' 組、'+seriesLinks+' 個細項\n商品類型：'+sections.type.length+' 組、'+typeLinks+' 個細項\n錨點總數：'+keys.size+' 個';
+ say('已轉換成功！原專輯名稱、分類標題與錨點已保留。請先比對數量，再貼回 1shop。');
+}
+$('convert').addEventListener('click',convert);
+$('clear').addEventListener('click',()=>{$('old').value='';$('out').value='';$('report').textContent='';generated='';say('已清空輸入。')});
+$('copy').addEventListener('click',async()=>{
+ if(!generated){convert();if(!generated)return}
+ try{await navigator.clipboard.writeText(generated);say('已複製新版完整程式碼。')}
+ catch(e){$('out').focus();$('out').select();say('已選取全部程式碼，請按 Command + C 複製。')}
+});
+})();
+</script></body></html>
