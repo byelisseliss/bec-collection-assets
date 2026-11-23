@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "release": "2026.11.23.1",
+  "release": "2026.11.23.2",
   "builder": "2.6",
   "description": "BEC Collection stable production asset manifest",
   "assets": {
@@ -13,17 +13,17 @@
       "version": "1.2"
     },
     "artistCSS": {
-      "path": "bec-artist-v2-1.css",
-      "version": "2.1"
+      "path": "bec-artist-compact.css",
+      "version": "2.2"
     },
     "artistJS": {
-      "path": "bec-artist-v2.js",
-      "version": "2.0"
+      "path": "bec-artist-compact.js",
+      "version": "2.2"
     }
   },
   "upgrade": {
     "brand": "original-category-links",
-    "artist": "series-type-three-stage",
+    "artist": "compact-category-drawer",
     "requiresManualVerification": true,
     "supportedInput": [
       "brand shared nav v1.x",
