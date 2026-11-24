@@ -72,7 +72,7 @@ body.bec-embedded .manager-sync[hidden]{display:none!important}
 </div>
 <div class="design-preview"><div class="design-preview-top"><strong>LIVE PREVIEW</strong><div class="design-preview-modes"><button type="button" id="designDesktop" class="selected">桌面</button><button type="button" id="designMobile" class="light">手機</button><button type="button" id="designReload" class="light">重新整理</button></div></div><div class="design-frame-wrap"><iframe id="designFrame" title="Taylor Swift 落地頁即時預覽" loading="lazy" src="taylor-landing.html?v=7-20261124-c"></iframe></div></div>
 </div></section>
-<section class="box"><h2>專輯系列 · 封面與分類連結</h2><div class="actions"><button class="light" id="scanAll" type="button">↻ 自動掃描 12 張專輯</button><span class="hint" id="scanAllStatus" role="status">依 1shop 公開商品資料辨識</span></div><p>「前往網址」請填入你在 1shop 建立的實際專輯分類頁 URL。封面圖建議使用已取得使用權的圖片並存放於自己的 BEC 站點。空白不代表已完成連結，會使用示範的系列目錄頁。</p><div id="albumList"></div></section>
+<section class="box"><h2>專輯系列 · 封面與分類連結</h2><div class="actions"><button class="light" id="scanAll" type="button">↻ 自動掃描 12 張專輯</button><span class="hint" id="scanAllStatus" role="status">只掃描每張專輯設定的獨立來源；不使用共用落地頁</span></div><p>「前往網址」請填入你在 1shop 建立的實際專輯分類頁 URL。封面圖建議使用已取得使用權的圖片並存放於自己的 BEC 站點。空白不代表已完成連結，會使用示範的系列目錄頁。</p><div id="albumList"></div></section>
 <section class="box"><h2>共用商品類型網址</h2><p>貼上各分類頁的完整網址。只有 URL 已確定時才填寫，避免顧客被帶到錯誤商品頁。</p><div id="typeList"></div></section>
 <section class="box"><h2>匯出／複製到 1shop</h2><p>生成一份可貼進 Taylor Swift 落地頁「程式」區塊的完整代碼。圖片與分類頁網址會一起保存於輸出，不用手動改 JavaScript。</p><div class="actions"><button id="generate" type="button">產生完整 1shop 程式碼</button><button class="light" id="copy" type="button">複製完整代碼</button><button class="light" id="download" type="button">匯出設定 JSON</button><button class="light" type="button" id="importButton">匯入設定 JSON</button><input id="importFile" type="file" accept=".json,application/json"></div><p id="status" role="status" aria-live="polite"></p><textarea id="output" spellcheck="false" readonly></textarea><p class="hint">此管理器只變更連結與圖片設定，不會自動建立 1shop 分類頁面或變更已上架商品。</p></section>
 </main><script>(()=>{'use strict';
@@ -81,15 +81,15 @@ const albums=[['showgirl','The Life of a Showgirl'],['ttpd','The Tortured Poets 
 const types=[['vinyl','黑膠 VINYL'],['cd','CD'],['cassette','卡帶 CASSETTE'],['clothing','服飾 APPAREL'],['accessories','配件 ACCESSORIES'],['collectibles','收藏品 COLLECTIBLES'],['home','居家生活 HOME'],['tour','巡演／活動 TOUR']];
 const KEY='bec-taylor-landing-manager-v1',$=id=>document.getElementById(id);
 const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&quot;'}[c]));
-let data={format:KEY,albums:{},types:{},images:{},albumTypes:{},albumTypeUrls:{},design:{},scanMeta:{}};
-try{const old=JSON.parse(localStorage.getItem(KEY)||'null');if(old&&old.format===KEY)data={...data,...old,albumTypes:old.albumTypes||{},albumTypeUrls:old.albumTypeUrls||{},design:old.design||{},scanMeta:old.scanMeta||{}}}catch{}
+let data={format:KEY,albums:{},types:{},images:{},albumTypes:{},albumTypeUrls:{},design:{},scanMeta:{},scanSources:{}};
+try{const old=JSON.parse(localStorage.getItem(KEY)||'null');if(old&&old.format===KEY)data={...data,...old,albumTypes:old.albumTypes||{},albumTypeUrls:old.albumTypeUrls||{},design:old.design||{},scanMeta:old.scanMeta||{},scanSources:old.scanSources||{}}}catch{}
 const defaults={showgirl:'https://byelisscollection.my1shop.com/TheLifeofaShowgirl'};
 const typeDefaults={cd:'https://byelisscollection.my1shop.com/categories/index-TS-cd'};
 function field(id,label,placeholder,value){
  const box=document.createElement('div');box.className='field';
  const lab=document.createElement('label');lab.htmlFor=id;lab.textContent=label;
  const input=document.createElement('input');input.id=id;input.type='url';input.placeholder=placeholder;input.value=value||'';
- input.addEventListener('input',()=>{const pos=id.indexOf(':');const kind=id.slice(0,pos),key=id.slice(pos+1);data[kind][key]=input.value.trim();save();});
+ input.addEventListener('input',()=>{const pos=id.indexOf(':');const kind=id.slice(0,pos),key=id.slice(pos+1);data[kind][key]=input.value.trim();if(kind==='scanSources'||(kind==='albums'&&!data.scanSources[key])){delete data.scanMeta[key];const badge=document.getElementById('scan:'+key);if(badge)badge.textContent='來源已變更，請重新掃描';}save();});
  box.append(lab,input);return box;
 }
 function populate(){
@@ -99,9 +99,10 @@ function populate(){
   const small=document.createElement('small');small.textContent=key==='showgirl'?'已找到 BEC 現有專輯頁':'等待連結到專屬 1shop 分類頁';label.append(small);
   row.append(label,field('albums:'+key,'1shop 專輯頁網址','https://...',data.albums[key]||defaults[key]||''),field('images:'+key,'圖片網址（供專輯卡片作背景）','https://...',data.images[key]||''));host.append(row);
   const editor=document.createElement('div');editor.className='album-products';
-  const caption=document.createElement('strong');caption.textContent='1shop 自動辨識商品分類';editor.append(caption);const badge=document.createElement('div');badge.className='scan-result';badge.id='scan:'+key;badge.textContent=data.scanMeta?.[key]?.status==='ok'?'已辨識：'+data.scanMeta[key].count+' 種類別':'尚無確認的掃描結果';editor.append(badge);const button=document.createElement('button');button.type='button';button.className='light scan-button';button.textContent='↻ 重新掃描';button.onclick=()=>scanAlbum(key);editor.append(button);
+  editor.append(field('scanSources:'+key,'商品分類偵測來源網址（留空則使用專輯專屬頁）','https://byelisscollection.my1shop.com/...',data.scanSources[key]||''));
+  const caption=document.createElement('strong');caption.textContent='1shop 自動辨識商品分類';editor.append(caption);const badge=document.createElement('div');badge.className='scan-result';badge.id='scan:'+key;badge.textContent=data.scanMeta?.[key]?.status==='ok'&&data.scanMeta[key].source===(data.scanSources[key]||data.albums[key]||defaults[key]||'').trim()?'已辨識：'+data.scanMeta[key].count+' 種類別':'尚無確認的掃描結果';editor.append(badge);const button=document.createElement('button');button.type='button';button.className='light scan-button';button.textContent='↻ 重新掃描';button.onclick=()=>scanAlbum(key);editor.append(button);
   const choices=document.createElement('div');choices.className='album-product-choices';
-  for(const [type,title] of types){const item=document.createElement('label');const cb=document.createElement('input');cb.type='checkbox';cb.checked=!Array.isArray(data.albumTypes[key])||data.albumTypes[key].includes(type);cb.onchange=()=>{data.albumTypes[key]=types.map(t=>t[0]).filter(t=>choices.querySelector('input[data-type="'+t+'"]').checked);save()};cb.dataset.type=type;item.append(cb,document.createTextNode(title));choices.append(item)}
+  for(const [type,title] of types){const item=document.createElement('label');const cb=document.createElement('input');cb.type='checkbox';cb.checked=Array.isArray(data.albumTypes[key])&&data.albumTypes[key].includes(type);cb.onchange=()=>{data.albumTypes[key]=types.map(t=>t[0]).filter(t=>choices.querySelector('input[data-type="'+t+'"]').checked);data.scanMeta[key]={status:'manual'};save();sendDesign()};cb.dataset.type=type;item.append(cb,document.createTextNode(title));choices.append(item)}
   const manual=document.createElement('details');manual.className='manual-fallback';manual.innerHTML='<summary>手動覆寫（掃描不完整時）</summary>';manual.append(choices);editor.append(manual);const detail=document.createElement('details');detail.innerHTML='<summary>設定各商品類別的專屬網址（選填）</summary>';const links=document.createElement('div');links.className='album-link-grid';for(const [type,title] of types){const k=key+':'+type;links.append(field('albumTypeUrls:'+k,title+' / 此專輯分類頁','https://...',data.albumTypeUrls[k]||''))}detail.append(links);editor.append(detail);host.append(editor);
  }
  const host2=$('typeList');host2.replaceChildren();
@@ -129,7 +130,7 @@ $('generate').onclick=()=>{try{$('output').value=code();$('status').textContent=
 $('copy').onclick=async()=>{try{$('output').value=code();await navigator.clipboard.writeText($('output').value);$('status').textContent='✓ 已複製完整代碼。'}catch(e){$('output').select();$('status').textContent='請按 Command + C 複製已選取的完整代碼。'}};
 $('download').onclick=()=>{const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='BEC_Taylor_Landing_Settings.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),800)};
 $('importButton').onclick=()=>$('importFile').click();
-$('importFile').onchange=async e=>{const f=e.target.files?.[0];if(!f)return;try{if(f.size>1000000)throw Error('檔案太大');const v=JSON.parse(await f.text());if(v.format!==KEY||!v.albums||!v.types||!v.images)throw Error('設定檔格式不正確');v.albumTypes=v.albumTypes||{};v.albumTypeUrls=v.albumTypeUrls||{};v.design=v.design||{};v.scanMeta=v.scanMeta||{};if(!confirm('確定要載入這份設定，覆蓋目前表單內容？'))return;data=v;save();populate();renderDesigner();$('generate').click()}catch(error){$('status').textContent=error.message}finally{e.target.value=''}};
+$('importFile').onchange=async e=>{const f=e.target.files?.[0];if(!f)return;try{if(f.size>1000000)throw Error('檔案太大');const v=JSON.parse(await f.text());if(v.format!==KEY||!v.albums||!v.types||!v.images)throw Error('設定檔格式不正確');v.albumTypes=v.albumTypes||{};v.albumTypeUrls=v.albumTypeUrls||{};v.design=v.design||{};v.scanMeta=v.scanMeta||{};v.scanSources=v.scanSources||{};if(!confirm('確定要載入這份設定，覆蓋目前表單內容？'))return;data=v;save();populate();renderDesigner();$('generate').click()}catch(error){$('status').textContent=error.message}finally{e.target.value=''}};
 function syncClassificationSummary(){
  try{
   const d=JSON.parse(localStorage.getItem('bec-collection-builder-draft-v1')||'null');
@@ -253,15 +254,17 @@ function extractProducts(html){
 async function scanAlbum(id){
  const badge=document.getElementById('scan:'+id);
  if(badge)badge.textContent='讀取公開商品中…';
- const url=(data.albums[id]||defaults[id]||'').trim();
- const sources=[url,SHOP+'/categories/ts-category'].filter(Boolean).filter((x,i,a)=>a.indexOf(x)===i);
+ const url=(data.scanSources[id]||data.albums[id]||defaults[id]||'').trim();
+ if(!url){if(badge)badge.textContent='尚未設定此專輯的偵測來源網址';return false;}
+ let source;try{source=new URL(url);if(source.hostname!=='byelisscollection.my1shop.com'||source.protocol!=='https:'||/^\/(taylor-swift-collection|categories\/ts-category)\/?$/i.test(source.pathname))throw Error('請指定此專輯的獨立商品來源頁');}catch(e){if(badge)badge.textContent='⚠ 請設定此專輯的獨立 1shop 商品來源網址';return false;}
+ scanCache.delete(url);
+ const sources=[url];
  const found=new Set();let productCount=0,read=0,fail=0;
  for(const src of sources){
   try{
    const entries=extractProducts(await shopText(src));
    read++;
    for(const name of entries){
-    if(!albumPatterns[id].test(name))continue;
     productCount++;
     for(const [type,re] of Object.entries(productPatterns))if(re.test(name))found.add(type);
    }
@@ -273,7 +276,7 @@ async function scanAlbum(id){
  }
  const chosen=types.map(t=>t[0]).filter(t=>found.has(t));
  data.albumTypes[id]=chosen;
- data.scanMeta[id]={status:'ok',count:chosen.length,products:productCount,incomplete:fail>0,checkedAt:new Date().toISOString()};
+ data.scanMeta[id]={status:'ok',count:chosen.length,products:productCount,incomplete:fail>0,source:url,checkedAt:new Date().toISOString()};
  const index=albums.findIndex(a=>a[0]===id);
  document.querySelectorAll('#albumList .album-products')[index]?.querySelectorAll('.album-product-choices input').forEach(cb=>cb.checked=chosen.includes(cb.dataset.type));
  if(badge)badge.textContent='✓ '+productCount+' 筆相關商品／'+chosen.length+' 種類別'+(fail?'（部分來源無法讀取）':'');
@@ -330,7 +333,7 @@ $('openCategories').onclick=()=>{
 };
 addEventListener('focus',syncClassificationSummary);
 populate();renderDesigner();$('generate').click();syncClassificationSummary();
-if(!Object.keys(data.scanMeta||{}).length)setTimeout(scanAllAlbums,900);
+if(!Object.values(data.scanMeta||{}).some(x=>x.source))setTimeout(scanAllAlbums,900);
 if(window.parent!==window){
  document.body.classList.add('bec-embedded');
  const size=()=>parent.postMessage({kind:'bec-taylor-height',height:document.documentElement.scrollHeight},location.origin);
